@@ -226,6 +226,7 @@ export class BaseRemoteElement extends LitElement {
 			case 'Sony BRAVIA':
 			case 'Roku':
 			case 'Samsung TV':
+			case 'Philips TV':
 			case 'Jellyfin':
 			default: {
 				const data: IData = {
@@ -254,6 +255,7 @@ export class BaseRemoteElement extends LitElement {
 			case 'Kodi':
 			case 'Apple TV':
 			case 'Samsung TV':
+			case 'Philips TV':
 			case 'LG webOS':
 				this.hass.callService('media_player', 'select_source', {
 					entity_id: action.media_player_id,

@@ -53,7 +53,7 @@
 		"prettier": "latest",
 		"prettier-plugin-organize-imports": "latest",
 		"ts-loader": "latest",
-		"typescript": "latest",
+		"typescript": "^5.8.3",
 		"webpack": "latest",
 		"webpack-cli": "latest"
 	}

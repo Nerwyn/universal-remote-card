@@ -16,10 +16,12 @@ import {
 	rokuDefaultSources,
 	samsungTVDefaultKeys,
 	samsungTVDefaultSources,
+	philipsTVDefaultKeys,
 	unifiedRemoteDefaultKeys,
 	unifiedRemoteDefaultSources,
 	webosDefaultKeys,
 	webosDefaultSources,
+	philipsTVDefaultSources,
 } from '../models/maps';
 
 export function getDefaultActions(platform: Platform) {
@@ -38,6 +40,11 @@ export function getDefaultActions(platform: Platform) {
 			defaultKeys = samsungTVDefaultKeys;
 			defaultSources = samsungTVDefaultSources;
 			break;
+		case 'Philips TV':
+			defaultKeys = philipsTVDefaultKeys;
+			defaultSources = philipsTVDefaultSources
+			break;
+	
 		case 'Jellyfin':
 			defaultKeys = jellyfinTVDefaultKeys;
 			defaultSources = jellyfinDefaultSources;

@@ -9,3 +9,4 @@ export * from './roku';
 export * from './samsung_tv';
 export * from './unified_remote';
 export * from './webos';
+export * from './philips_tv'

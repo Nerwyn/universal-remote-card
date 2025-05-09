@@ -1,0 +1,45 @@
+export const KeyboardPlatforms = [
+    'Android TV',
+    'Sony BRAVIA',
+    'Fire TV',
+    'Roku',
+    'LG webOS',
+    'Kodi',
+    'Unified Remote',
+];
+export const Platforms = [
+    ...KeyboardPlatforms,
+    'Apple TV',
+    'Samsung TV',
+    'Jellyfin',
+    'Philips TV',
+];
+export const Actions = [
+    'more-info',
+    'toggle',
+    'navigate',
+    'url',
+    'perform-action',
+    'assist',
+    'key',
+    'source',
+    'keyboard',
+    'textbox',
+    'search',
+    'fire-dom-event',
+    'eval',
+    'repeat',
+    'none',
+];
+export const ActionTypes = [
+    'tap_action',
+    'hold_action',
+    'double_tap_action',
+    'multi_tap_action',
+    'multi_hold_action',
+    'multi_double_tap_action',
+    'momentary_start_action',
+    'momentary_end_action',
+    'drag_action',
+    'multi_drag_action',
+];

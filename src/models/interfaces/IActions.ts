@@ -13,6 +13,8 @@ export const Platforms = [
 	'Apple TV',
 	'Samsung TV',
 	'Jellyfin',
+	'Philips TV',
+
 ] as const;
 export type Platform = (typeof Platforms)[number];
 
