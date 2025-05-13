@@ -83,6 +83,12 @@ export const androidTVDefaultSources: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 'globoplay',
+		tap_action: { action: 'source', source: 'com.globo.globotv' },
+		icon: 'globoplay',
+	},
+	{
+		type: 'button',
 		name: 'hulu',
 		tap_action: { action: 'source', source: 'hulu://' }, // BROKEN
 		icon: 'mdi:hulu',
