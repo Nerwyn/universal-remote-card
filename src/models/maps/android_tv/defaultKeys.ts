@@ -503,6 +503,12 @@ export const androidTVDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 'source',
+		tap_action: { action: 'key', key: 'TV_INPUT' },
+		icon: 'mdi:import',
+	},
+	{
+		type: 'button',
 		name: 'tv',
 		tap_action: { action: 'key', key: 'TV' },
 		icon: 'mdi:television-box',
