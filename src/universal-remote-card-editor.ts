@@ -1839,7 +1839,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 	buildIconGuiEditor() {
 		return html`<div class="content">
 			${this.buildAlertBox(
-				'Icons must be resized to 24x24px to display correctly. Use a tool like https://yqnn.github.io/svg-path-editor/ to edit your SVG paths. If correctly sized the icon will perfectly fit in the preview ouline below.',
+				html`Icons must be resized to 24x24px to display correctly. Use
+					a tool like
+					<a
+						target="_blank"
+						href="https://yqnn.github.io/svg-path-editor/"
+						>this SVG path editor</a
+					>
+					to edit your icons. If correctly sized the icon will
+					perfectly fit in the preview ouline below.`,
 				'info',
 			)}
 			${this.buildSelector('Name', 'name', {
@@ -2289,7 +2297,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	buildAlertBox(
-		title = "Set the action below, and then use the code editor to set a data field to the feature's new value using a template like '{{ value | float }}'.",
+		title:
+			| string
+			| TemplateResult = "Set the action below, and then use the code editor to set a data field to the feature's new value using a template like '{{ value | float }}'.",
 		type: 'info' | 'warning' | 'error' | 'success' = 'info',
 	) {
 		return html`<ha-alert
