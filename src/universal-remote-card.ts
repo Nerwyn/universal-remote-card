@@ -65,7 +65,11 @@ class UniversalRemoteCard extends LitElement {
 	static getStubConfig() {
 		return {
 			type: 'custom:universal-remote-card',
-			rows: [],
+			rows: [
+				['back', 'power', 'home', 'menu'],
+				['touchpad', ['volume_buttons']],
+				['rewind', 'previous', 'play_pause', 'next', 'fast_forward'],
+			],
 		};
 	}
 
