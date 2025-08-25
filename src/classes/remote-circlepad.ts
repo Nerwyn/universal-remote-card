@@ -142,8 +142,8 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					max-width: 100%;
 					overflow: visible;
 
-					--size: min(48px, 12vw);
-					--center-button-relative-size: 48%;
+					--size: min(64px, 16vw);
+					--center-button-relative-size: 40%;
 					--icon-color: var(--dark-grey-color);
 				}
 
@@ -186,7 +186,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 				}
 
 				.direction {
-					width: 26%;
+					width: 25%;
 					aspect-ratio: 1 / 1;
 				}
 
