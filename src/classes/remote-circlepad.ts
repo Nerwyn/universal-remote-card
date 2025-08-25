@@ -17,9 +17,24 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		' ': 'center',
 	};
 
+	onPointerMove(e: PointerEvent) {
+		super.onPointerMove(e);
+		if (this.pressed && e.isPrimary) {
+			console.log(this.deltaX, this.deltaY);
+		}
+	}
+
 	render() {
 		return html`
-			<div class="circlepad" part="circlepad">
+			<div
+				class="circlepad"
+				part="circlepad"
+				@pointerdown=${this.onPointerDown}
+				@pointerup=${this.onPointerUp}
+				@pointermove=${this.onPointerMove}
+				@pointercancel=${this.onPointerCancel}
+				@pointerleave=${this.onPointerLeave}
+			>
 				<remote-button
 					class="direction"
 					id="up"
@@ -158,6 +173,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 						var(--primary-background-color)
 					);
 					outline: 3px solid var(--black-color);
+					pointer-events: all;
 				}
 				:host(:focus-visible) .circlepad {
 					box-shadow: 0 0 0 2px
