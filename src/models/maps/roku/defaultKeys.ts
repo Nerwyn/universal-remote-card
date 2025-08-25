@@ -200,15 +200,15 @@ export const rokuDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
-		name: 'forward',
-		tap_action: { action: 'key', key: 'forward' },
-		icon: 'mdi:fast-forward',
+		name: 'rewind',
+		tap_action: { action: 'key', key: 'reverse' },
+		icon: 'mdi:rewind',
 	},
 	{
 		type: 'button',
-		name: 'reverse',
-		tap_action: { action: 'key', key: 'reverse' },
-		icon: 'mdi:rewind',
+		name: 'fast_forward',
+		tap_action: { action: 'key', key: 'forward' },
+		icon: 'mdi:fast-forward',
 	},
 	{
 		type: 'button',

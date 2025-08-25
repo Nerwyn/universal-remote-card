@@ -251,15 +251,15 @@ export const fireTVDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
-		name: 'fast_forward',
-		tap_action: { action: 'key', key: 'FAST_FORWARD' },
-		icon: 'mdi:fast-forward',
-	},
-	{
-		type: 'button',
 		name: 'rewind',
 		tap_action: { action: 'key', key: 'REWIND' },
 		icon: 'mdi:rewind',
+	},
+	{
+		type: 'button',
+		name: 'fast_forward',
+		tap_action: { action: 'key', key: 'FAST_FORWARD' },
+		icon: 'mdi:fast-forward',
 	},
 	{
 		type: 'button',
