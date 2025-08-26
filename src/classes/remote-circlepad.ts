@@ -17,11 +17,91 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		' ': 'center',
 	};
 
+	previousAngle: number | undefined = undefined;
+
+	isInsideCenter() {
+		// Assumes center button is a circle
+		const x = this.currentX || 0;
+		const y = this.currentY || 0;
+
+		const rect = (
+			this.shadowRoot?.querySelector('#center') as HTMLElement
+		).getBoundingClientRect();
+		const x0 = rect.left + rect.width / 2;
+		const y0 = rect.top + rect.height / 2;
+		const r = rect.top + rect.height / 2 - rect.top;
+
+		if (Math.sqrt(Math.pow(x - x0, 2) + Math.pow(y - y0, 2)) <= r) {
+			this.endAction();
+			return true;
+		}
+		return false;
+	}
+
+	getCurrentAngle() {
+		const x = this.currentX || 0;
+		const y = this.currentY || 0;
+
+		const rect = (
+			this.shadowRoot?.querySelector('.circlepad') as HTMLElement
+		).getBoundingClientRect();
+		const x0 = rect.left + rect.width / 2;
+		const y0 = rect.top + rect.height / 2;
+
+		let angle =
+			Math.round((Math.atan2(x - y0, y - x0) * 180) / Math.PI) + 90;
+		if (angle < 0) {
+			angle += 360;
+		}
+		return angle;
+	}
+
+	onPointerDown(e: PointerEvent) {
+		super.onPointerDown(e);
+		if (this.isInsideCenter()) {
+			return;
+		}
+		this.previousAngle = this.getCurrentAngle();
+	}
+
+	onPointerUp(e: PointerEvent) {
+		super.onPointerUp(e);
+		this.endAction();
+	}
+
 	onPointerMove(e: PointerEvent) {
 		super.onPointerMove(e);
 		if (this.pressed && e.isPrimary) {
-			console.log(this.deltaX, this.deltaY);
+			if (this.isInsideCenter()) {
+				return;
+			}
+
+			if (this.previousAngle === undefined) {
+				this.previousAngle = this.getCurrentAngle();
+				return;
+			}
+
+			const angle = this.getCurrentAngle();
+			let diff = angle - this.previousAngle;
+			if (diff > 180) {
+				diff -= 360;
+			} else if (diff < -180) {
+				diff += 360;
+			}
+			if (Math.abs(diff) >= 20) {
+				this.fireHapticEvent('selection');
+				const direction = diff > 0 ? 'clockwise' : 'counterclockwise';
+
+				// TODO: only fire if drag action is defined, fire drag action, make direction available in templates
+				console.log(this.previousAngle, angle, diff, direction);
+				this.previousAngle = angle;
+			}
 		}
+	}
+
+	endAction() {
+		super.endAction();
+		this.previousAngle = undefined;
 	}
 
 	render() {
@@ -220,6 +300,11 @@ export class RemoteCirclepad extends BaseRemoteElement {
 
 				:host([dir='rtl']) .center-row {
 					flex-direction: row-reverse;
+				}
+
+				/* TODO only apply this style if drag action is enabled */
+				.circlepad {
+					touch-action: none;
 				}
 			`,
 		];
