@@ -48,9 +48,11 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		const x0 = rect.left + rect.width / 2;
 		const y0 = rect.top + rect.height / 2;
 
-		const angle =
+		let angle =
 			Math.round((Math.atan2(x - y0, y - x0) * 180) / Math.PI) + 90;
-
+		if (angle < 0) {
+			angle += 360;
+		}
 		return angle;
 	}
 
