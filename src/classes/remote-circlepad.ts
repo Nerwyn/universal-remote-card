@@ -48,12 +48,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		const x0 = rect.left + rect.width / 2;
 		const y0 = rect.top + rect.height / 2;
 
-		let angle =
-			Math.round((Math.atan2(x - y0, y - x0) * 180) / Math.PI) + 90;
-		if (angle < 0) {
-			angle += 360;
-		}
-		return angle;
+		return Math.round((Math.atan2(y - y0, x - x0) * 180) / Math.PI);
 	}
 
 	onPointerDown(e: PointerEvent) {
@@ -82,12 +77,14 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			}
 
 			const angle = this.getCurrentAngle();
+
 			let diff = angle - this.previousAngle;
 			if (diff > 180) {
 				diff -= 360;
 			} else if (diff < -180) {
 				diff += 360;
 			}
+
 			if (Math.abs(diff) >= 20) {
 				this.fireHapticEvent('selection');
 				const direction = diff > 0 ? 'clockwise' : 'counterclockwise';
