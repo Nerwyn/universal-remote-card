@@ -1612,7 +1612,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		}
 
 		return html`
-			${isChild ? '' : this.buildMainFeatureOptions(undefined)}
+			${isChild ? '' : this.buildMainFeatureOptions()}
 			${this.buildAppearancePanel(this.buildCommonAppearanceOptions())}
 			${this.buildInteractionsPanel(html`
 				${actionsTabBar}${actionSelectors}
@@ -1849,8 +1849,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 			this.DIRECTION_TABS,
 		);
 
-		return html`${directionTabBar}${this.buildButtonGuiEditor(
-			true,
+		return html`${directionTabBar}
+		${this.buildButtonGuiEditor(
+			this.directionTabIndex != 2,
 			this.directionTabIndex == 2,
 		)} `;
 	}
