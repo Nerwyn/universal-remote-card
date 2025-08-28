@@ -205,6 +205,7 @@ export class RemoteButton extends BaseRemoteElement {
 				@pointermove=${this.onPointerMove}
 				@pointercancel=${this.onPointerCancel}
 				@pointerleave=${this.onPointerLeave}
+				@lostpointercapture=${this.onPointerLeave}
 				@contextmenu=${this.onContextMenu}
 			>
 				${this.buildIcon(this.config.icon)}

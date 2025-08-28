@@ -18,6 +18,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 	};
 
 	previousAngle: number | undefined = undefined;
+	clockwise: boolean = true;
 
 	isInsideCenter() {
 		// Assumes center button is a circle
@@ -86,11 +87,9 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			}
 
 			if (Math.abs(diff) >= 20) {
+				this.clockwise = diff > 0;
 				this.fireHapticEvent('selection');
-				const direction = diff > 0 ? 'clockwise' : 'counterclockwise';
-
-				// TODO: only fire if drag action is defined, fire drag action, make direction available in templates
-				console.log(this.previousAngle, angle, diff, direction);
+				this.sendAction('drag_action');
 				this.previousAngle = angle;
 			}
 		}
@@ -99,6 +98,14 @@ export class RemoteCirclepad extends BaseRemoteElement {
 	endAction() {
 		super.endAction();
 		this.previousAngle = undefined;
+	}
+
+	renderTemplate(str: string, context?: object) {
+		context = {
+			...context,
+			clockwise: this.clockwise,
+		};
+		return super.renderTemplate(str, context);
 	}
 
 	render() {
@@ -111,6 +118,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 				@pointermove=${this.onPointerMove}
 				@pointercancel=${this.onPointerCancel}
 				@pointerleave=${this.onPointerLeave}
+				@lostpointercapture=${this.onPointerLeave}
 			>
 				<remote-button
 					class="direction"
@@ -195,6 +203,18 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		if (id) {
 			e.preventDefault();
 			e.stopImmediatePropagation();
+
+			if (
+				e.shiftKey &&
+				this.renderTemplate(
+					this.config.drag_action?.action ?? 'none',
+				) != 'none'
+			) {
+				this.clockwise = ['up', 'right'].includes(id);
+				this.sendAction('drag_action');
+				return;
+			}
+
 			const button = this.shadowRoot?.getElementById(id) as RemoteButton;
 			if (button) {
 				const direction = e.type == 'keydown' ? 'Down' : 'Up';
@@ -220,6 +240,19 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		for (const button of buttons) {
 			button.removeAttribute('tabindex');
 			button.onKey = async () => {};
+		}
+	}
+
+	updated() {
+		super.updated();
+
+		if (
+			this.renderTemplate(this.config.drag_action?.action ?? 'none') !=
+			'none'
+		) {
+			this.setAttribute('clickwheel', '');
+		} else {
+			this.removeAttribute('clickwheel');
 		}
 	}
 
@@ -253,7 +286,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					pointer-events: all;
 				}
 				:host(:focus-visible) .circlepad {
-					box-shadow: 0 0 0 2px
+					box-shadow: 0 0 0 6px
 						var(--icon-color, var(--primary-text-color));
 				}
 
@@ -299,8 +332,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					flex-direction: row-reverse;
 				}
 
-				/* TODO only apply this style if drag action is enabled */
-				.circlepad {
+				:host([clickwheel]) .circlepad {
 					touch-action: none;
 				}
 			`,

@@ -933,6 +933,7 @@ export class BaseRemoteElement extends LitElement {
 		if (e.pointerType == 'mouse' && this.initialX && this.initialY) {
 			this.onPointerCancel(e);
 		}
+		this.endRipple();
 	}
 
 	onContextMenu(e: PointerEvent) {
@@ -955,6 +956,10 @@ export class BaseRemoteElement extends LitElement {
 		e.preventDefault();
 
 		// Stuck ripple fix
+		this.endRipple();
+	}
+
+	endRipple() {
 		clearTimeout(this.rippleEndTimer);
 		const ripple = this.shadowRoot?.querySelector('md-ripple') as MdRipple;
 		this.rippleEndTimer = setTimeout(
