@@ -276,7 +276,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 
 					--size: min(64px, 16vw);
 					--center-button-relative-size: 40%;
-					--icon-color: var(--dark-grey-color);
+					--icon-color: var(--grey-color);
 				}
 
 				.circlepad {
