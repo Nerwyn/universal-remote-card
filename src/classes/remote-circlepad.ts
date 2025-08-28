@@ -67,7 +67,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 
 	onPointerMove(e: PointerEvent) {
 		super.onPointerMove(e);
-		if (this.pressed && e.isPrimary) {
+		if (this.pressed && e.isPrimary && this.hasAttribute('clickwheel')) {
 			if (this.isInsideCenter()) {
 				return;
 			}
@@ -213,12 +213,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 
-			if (
-				e.shiftKey &&
-				this.renderTemplate(
-					this.config.drag_action?.action ?? 'none',
-				) != 'none'
-			) {
+			if (e.shiftKey && this.hasAttribute('clickwheel')) {
 				if (e.type == 'keyup') {
 					this.clockwise = ['up', 'right'].includes(id);
 					this.sendAction('drag_action');
