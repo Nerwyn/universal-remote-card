@@ -1526,8 +1526,14 @@ export class UniversalRemoteCardEditor extends LitElement {
 		`;
 	}
 
-	buildButtonGuiEditor(isChild: boolean = false, keypress: boolean = true) {
+	buildButtonGuiEditor(
+		isChild: boolean = false,
+		clickwheel: boolean = false,
+	) {
 		this.ACTION_TABS = ['default', 'momentary'];
+		if (clickwheel) {
+			this.ACTION_TABS.push('clickwheel');
+		}
 		const actionsTabBar = this.buildTabBar(
 			this.actionsTabIndex,
 			this.handleActionsTabSelected,
@@ -1542,9 +1548,23 @@ export class UniversalRemoteCardEditor extends LitElement {
 			},
 		};
 		switch (this.actionsTabIndex) {
+			case 2:
+				if (clickwheel) {
+					actionSelectors = html`
+						${this.buildAlertBox(
+							"Use the 'clockwise' boolean variable in a template to change the clickwheel action.",
+						)}
+						${this.buildActionOption(
+							'Clickwheel (optional)',
+							'drag_action',
+							defaultUiActions,
+							true,
+						)}
+					`;
+					break;
+				}
 			case 1:
 				actionSelectors = html`
-					${actionsTabBar}
 					${this.buildAlertBox(
 						'Enabling momentary actions disables tap, double tap, and hold actions.',
 						'warning',
@@ -1568,7 +1588,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 			case 0:
 			default:
 				actionSelectors = html`
-					${actionsTabBar}
 					${this.buildActionOption(
 						'Tap behavior (optional)',
 						'tap_action',
@@ -1596,12 +1615,12 @@ export class UniversalRemoteCardEditor extends LitElement {
 			${isChild ? '' : this.buildMainFeatureOptions(undefined)}
 			${this.buildAppearancePanel(this.buildCommonAppearanceOptions())}
 			${this.buildInteractionsPanel(html`
-				${actionSelectors}
-				${keypress
-					? this.buildSelector('Keyboard Key', 'keypress', {
+				${actionsTabBar}${actionSelectors}
+				${isChild
+					? ''
+					: this.buildSelector('Keyboard Key', 'keypress', {
 							text: {},
-					  })
-					: ''}
+					  })}
 			`)}
 		`;
 	}
@@ -1830,10 +1849,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 			this.DIRECTION_TABS,
 		);
 
-		return html`
-			${directionTabBar}
-			${this.buildButtonGuiEditor(this.directionTabIndex != 2, false)}
-		`;
+		return html`${directionTabBar}${this.buildButtonGuiEditor(
+			true,
+			this.directionTabIndex == 2,
+		)} `;
 	}
 
 	buildIconGuiEditor() {
