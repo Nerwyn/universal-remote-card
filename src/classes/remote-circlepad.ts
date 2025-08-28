@@ -87,11 +87,21 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			}
 
 			if (Math.abs(diff) >= 20) {
+				this.cancelButtons();
 				this.clockwise = diff > 0;
 				this.fireHapticEvent('selection');
 				this.sendAction('drag_action');
 				this.previousAngle = angle;
 			}
+		}
+	}
+
+	cancelButtons() {
+		const buttons = (this.shadowRoot?.querySelectorAll('remote-button') ??
+			[]) as RemoteButton[];
+		for (const button of buttons) {
+			button.endAction();
+			button.endRipple();
 		}
 	}
 
@@ -118,7 +128,6 @@ export class RemoteCirclepad extends BaseRemoteElement {
 				@pointermove=${this.onPointerMove}
 				@pointercancel=${this.onPointerCancel}
 				@pointerleave=${this.onPointerLeave}
-				@lostpointercapture=${this.onPointerLeave}
 			>
 				<remote-button
 					class="direction"
@@ -210,8 +219,11 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					this.config.drag_action?.action ?? 'none',
 				) != 'none'
 			) {
-				this.clockwise = ['up', 'right'].includes(id);
-				this.sendAction('drag_action');
+				if (e.type == 'keyup') {
+					this.clockwise = ['up', 'right'].includes(id);
+					this.sendAction('drag_action');
+					this.cancelButtons();
+				}
 				return;
 			}
 

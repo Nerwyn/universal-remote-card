@@ -264,7 +264,6 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				@pointermove=${this.onPointerMove}
 				@pointercancel=${this.onPointerCancel}
 				@pointerleave=${this.onPointerLeave}
-				@lostpointercapture=${this.onPointerLeave}
 				@contextmenu=${this.onContextMenu}
 			>
 				<div class="toucharea-row" part="top-row">
