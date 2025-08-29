@@ -552,7 +552,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 		let context;
 		const entryType = entry.type;
 		switch (entryType) {
+			case 'slider':
+				this.actionsTabIndex = 0;
+				break;
 			case 'touchpad':
+			case 'circlepad':
 				if (this.directionTabIndex != 2) {
 					entry =
 						(entry[
@@ -598,18 +602,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 				} else {
 					this.actionsTabIndex = 0;
 				}
-				break;
-			case 'slider':
-				this.actionsTabIndex = 0;
-				break;
-			case 'circlepad':
-				if (this.directionTabIndex != 2) {
-					entry =
-						(entry[
-							this.DIRECTION_TABS[
-								this.directionTabIndex
-							] as DirectionAction
-						] as IElementConfig) ?? {};
+				if (entryType == 'touchpad') {
+					break;
 				}
 			// falls through
 			case 'button':
@@ -1111,6 +1105,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		actionType: ActionType,
 		selector: object,
 		buildCodeEditor: boolean = false,
+		showSamplingDelay: boolean = false,
 	) {
 		const context = this.getEntryContext(
 			(this.activeEntry as IElementConfig) ?? ({} as IElementConfig),
@@ -1195,7 +1190,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							  )
 							: ''}
 				  </div>`
-				: action != 'none' && actionType.includes('drag_action')
+				: action != 'none' && showSamplingDelay
 				? this.buildSelector(
 						'Sampling delay',
 						`${actionType}.repeat_delay`,
@@ -1527,11 +1522,12 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	buildButtonGuiEditor(
-		isChild: boolean = false,
-		clickwheel: boolean = false,
+		showMainOptions: boolean = true,
+		showClickwheel: boolean = false,
+		showKeyboardKey: boolean = true,
 	) {
 		this.ACTION_TABS = ['default', 'momentary'];
-		if (clickwheel) {
+		if (showClickwheel) {
 			this.ACTION_TABS.push('clickwheel');
 		}
 		const actionsTabBar = this.buildTabBar(
@@ -1549,7 +1545,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		};
 		switch (this.actionsTabIndex) {
 			case 2:
-				if (clickwheel) {
+				if (showClickwheel) {
 					actionSelectors = html`
 						${this.buildAlertBox(
 							"Use the 'clockwise' boolean variable in a template to change the clickwheel action.",
@@ -1558,7 +1554,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 							'Clickwheel (optional)',
 							'drag_action',
 							defaultUiActions,
-							true,
 						)}
 					`;
 					break;
@@ -1612,15 +1607,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 		}
 
 		return html`
-			${isChild ? '' : this.buildMainFeatureOptions()}
+			${showMainOptions ? this.buildMainFeatureOptions() : ''}
 			${this.buildAppearancePanel(this.buildCommonAppearanceOptions())}
 			${this.buildInteractionsPanel(html`
 				${actionsTabBar}${actionSelectors}
-				${isChild
-					? ''
-					: this.buildSelector('Keyboard Key', 'keypress', {
+				${showKeyboardKey
+					? this.buildSelector('Keyboard Key', 'keypress', {
 							text: {},
-					  })}
+					  })
+					: ''}
 			`)}
 		`;
 	}
@@ -1761,11 +1756,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 						'Drag behavior (optional)',
 						'drag_action',
 						defaultUiActions,
+						false,
+						true,
 					)}
 					${this.buildActionOption(
 						'Multi-touch drag behavior (optional)',
 						'multi_drag_action',
 						defaultUiActions,
+						false,
+						true,
 					)}
 				`;
 				break;
@@ -1851,8 +1850,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 		return html`${directionTabBar}
 		${this.buildButtonGuiEditor(
-			this.directionTabIndex != 2,
 			this.directionTabIndex == 2,
+			this.directionTabIndex == 2,
+			false,
 		)} `;
 	}
 
