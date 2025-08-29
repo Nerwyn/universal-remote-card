@@ -154,6 +154,51 @@ export const androidTVDefaultKeys: IElementConfig[] = [
 		},
 	},
 	{
+		type: 'circlepad',
+		name: 'clickwheel',
+		styles: '.circlepad {\n  outline: none;\n\n  --label-color: var(--icon-color);\n  --size: min(32px, 12vw);\n  --icon-offset: min(20px, 4vw);\n}\n#center::part(button) {\n  outline: none;\n}',
+		up: {
+			styles: '.label {\n  font-size: min(18px, 6vw);\n  translate: var(--icon-offset) calc(-1 * var(--icon-offset));\n}',
+			label: 'MENU',
+			tap_action: {
+				action: 'key',
+				key: 'MENU',
+			},
+		},
+		down: {
+			styles: '.icon {\n  translate: calc(-1 * var(--icon-offset)) var(--icon-offset);\n\n}',
+			icon: 'mdi:play-pause',
+			tap_action: {
+				action: 'key',
+				key: 'MEDIA_PLAY_PAUSE',
+			},
+		},
+		left: {
+			icon: 'mdi:skip-backward',
+			styles: '.icon {\n  translate: calc(-1 * var(--icon-offset)) calc(-1 * var(--icon-offset));\n}',
+			tap_action: {
+				action: 'key',
+				key: 'MEDIA_PREVIOUS',
+			},
+		},
+		right: {
+			icon: 'mdi:skip-forward',
+			styles: '.icon {\n  translate: var(--icon-offset) var(--icon-offset);\n}',
+			tap_action: {
+				action: 'key',
+				key: 'MEDIA_NEXT',
+			},
+		},
+		drag_action: {
+			action: 'key',
+			key: 'VOLUME_{{"UP" if clockwise else "DOWN"}}',
+		},
+		tap_action: {
+			action: 'key',
+			key: 'DPAD_CENTER',
+		},
+	},
+	{
 		type: 'touchpad',
 		name: 'touchpad',
 		tap_action: {

@@ -83,7 +83,7 @@ class UniversalRemoteCard extends LitElement {
 
 	setConfig(config: IConfig) {
 		if (!config) {
-			throw new Error('Invalid configuration');
+			throw Error('Invalid configuration');
 		}
 		this.config = config;
 	}

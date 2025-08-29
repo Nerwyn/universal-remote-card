@@ -136,7 +136,6 @@ export class BaseRemoteElement extends LitElement {
 
 		action &&= this.deepRenderTemplate(action);
 		if (!action || !(await this.handleConfirmation(action))) {
-			this.dispatchEvent(new Event('confirmation-failed'));
 			return;
 		}
 
@@ -262,8 +261,13 @@ export class BaseRemoteElement extends LitElement {
 			case 'Unified Remote':
 			case 'Generic Remote':
 			case 'Jellyfin':
-			case 'Kodi':
 			case 'Philips TV':
+				break;
+			case 'Kodi':
+				this.hass.callService('kodi', 'call_method', {
+					method: 'Addons.ExecuteAddon',
+					addonid: action.source,
+				});
 				break;
 			case 'Fire TV':
 			case 'Roku':
@@ -910,8 +914,9 @@ export class BaseRemoteElement extends LitElement {
 		}
 	}
 
-	onPointerUp(_e: PointerEvent) {
+	onPointerUp(e: PointerEvent) {
 		this.pressed = false;
+		this.dispatchEvent(new PointerEvent('pointerup', e));
 	}
 
 	onPointerMove(e: PointerEvent) {
