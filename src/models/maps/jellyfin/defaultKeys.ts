@@ -140,6 +140,51 @@ export const jellyfinTVDefaultKeys: IElementConfig[] = [
 		},
 	},
 	{
+		type: 'circlepad',
+		name: 'clickwheel',
+		styles: '.circlepad {\n  outline: none;\n\n  --label-color: var(--icon-color);\n  --size: min(32px, 12vw);\n  --icon-offset: min(20px, 4vw);\n}\n#center::part(button) {\n  outline: none;\n}',
+		up: {
+			styles: '.label {\n  font-size: min(18px, 6vw);\n  translate: var(--icon-offset) calc(-1 * var(--icon-offset));\n}',
+			label: 'MENU',
+			tap_action: {
+				action: 'key',
+				key: 'ToggleContextMenu',
+			},
+		},
+		down: {
+			styles: '.icon {\n  translate: calc(-1 * var(--icon-offset)) var(--icon-offset);\n\n}',
+			icon: 'mdi:play-pause',
+			tap_action: {
+				action: 'perform-action',
+				perform_action: 'media_player.media_play_pause',
+			},
+		},
+		left: {
+			icon: 'mdi:skip-backward',
+			styles: '.icon {\n  translate: calc(-1 * var(--icon-offset)) calc(-1 * var(--icon-offset));\n}',
+			tap_action: {
+				action: 'perform-action',
+				perform_action: 'media_player.media_previous_track',
+			},
+		},
+		right: {
+			icon: 'mdi:skip-forward',
+			styles: '.icon {\n  translate: var(--icon-offset) var(--icon-offset);\n}',
+			tap_action: {
+				action: 'key',
+				key: 'PlayNext',
+			},
+		},
+		drag_action: {
+			action: 'key',
+			key: 'Volume{{"Up" if clockwise else "Down"}}',
+		},
+		tap_action: {
+			action: 'key',
+			key: 'Select',
+		},
+	},
+	{
 		type: 'touchpad',
 		name: 'touchpad',
 		tap_action: {
@@ -212,6 +257,15 @@ export const jellyfinTVDefaultKeys: IElementConfig[] = [
 			perform_action: 'media_player.media_pause',
 		},
 		icon: 'mdi:pause',
+	},
+	{
+		type: 'button',
+		name: 'previous',
+		tap_action: {
+			action: 'perform-action',
+			perform_action: 'media_player.media_previous_track',
+		},
+		icon: 'mdi:skip-previous',
 	},
 	{
 		type: 'button',
