@@ -218,7 +218,7 @@ export const unfoldedCircleDefaultKeys: IElementConfig[] = [
 		name: 'play_pause',
 		tap_action: { action: 'key', key: 'PAUSE' },
 		hold_action: { action: 'key', key: 'PLAY' },
-		icon: 'mdi:play',
+		icon: 'mdi:play-pause',
 	},
 	{
 		type: 'button',
