@@ -30,6 +30,7 @@ A super customizable universal remote card iterating on the work of several othe
   - Samsung TV
   - Philips TV
   - Jellyfin
+  - Unfolded Circle
   - Generic Remote
 - Support for multiple buttons, circlepads, touchpads, and sliders using default or user defined actions.
 - Complete [Home Assistant actions](https://www.home-assistant.io/dashboards/actions/) support.
@@ -70,6 +71,7 @@ This card supports several media platforms with default key and source lists. Di
 | [Samsung TV](https://www.home-assistant.io/integrations/samsungtv/)        | Default keys                                | Default sources (requires the [SamsungTV Smart Component custom integration](https://github.com/ollo69/ha-samsungtv-smart)) and slider | NA                                                                                                          | NA                              |
 | [Philips TV](https://www.home-assistant.io/integrations/philips_js/)       | Default keys                                | Play/pause and slider                                                                                                                  | NA                                                                                                          | NA                              |
 | [Jellyfin](https://www.home-assistant.io/integrations/jellyfin/)           | Default keys                                | Play/pause and slider                                                                                                                  | NA                                                                                                          | NA                              |
+| [Unfolded Circle](https://github.com/JackJPowell/hass-unfoldedcircle)      | Default keys                                | NA                                                                                                                                     | NA                                                                                                          | NA                              |
 | Generic Remote                                                             | Default keys and sources                    | NA                                                                                                                                     | NA                                                                                                          | Device name to include in calls |
 
 ### Sony BRAVIA - Different APIs on Different Models
@@ -89,6 +91,10 @@ The Home Assistant Samsung TV integration does not allow you to change sources. 
 ### Unified Remote - Custom Integration
 
 Unified Remote relies entirely on [a custom integration](https://github.com/DaviPtrs/hass-unified-remote), which is used to control a [Unified Remote server](https://www.unifiedremote.com/) on your PC. This custom integration does not create any entities, but does provide us with the action `unified_remote.call` which can be used to call any Unified Remote API. It requires that you install the integration and optionally setup your computer hosts [as described here in its README](https://github.com/DaviPtrs/hass-unified-remote?tab=readme-ov-file#home-assistant). You can then use the host name or IP address in the remote/device name field in the configuration UI.
+
+### Unfolded Circle - Custom Integration
+
+Unfolded Circle relies entirely on [a custom integration](https://github.com/JackJPowell/hass-unfoldedcircle), which is used to control an [Unfolded Circle Remote Two/3](https://www.unfoldedcircle.com/). This custom integration creates a remote entity which can be provided to this card, which is then used to call its `unfoldedcircle.send_button_command` action.
 
 ### Generic Remote - Shorthand for IR/RF Commands
 

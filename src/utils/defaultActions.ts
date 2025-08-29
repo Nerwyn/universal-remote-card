@@ -17,6 +17,7 @@ import {
 	rokuDefaultSources,
 	samsungTVDefaultKeys,
 	samsungTVDefaultSources,
+	unfoldedCircleDefaultKeys,
 	unifiedRemoteDefaultKeys,
 	webosDefaultKeys,
 	webosDefaultSources,
@@ -63,6 +64,10 @@ export function getDefaultActions(platform: Platform) {
 					}
 				}
 			}
+			break;
+		case 'Unfolded Circle':
+			defaultKeys = unfoldedCircleDefaultKeys;
+			defaultSources = [];
 			break;
 		case 'Unified Remote':
 			defaultKeys = unifiedRemoteDefaultKeys;

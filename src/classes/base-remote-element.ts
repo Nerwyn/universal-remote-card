@@ -214,6 +214,12 @@ export class BaseRemoteElement extends LitElement {
 		switch (action.platform) {
 			case 'Unified Remote':
 				break;
+			case 'Unfolded Circle':
+				this.hass.callService('unfoldedcircle', 'send_button_command', {
+					entity_id: action.remote_id,
+					button: action.key,
+				});
+				break;
 			case 'Kodi':
 				this.hass.callService('kodi', 'call_method', {
 					entity_id: action.media_player_id,
@@ -259,6 +265,7 @@ export class BaseRemoteElement extends LitElement {
 	source(action: IAction) {
 		switch (action.platform) {
 			case 'Unified Remote':
+			case 'Unfolded Circle':
 			case 'Generic Remote':
 			case 'Jellyfin':
 			case 'Philips TV':

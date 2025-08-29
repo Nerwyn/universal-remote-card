@@ -14,6 +14,7 @@ export const Platforms = [
 	'Samsung TV',
 	'Philips TV',
 	'Jellyfin',
+	'Unfolded Circle',
 	'Generic Remote',
 ] as const;
 export type Platform = (typeof Platforms)[number];
@@ -35,6 +36,7 @@ export const RemotePlatforms: Platform[] = [
 	'Samsung TV',
 	'Philips TV',
 	'Jellyfin',
+	'Unfolded Circle',
 	'Generic Remote',
 ];
 export const MediaPlayerPlatforms: Platform[] = [

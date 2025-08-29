@@ -9,5 +9,6 @@ export * from './kodi';
 export * from './philips_tv';
 export * from './roku';
 export * from './samsung_tv';
+export * from './unfolded_circle';
 export * from './unified_remote';
 export * from './webos';
