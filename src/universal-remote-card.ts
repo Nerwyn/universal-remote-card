@@ -1,11 +1,11 @@
 import packageInfo from '../package.json';
 
-import { LitElement, TemplateResult, css, html } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, css, html } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { hasTemplate, renderTemplate } from 'ha-nunjucks';
 import { load } from 'js-yaml';
-import { HomeAssistant } from './models/interfaces';
+import { HomeAssistant, Row } from './models/interfaces';
 
 import {
 	ActionTypes,
@@ -49,6 +49,9 @@ class UniversalRemoteCard extends LitElement {
 	PLATFORM?: Platform;
 	DEFAULT_KEYS: IElementConfig[] = [];
 	DEFAULT_SOURCES: IElementConfig[] = [];
+
+	layout: Row[] = [];
+	styles: string = '';
 
 	nRows: number = 0;
 	nColumns: number = 0;
@@ -472,23 +475,35 @@ class UniversalRemoteCard extends LitElement {
 		]);
 	}
 
-	buildElements(
-		row: (string | string[])[],
-		isColumn: boolean = false,
-		context: object = {},
-	) {
+	buildLayout(row: Row, context: object = {}): Row {
+		const layout: Row = [];
 		if (typeof row == 'string') {
 			row = [row];
 		}
-		const rowContent: TemplateResult[] = [];
 		for (let elementName of row) {
 			elementName = this.renderTemplate(
 				elementName as string,
 				context,
 			) as string;
+
 			if (typeof elementName == 'string' && elementName.includes('- ')) {
-				elementName = load(elementName) as string;
+				elementName = [load(elementName) as string];
 			}
+			if (typeof elementName == 'object' && elementName != null) {
+				layout.push(this.buildLayout(elementName, context));
+			} else {
+				layout.push(elementName);
+			}
+		}
+		return layout;
+	}
+
+	buildElements(row: Row, isColumn: boolean = false, context: object = {}) {
+		if (typeof row == 'string') {
+			row = [row];
+		}
+		const rowContent: TemplateResult[] = [];
+		for (let elementName of row) {
 			if (typeof elementName == 'object' && elementName != null) {
 				rowContent.push(
 					this.buildElements(elementName, !isColumn, context),
@@ -606,15 +621,6 @@ class UniversalRemoteCard extends LitElement {
 		return html`<remote-dialog .hass=${this.hass}></remote-dialog>`;
 	}
 
-	buildStyles(styles?: string, context?: object) {
-		const rendered = this.renderTemplate(
-			styles as string,
-			context,
-		) as string;
-
-		return buildStyles(rendered);
-	}
-
 	fetchCustomActionsFromFile(filename?: string) {
 		if (!this.customActionsFromFile && filename) {
 			filename = `${filename.startsWith('/') ? '' : '/'}${filename}`;
@@ -692,7 +698,7 @@ class UniversalRemoteCard extends LitElement {
 		this.nRows = 0;
 		this.nColumns = 0;
 		this.nPads = 0;
-		for (const row of this.config.rows ?? []) {
+		for (const row of this.layout ?? []) {
 			const rowContent = this.buildElements(
 				row as string[],
 				false,
@@ -710,11 +716,9 @@ class UniversalRemoteCard extends LitElement {
 				this.config.title as string,
 				context,
 			)}"
-			>${content}${this.buildDialog()}${this.buildStyles(
-				this.config.styles,
-				context,
-			)}</ha-card
-		>`;
+		>
+			${content}${this.buildDialog()}${buildStyles(this.styles)}
+		</ha-card>`;
 	}
 
 	showDialog(e: Event) {
@@ -722,6 +726,64 @@ class UniversalRemoteCard extends LitElement {
 			'remote-dialog',
 		) as RemoteDialog;
 		dialog.showDialog(e.detail);
+	}
+
+	shouldUpdate(changedProperties: PropertyValues) {
+		if (changedProperties.has('hass')) {
+			const context = {
+				config: {
+					...this.config,
+					entity: this.renderTemplate(
+						this.config.remote_id ??
+							this.config.media_player_id ??
+							this.config.keyboard_id ??
+							'',
+					),
+					attribute: 'state',
+				},
+			};
+
+			const layout = this.buildLayout(
+				(this.config.rows as Row) ?? [],
+				context,
+			);
+
+			const styles = this.renderTemplate(
+				this.config.styles as string,
+				context,
+			);
+
+			if (
+				JSON.stringify(this.layout) != JSON.stringify(layout) ||
+				this.styles != styles
+			) {
+				this.layout = layout as Row[];
+				this.styles = styles as string;
+				return true;
+			}
+		}
+
+		if (changedProperties.has('config')) {
+			return (
+				JSON.stringify(this.config) !=
+				JSON.stringify(changedProperties.get('config'))
+			);
+		}
+
+		if (changedProperties.size == 0) {
+			// Explicitly request update
+			return true;
+		}
+
+		// Update child hass objects if not updating
+		const children = (this.shadowRoot?.querySelectorAll(
+			'remote-button, remote-slider, remote-circlepad, remote-touchpad',
+		) ?? []) as BaseRemoteElement[];
+		for (const child of children) {
+			child.hass = this.hass;
+		}
+
+		return false;
 	}
 
 	firstUpdated() {

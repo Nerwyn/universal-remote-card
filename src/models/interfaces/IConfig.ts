@@ -1,6 +1,6 @@
 import { IElementConfig, Platform } from '.';
 
-export type Row = (string | Row[])[];
+export type Row = string | Row[];
 
 export interface IIconConfig {
 	name: string;

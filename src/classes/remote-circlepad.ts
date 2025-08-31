@@ -1,4 +1,4 @@
-import { CSSResult, css, html } from 'lit';
+import { CSSResult, PropertyValues, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ICirclepadConfig } from '../models/interfaces';
 import { buildStyles } from '../utils/styles';
@@ -239,6 +239,22 @@ export class RemoteCirclepad extends BaseRemoteElement {
 				);
 			}
 		}
+	}
+
+	shouldUpdate(changedProperties: PropertyValues) {
+		const should = super.shouldUpdate(changedProperties);
+		if (should) {
+			return true;
+		}
+
+		// Update child hass objects if not updating
+		const children = (this.shadowRoot?.querySelectorAll('remote-button') ??
+			[]) as BaseRemoteElement[];
+		for (const child of children) {
+			child.hass = this.hass;
+		}
+
+		return false;
 	}
 
 	firstUpdated() {

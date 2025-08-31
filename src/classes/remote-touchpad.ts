@@ -1,4 +1,4 @@
-import { CSSResult, css, html } from 'lit';
+import { CSSResult, PropertyValues, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import {
@@ -311,6 +311,23 @@ export class RemoteTouchpad extends BaseRemoteElement {
 			</toucharea>
 			${buildStyles(this.styles)}
 		`;
+	}
+
+	shouldUpdate(changedProperties: PropertyValues) {
+		const should = super.shouldUpdate(changedProperties);
+		if (should) {
+			return true;
+		}
+
+		// Update child hass objects if not updating
+		const children = (this.shadowRoot?.querySelectorAll(
+			'remote-icon-label',
+		) ?? []) as BaseRemoteElement[];
+		for (const child of children) {
+			child.hass = this.hass;
+		}
+
+		return false;
 	}
 
 	firstUpdated() {

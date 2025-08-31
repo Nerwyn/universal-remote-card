@@ -993,33 +993,44 @@ export class BaseRemoteElement extends LitElement {
 		}
 	}
 
-	shouldUpdate(changedProperties: PropertyValues): boolean {
-		const oldValue = changedProperties.get('value') || this.value;
-		const oldIcon = this.icon;
-		const oldLabel = this.label;
-		const oldStyles = this.styles;
-
+	shouldUpdate(changedProperties: PropertyValues) {
 		if (changedProperties.has('hass') || changedProperties.has('value')) {
+			const value = changedProperties.get('value') || this.value;
 			this.setValue();
 
-			this.icon = this.renderTemplate(
+			const icon = this.renderTemplate(
 				this.config.icon as string,
 			) as string;
 
-			this.label = this.renderTemplate(
+			const label = this.renderTemplate(
 				this.config.label as string,
 			) as string;
 
-			this.styles = this.renderTemplate(
+			const styles = this.renderTemplate(
 				this.config.styles as string,
 			) as string;
+
+			if (
+				value != this.value ||
+				icon != this.icon ||
+				label != this.label ||
+				styles != this.styles
+			) {
+				this.icon = icon;
+				this.label = label;
+				this.styles = styles;
+				return true;
+			}
+		}
+
+		if (changedProperties.has('config')) {
+			return (
+				JSON.stringify(this.config) !=
+				JSON.stringify(changedProperties.get('config'))
+			);
 		}
 
 		return (
-			this.value != oldValue ||
-			this.icon != oldIcon ||
-			this.label != oldLabel ||
-			this.styles != oldStyles ||
 			changedProperties.size == 0 || // Explicitly request update
 			changedProperties.has('value') ||
 			changedProperties.has('pressed')

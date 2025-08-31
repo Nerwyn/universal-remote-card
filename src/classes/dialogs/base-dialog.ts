@@ -1,4 +1,4 @@
-import { css, CSSResult, html, LitElement } from 'lit';
+import { css, CSSResult, html, LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 import { HomeAssistant } from '../../models/interfaces';
 
@@ -11,6 +11,10 @@ export class BaseDialog extends LitElement {
 			<button @click=${this.open ? handler : undefined}></button>
 			<span>${text}</span>
 		</div>`;
+	}
+
+	shouldUpdate(changedProperties: PropertyValues) {
+		return changedProperties.has('open');
 	}
 
 	static get styles(): CSSResult | CSSResult[] {
