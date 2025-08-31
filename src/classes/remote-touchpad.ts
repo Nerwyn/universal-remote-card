@@ -15,6 +15,7 @@ import {
 	NAVIGATION_KEYS,
 	REPEAT_DELAY,
 } from '../models/constants';
+import { buildStyles } from '../utils/styles';
 import { BaseRemoteElement } from './base-remote-element';
 
 @customElement('remote-touchpad')
@@ -254,7 +255,6 @@ export class RemoteTouchpad extends BaseRemoteElement {
 	}
 
 	render() {
-		this.setValue();
 		return html`
 			<toucharea
 				part="toucharea"
@@ -309,8 +309,18 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				</div>
 				${this.buildRipple()}
 			</toucharea>
-			${this.buildStyles(this.config.styles)}
+			${buildStyles(this.styles)}
 		`;
+	}
+
+	firstUpdated() {
+		super.firstUpdated();
+		this.removeAttribute('tabindex');
+		const children =
+			this.shadowRoot?.querySelectorAll('remote-icon-label') ?? [];
+		for (const child of children) {
+			child.removeAttribute('tabindex');
+		}
 	}
 
 	async onKey(e: KeyboardEvent) {
@@ -365,16 +375,6 @@ export class RemoteTouchpad extends BaseRemoteElement {
 					}
 				}
 			}
-		}
-	}
-
-	firstUpdated() {
-		super.firstUpdated();
-		this.removeAttribute('tabindex');
-		const children =
-			this.shadowRoot?.querySelectorAll('remote-icon-label') ?? [];
-		for (const child of children) {
-			child.removeAttribute('tabindex');
 		}
 	}
 
@@ -434,11 +434,9 @@ export class RemoteTouchpad extends BaseRemoteElement {
 @customElement('remote-icon-label')
 export class IconLabelContainer extends BaseRemoteElement {
 	render() {
-		this.setValue();
 		return html`
-			${this.buildIcon(this.config.icon)}${this.buildLabel(
-				this.config.label,
-			)}${this.buildStyles(this.config.styles)}
+			${this.buildIcon(this.icon)}${this.buildLabel(this.label)}
+			${buildStyles(this.styles)}
 		`;
 	}
 }

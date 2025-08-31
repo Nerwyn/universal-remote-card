@@ -7,6 +7,7 @@ import {
 	REPEAT_DELAY,
 } from '../models/constants';
 import { IButtonConfig } from '../models/interfaces';
+import { buildStyles } from '../utils/styles';
 import { BaseRemoteElement } from './base-remote-element';
 
 @customElement('remote-button')
@@ -189,8 +190,6 @@ export class RemoteButton extends BaseRemoteElement {
 	}
 
 	render() {
-		this.setValue();
-
 		const key = this.renderTemplate(this.config.keypress ?? '');
 		if (key) {
 			this.setAttribute('key', key as string);
@@ -207,10 +206,10 @@ export class RemoteButton extends BaseRemoteElement {
 				@pointerleave=${this.onPointerLeave}
 				@contextmenu=${this.onContextMenu}
 			>
-				${this.buildIcon(this.config.icon)}
-				${this.buildLabel(this.config.label)}${this.buildRipple()}
+				${this.buildIcon(this.icon)}
+				${this.buildLabel(this.label)}${this.buildRipple()}
 			</button>
-			${this.buildStyles(this.config.styles)}
+			${buildStyles(this.styles)}
 		`;
 	}
 

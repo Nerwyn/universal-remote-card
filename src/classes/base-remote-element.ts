@@ -1,4 +1,4 @@
-import { CSSResult, LitElement, css, html } from 'lit';
+import { CSSResult, LitElement, PropertyValues, css, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { hasTemplate, renderTemplate } from 'ha-nunjucks';
@@ -22,7 +22,6 @@ import {
 import { MdRipple } from '../models/interfaces/MdRipple';
 import { defaultIcons } from '../models/maps';
 import { deepGet, deepSet, getDeepKeys } from '../utils';
-import { buildStyles } from '../utils/styles';
 
 export class BaseRemoteElement extends LitElement {
 	@property() hass!: HomeAssistant;
@@ -37,6 +36,10 @@ export class BaseRemoteElement extends LitElement {
 	getValueFromHass: boolean = true;
 	getValueFromHassTimer?: ReturnType<typeof setTimeout>;
 	valueUpdateInterval?: ReturnType<typeof setInterval>;
+
+	icon: string = '';
+	label: string = '';
+	styles: string = '';
 
 	unitOfMeasurement: string = '';
 	precision?: number;
@@ -864,8 +867,7 @@ export class BaseRemoteElement extends LitElement {
 		}, valueFromHassDelay);
 	}
 
-	buildIcon(icon?: string, context?: object) {
-		icon = this.renderTemplate(icon ?? '', context) as string;
+	buildIcon(icon?: string) {
 		let iconElement = html``;
 		if (icon) {
 			if (icon.includes(':')) {
@@ -888,24 +890,14 @@ export class BaseRemoteElement extends LitElement {
 		return html`<div class="icon" part="icon">${iconElement}</div>`;
 	}
 
-	buildLabel(label?: string, context?: object) {
-		const rendered = this.renderTemplate(label as string, context);
-		return rendered
-			? html`<pre class="label" part="label">${rendered}</pre>`
+	buildLabel(label?: string) {
+		return label
+			? html`<pre class="label" part="label">${label}</pre>`
 			: '';
 	}
 
 	buildRipple() {
 		return html`<md-ripple part="ripple"></md-ripple>`;
-	}
-
-	buildStyles(styles?: string, context?: object) {
-		const rendered = this.renderTemplate(
-			styles as string,
-			context,
-		) as string;
-
-		return buildStyles(rendered);
 	}
 
 	onPointerDown(e: PointerEvent) {
@@ -999,6 +991,39 @@ export class BaseRemoteElement extends LitElement {
 				);
 			}
 		}
+	}
+
+	shouldUpdate(changedProperties: PropertyValues): boolean {
+		const oldValue = changedProperties.get('value') || this.value;
+		const oldIcon = this.icon;
+		const oldLabel = this.label;
+		const oldStyles = this.styles;
+
+		if (changedProperties.has('hass') || changedProperties.has('value')) {
+			this.setValue();
+
+			this.icon = this.renderTemplate(
+				this.config.icon as string,
+			) as string;
+
+			this.label = this.renderTemplate(
+				this.config.label as string,
+			) as string;
+
+			this.styles = this.renderTemplate(
+				this.config.styles as string,
+			) as string;
+		}
+
+		return (
+			this.value != oldValue ||
+			this.icon != oldIcon ||
+			this.label != oldLabel ||
+			this.styles != oldStyles ||
+			changedProperties.size == 0 || // Explicitly request update
+			changedProperties.has('value') ||
+			changedProperties.has('pressed')
+		);
 	}
 
 	firstUpdated() {

@@ -1,4 +1,4 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, PropertyValues, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { HomeAssistant, IAction, KeyboardPlatform } from '../models/interfaces';
 
@@ -128,6 +128,14 @@ export class RemoteDialog extends LitElement {
 		>
 			${content}
 		</dialog>`;
+	}
+
+	shouldUpdate(changedProperties: PropertyValues): boolean {
+		return (
+			changedProperties.has('config') ||
+			changedProperties.has('open') ||
+			changedProperties.has('fadedIn')
+		);
 	}
 
 	static get styles() {

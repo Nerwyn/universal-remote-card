@@ -1,6 +1,7 @@
 import { CSSResult, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ICirclepadConfig } from '../models/interfaces';
+import { buildStyles } from '../utils/styles';
 import { BaseRemoteElement } from './base-remote-element';
 import './remote-button';
 import { RemoteButton } from './remote-button';
@@ -203,7 +204,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					.icons=${this.icons}
 				></remote-button>
 			</div>
-			${this.buildStyles(this.config.styles)}
+			${buildStyles(this.styles)}
 		`;
 	}
 
