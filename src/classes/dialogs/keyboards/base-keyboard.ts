@@ -195,6 +195,7 @@ export class BaseKeyboard extends BaseDialog {
 	shouldUpdate(changedProperties: PropertyValues) {
 		return (
 			super.shouldUpdate(changedProperties) ||
+			changedProperties.has('enabled') ||
 			(changedProperties.has('action') &&
 				JSON.stringify(changedProperties.get('action')) !=
 					JSON.stringify(this.action))
