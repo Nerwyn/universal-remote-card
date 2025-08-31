@@ -14,20 +14,23 @@ export class RemoteSlider extends BaseRemoteElement {
 	@state() thumbOffset: number = 0;
 	@state() sliderOn: boolean = true;
 
+	vertical: boolean = false;
+	@state() height: number = this.vertical
+		? this.clientWidth
+		: this.clientHeight;
+	@state() width: number = this.vertical
+		? this.clientHeight
+		: this.clientWidth;
+	resizeObserver: ResizeObserver = new ResizeObserver(() => {
+		this.height = this.vertical ? this.clientWidth : this.clientHeight;
+		this.style.setProperty('--feature-height', `${this.height}px`);
+
+		this.width = this.vertical ? this.clientHeight : this.clientWidth;
+		this.style.setProperty('--feature-width', `${this.width}px`);
+	});
+
 	range: [number, number] = [RANGE_MIN, RANGE_MAX];
 	step: number = STEP;
-
-	vertical: boolean = false;
-	resizeObserver: ResizeObserver = new ResizeObserver(() => {
-		this.style.setProperty(
-			'--feature-height',
-			`${this.vertical ? this.clientWidth : this.clientHeight}px`,
-		);
-		this.style.setProperty(
-			'--feature-width',
-			`${this.vertical ? this.clientHeight : this.clientWidth}px`,
-		);
-	});
 
 	pressedTimeout?: ReturnType<typeof setTimeout>;
 
@@ -121,15 +124,15 @@ export class RemoteSlider extends BaseRemoteElement {
 	}
 
 	setThumbOffset() {
-		const width = this.vertical ? this.clientHeight : this.clientWidth;
 		const thumbWidth =
 			this.shadowRoot?.querySelector('.thumb')?.clientWidth ?? 48;
-		const maxOffset = (width - thumbWidth) / 2;
+		const maxOffset = (this.width - thumbWidth) / 2;
 
 		this.thumbOffset = Math.min(
 			Math.max(
 				Math.round(
-					((width - thumbWidth) / (this.range[1] - this.range[0])) *
+					((this.width - thumbWidth) /
+						(this.range[1] - this.range[0])) *
 						((this.value as number) -
 							(this.range[0] + this.range[1]) / 2),
 				),
@@ -251,7 +254,9 @@ export class RemoteSlider extends BaseRemoteElement {
 		return (
 			super.shouldUpdate(changedProperties) ||
 			changedProperties.has('thumbOffset') ||
-			changedProperties.has('sliderOn')
+			changedProperties.has('sliderOn') ||
+			changedProperties.has('height') ||
+			changedProperties.has('width')
 		);
 	}
 
