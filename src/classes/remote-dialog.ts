@@ -111,18 +111,8 @@ export class RemoteDialog extends LitElement {
 			}
 		}
 
-		if (this.open) {
-			this.setAttribute('open', '');
-			this.removeAttribute('closed');
-		} else {
-			this.setAttribute('closed', '');
-			this.removeAttribute('open');
-		}
-
 		return html`<dialog
-			class="${this.open ? 'open' : 'closed'} ${this.fadedIn
-				? 'faded-in'
-				: 'faded-out'}"
+			class="${this.fadedIn ? 'faded-in' : 'faded-out'}"
 			@dialog-close=${this.closeDialog}
 			@cancel=${this.closeDialog}
 		>
@@ -136,6 +126,16 @@ export class RemoteDialog extends LitElement {
 			changedProperties.has('open') ||
 			changedProperties.has('fadedIn')
 		);
+	}
+
+	updated() {
+		if (this.open) {
+			this.setAttribute('open', '');
+			this.removeAttribute('closed');
+		} else {
+			this.setAttribute('closed', '');
+			this.removeAttribute('open');
+		}
 	}
 
 	static get styles() {
@@ -204,7 +204,7 @@ export class RemoteDialog extends LitElement {
 					scale 0.5s cubic-bezier(0.2, 0, 0, 1),
 					opacity 0.05s linear;
 			}
-			dialog.closed {
+			dialog:not([open]) {
 				translate: 0 -100px;
 				scale: 1 0;
 				opacity: 0;

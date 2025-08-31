@@ -600,11 +600,6 @@ export class BaseRemoteElement extends LitElement {
 			this.config.entity_id as string,
 		) as string;
 
-		this.unitOfMeasurement =
-			(this.renderTemplate(
-				this.config.unit_of_measurement as string,
-			) as string) ?? '';
-
 		if (this.getValueFromHass && this.entityId) {
 			clearInterval(this.valueUpdateInterval);
 			this.valueUpdateInterval = undefined;
@@ -998,6 +993,11 @@ export class BaseRemoteElement extends LitElement {
 			const value = changedProperties.get('value') || this.value;
 			this.setValue();
 
+			const unitOfMeasurement =
+				(this.renderTemplate(
+					this.config.unit_of_measurement as string,
+				) as string) ?? '';
+
 			const icon = this.renderTemplate(
 				this.config.icon as string,
 			) as string;
@@ -1012,10 +1012,12 @@ export class BaseRemoteElement extends LitElement {
 
 			if (
 				value != this.value ||
+				unitOfMeasurement != this.unitOfMeasurement ||
 				icon != this.icon ||
 				label != this.label ||
 				styles != this.styles
 			) {
+				this.unitOfMeasurement = unitOfMeasurement;
 				this.icon = icon;
 				this.label = label;
 				this.styles = styles;

@@ -194,47 +194,6 @@ export class RemoteSlider extends BaseRemoteElement {
 	}
 
 	render() {
-		if (this.config.range) {
-			this.range[0] = parseFloat(
-				(this.renderTemplate(
-					this.config.range[0] as unknown as string,
-				) as string) ?? RANGE_MIN,
-			);
-			this.range[1] = parseFloat(
-				(this.renderTemplate(
-					this.config.range[1] as unknown as string,
-				) as string) ?? RANGE_MAX,
-			);
-		}
-
-		if (this.config.step) {
-			this.step = Number(this.renderTemplate(this.config.step));
-		} else {
-			this.step = (this.range[1] - this.range[0]) / STEP_COUNT;
-		}
-		const splitStep = this.step.toString().split('.');
-		if (splitStep.length > 1) {
-			this.precision = splitStep[1].length;
-		} else {
-			this.precision = 0;
-		}
-
-		this.vertical =
-			this.renderTemplate(this.config.vertical ?? false) == true;
-		if (this.vertical) {
-			this.setAttribute('vertical', '');
-		} else {
-			this.removeAttribute('vertical');
-		}
-
-		this.style.setProperty(
-			'--tooltip-label',
-			`'${this.renderTemplate('{{ value }}{{ unit }}')}'`,
-		);
-
-		this.setThumbOffset();
-		this.setSliderState();
-
 		return html`
 			<div
 				class="container ${classMap({
@@ -250,9 +209,68 @@ export class RemoteSlider extends BaseRemoteElement {
 		`;
 	}
 
+	willUpdate() {
+		this.setThumbOffset();
+		this.setSliderState();
+	}
+
 	shouldUpdate(changedProperties: PropertyValues): boolean {
+		const should = super.shouldUpdate(changedProperties);
+
+		if (changedProperties.has('hass')) {
+			const min = parseFloat(
+				(this.renderTemplate(
+					this.config.range?.[0] as unknown as string,
+				) as string) ?? RANGE_MIN,
+			);
+
+			const max = parseFloat(
+				(this.renderTemplate(
+					this.config.range?.[1] as unknown as string,
+				) as string) ?? RANGE_MAX,
+			);
+
+			let step = Number(
+				this.renderTemplate(this.config.step as unknown as string),
+			);
+			if (!step || isNaN(step) || step <= 0) {
+				step = (max - min) / STEP_COUNT;
+			}
+
+			const splitStep = step.toString().split('.');
+			let precision = 0;
+			if (splitStep.length > 1) {
+				precision = splitStep[1].length;
+			}
+
+			const vertical =
+				this.renderTemplate(this.config.vertical ?? false) == true;
+
+			if (
+				min != this.range[0] ||
+				max != this.range[1] ||
+				step != this.step ||
+				precision != this.precision ||
+				vertical != this.vertical
+			) {
+				this.range = [min, max];
+				this.step = step;
+				this.precision = precision;
+				this.vertical = vertical;
+				if (vertical) {
+					this.setAttribute('vertical', '');
+				} else {
+					this.removeAttribute('vertical');
+				}
+				return true;
+			}
+		}
+
+		if (should) {
+			return true;
+		}
+
 		return (
-			super.shouldUpdate(changedProperties) ||
 			changedProperties.has('thumbOffset') ||
 			changedProperties.has('sliderOn') ||
 			changedProperties.has('height') ||
@@ -262,6 +280,11 @@ export class RemoteSlider extends BaseRemoteElement {
 
 	updated() {
 		super.updated();
+
+		this.style.setProperty(
+			'--tooltip-label',
+			`'${this.renderTemplate('{{ value }}{{ unit }}')}'`,
+		);
 
 		// Set readonly if action is none
 		if (

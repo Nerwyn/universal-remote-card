@@ -190,11 +190,6 @@ export class RemoteButton extends BaseRemoteElement {
 	}
 
 	render() {
-		const key = this.renderTemplate(this.config.keypress ?? '');
-		if (key) {
-			this.setAttribute('key', key as string);
-		}
-
 		return html`
 			<button
 				part="button"
@@ -211,6 +206,17 @@ export class RemoteButton extends BaseRemoteElement {
 			</button>
 			${buildStyles(this.styles)}
 		`;
+	}
+
+	updated() {
+		super.updated();
+
+		const key = this.renderTemplate(this.config.keypress ?? '') as string;
+		if (key) {
+			this.setAttribute('key', key);
+		} else {
+			this.removeAttribute('key');
+		}
 	}
 
 	static get styles(): CSSResult | CSSResult[] {
