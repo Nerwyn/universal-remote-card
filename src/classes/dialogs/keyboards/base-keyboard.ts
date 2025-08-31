@@ -192,6 +192,15 @@ export class BaseKeyboard extends BaseDialog {
 			<div class="buttons">${buttons}</div>`;
 	}
 
+	shouldUpdate(changedProperties: PropertyValues) {
+		return (
+			super.shouldUpdate(changedProperties) ||
+			(changedProperties.has('action') &&
+				JSON.stringify(changedProperties.get('action')) !=
+					JSON.stringify(this.action))
+		);
+	}
+
 	updated(changedProperties: PropertyValues) {
 		super.updated(changedProperties);
 		if (
