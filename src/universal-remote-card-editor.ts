@@ -1551,7 +1551,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							"Use the 'clockwise' boolean variable in a template to change the clickwheel action.",
 						)}
 						${this.buildActionOption(
-							'Clickwheel (optional)',
+							'Clickwheel behavior (optional)',
 							'drag_action',
 							defaultUiActions,
 						)}

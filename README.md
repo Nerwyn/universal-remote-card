@@ -36,6 +36,7 @@ A super customizable universal remote card iterating on the work of several othe
 - Complete [Home Assistant actions](https://www.home-assistant.io/dashboards/actions/) support.
 - [Keyboard and search](#keyboard-and-search) dialog actions for most platforms.
 - [Template](#a-note-on-templating) support for almost all fields using ha-nunjucks.
+- [Accessability keyboard controls](#keyboard-interactions-and-accessability) for all components.
 - Toggleable haptics.
 - User configurable remote [layout](#layout).
 - Icons and labels for all elements.
@@ -202,6 +203,8 @@ If you are updating from an older version of this card, you may find that your c
 
 # Layout
 
+When you first create a universal remote card, it will have a default layout. Feel free to modify or delete this layout to your liking. Not all default keys used in the default layout are available for all platforms.
+
 <img src="https://raw.githubusercontent.com/Nerwyn/universal-remote-card/main/assets/editor_layout_tab.png" width="600"/>
 
 The remote layout is defined using a series of nested arrays. The lowest level of arrays is each row. As you nest arrays further it switches between rows and columns, allowing you to create unique remote layouts.
@@ -231,6 +234,7 @@ The default keys and sources lists for your selected platform are displayed belo
 | Name               | Type        | Description                                                                                                                                                                                     |
 | ------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | circlepad          | circlepad   | A circlepad with five buttons for navigation.                                                                                                                                                   |
+| clickwheel         | circlepad   | A circlepad with five buttons for media control and iPod-like volume control.                                                                                                                   |
 | touchpad           | touchpad    | A touchpad for swipe navigation.                                                                                                                                                                |
 | dragpad            | touchpad    | A touchpad for drag navigation. Use two fingers for faster movement.                                                                                                                            |
 | mousepad           | touchpad    | A touchpad for mouse navigation. **Note**: mousepad support is dependent on the platform supporting mouse movement via a Home Assistant action.                                                 |
@@ -504,7 +508,7 @@ data: |
   {% endif %}
 ```
 
-### Key and Source
+#### Key and Source
 
 `Key` and `Source` are shortcuts for `perform-action` actions and vary by platform. Read the Home Assistant documentation as linked above [in this table](#media-platform-and-entity-ids) for more information on the actions performed by each platform. You can also look at the default key and source map files [here](https://github.com/Nerwyn/universal-remote-card/tree/main/src/models/maps). They will use the general remote or media player ID if set but can be overridden at the custom element level.
 
@@ -524,7 +528,7 @@ The momentary start action is fired when you first press down on a buttonand the
 
 For momentary end actions you can include the number of seconds a button has been held down using `hold_secs` in a template. For convenience, the momentary end action YAML is included in a code box below the action, like shown above.
 
-### Touchpad Actions
+### Touchpad Interactions
 
 <img src="https://raw.githubusercontent.com/Nerwyn/universal-remote-card/main/assets/editor_actions_interactions_touchpad.png" width="600"/>
 
@@ -533,6 +537,12 @@ The touchpad's center supports the default tap, double tap, and hold actions. Th
 Touchpads also support multi-touch mode, which fires alternate actions when more than one finger is used with it. This mode is disabled by default but can be enabled by setting a touchpad's multi-touch actions to something other than `Nothing`. Multi-touch mode supports center tap, double tap, and hold actions, and direction swipe and hold actions.
 
 Touchpads also support an alternate drag mode. This action is called whenever movement is detected on the touchpad, and works best with mouse movement actions like Unified Remote's `Relmtech.Basic Input delta`. The touchpad X and Y movement can be added to actions using templates using `deltaX` and `deltaY`. Because this action fires every time movement is detected on the touchpad, you may find that it fires too often, or not often enough. You can either use math to modify the values of `deltaX` and `deltaY` within the action data templates, or introduce a delay in which movement will be ignored after a drag action is fired using the configuration UI option `Sampling delay` to tweak the speed of your drag movements and action fire rate. The drag action can also be used in multi-touch mode. Enabling this action disables direction swipe actions, but not center default actions.
+
+### Circlepad Interactions
+
+<img src="https://raw.githubusercontent.com/Nerwyn/universal-remote-card/main/assets/editor_actions_interactions_circlepad.png" width="600"/>
+
+Circlepads are made up of five buttons, each supporting all interactions that a regular button does. In addition to this, you can use the outer ring of the circlepad like an iPod clickwheel. When setting this action, you can use the template boolean variable `clockwise` to modify the clickwheel action based on the direction you are dragging, like shown in the screenshot. When the clickwheel action is enabled, you cannot drag to scroll on the circlepad, similar to the touchpad.
 
 ### Keyboard and Search
 
@@ -584,7 +594,7 @@ Send a global search query to your media platform using the action or default bu
 
 ### Keyboard Interactions and Accessability
 
-Not to be confused with keyboard input to platforms. You can control the elements of this card with your keyboard. By default you can focus on any element in the remote by tabbing to or click on it and then actuating it with the arrow or space/enter keys. You can also assign any key to any button using the `Keyboard Key` field at the bottom of the interactions pane. This button will then actuate when you press this key. All actions are supported when using keyboard interactions. For easier navigational input, any arrow or space/enter keys you type while focused on the remote card itself will be sent to the first circlepad or touchpad in the remote if not assigned to a button.Multi touch actions can be forwarded to touchpads by holding down the shift key.
+Not to be confused with keyboard input to platforms. You can control the elements of this card with your keyboard. By default you can focus on any element in the remote by tabbing to or click on it and then actuating it with the arrow or space/enter keys. You can also assign any key to any button using the `Keyboard Key` field at the bottom of the interactions pane. This button will then actuate when you press this key. All actions are supported when using keyboard interactions. For easier navigational input, any arrow or space/enter keys you type while focused on the remote card itself will be sent to the first circlepad or touchpad in the remote if not assigned to a button. Multi touch and clickwheel actions can be forwarded to touchpads and circlepads by holding down the shift key.
 
 ## Icons
 
