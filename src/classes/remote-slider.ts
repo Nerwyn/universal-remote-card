@@ -39,6 +39,9 @@ export class RemoteSlider extends BaseRemoteElement {
 			Math.min(Number(value) ?? this.range[0], this.range[1]),
 			this.range[0],
 		);
+		if (isNaN(value)) {
+			value = this.range[0];
+		}
 		if (this.precision) {
 			value = Number(value.toFixed(this.precision));
 		} else {
@@ -218,17 +221,19 @@ export class RemoteSlider extends BaseRemoteElement {
 		const should = super.shouldUpdate(changedProperties);
 
 		if (changedProperties.has('hass')) {
-			const min = parseFloat(
-				(this.renderTemplate(
-					this.config.range?.[0] as unknown as string,
-				) as string) ?? RANGE_MIN,
-			);
+			const min =
+				parseFloat(
+					this.renderTemplate(
+						this.config.range?.[0] as unknown as string,
+					) as string,
+				) || RANGE_MIN;
 
-			const max = parseFloat(
-				(this.renderTemplate(
-					this.config.range?.[1] as unknown as string,
-				) as string) ?? RANGE_MAX,
-			);
+			const max =
+				parseFloat(
+					this.renderTemplate(
+						this.config.range?.[1] as unknown as string,
+					) as string,
+				) || RANGE_MAX;
 
 			let step = Number(
 				this.renderTemplate(this.config.step as unknown as string),
