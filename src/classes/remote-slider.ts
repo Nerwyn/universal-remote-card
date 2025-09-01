@@ -266,11 +266,8 @@ export class RemoteSlider extends BaseRemoteElement {
 			}
 		}
 
-		if (should) {
-			return true;
-		}
-
 		return (
+			should ||
 			changedProperties.has('thumbOffset') ||
 			changedProperties.has('sliderOn') ||
 			changedProperties.has('height') ||
