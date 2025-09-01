@@ -46,10 +46,10 @@ class UniversalRemoteCard extends LitElement {
 	@property() hass!: HomeAssistant;
 	@property() config!: IConfig;
 
-	PLATFORM?: Platform;
 	DEFAULT_KEYS: IElementConfig[] = [];
 	DEFAULT_SOURCES: IElementConfig[] = [];
 
+	platform?: Platform;
 	layout: Row[] = [];
 	styles: string = '';
 
@@ -59,6 +59,7 @@ class UniversalRemoteCard extends LitElement {
 	editMode: boolean = false;
 	rtl: boolean = false;
 
+	customActionsFile: string = '';
 	customActionsFromFile?: IElementConfig[];
 
 	static getConfigElement() {
@@ -622,7 +623,7 @@ class UniversalRemoteCard extends LitElement {
 	}
 
 	fetchCustomActionsFromFile(filename?: string) {
-		if (!this.customActionsFromFile && filename) {
+		if (filename) {
 			filename = `${filename.startsWith('/') ? '' : '/'}${filename}`;
 			try {
 				const extension = filename.split('.').pop()?.toLowerCase();
@@ -644,15 +645,13 @@ class UniversalRemoteCard extends LitElement {
 				);
 				this.customActionsFromFile = [];
 			}
+		} else {
+			this.customActionsFromFile = [];
 		}
 	}
 
-	render() {
-		if (!this.config || !this.hass) {
-			return html``;
-		}
-
-		const context = {
+	getContext() {
+		return {
 			config: {
 				...this.config,
 				entity: this.renderTemplate(
@@ -664,40 +663,15 @@ class UniversalRemoteCard extends LitElement {
 				attribute: 'state',
 			},
 		};
+	}
 
-		this.fetchCustomActionsFromFile(
-			this.renderTemplate(
-				this.config.custom_actions_file ?? '',
-				context,
-			) as string,
-		);
-
-		this.editMode = Boolean(
-			document
-				.querySelector('home-assistant')
-				?.shadowRoot?.querySelector('hui-dialog-edit-card')
-				?.shadowRoot?.querySelector('ha-dialog'),
-		);
-		this.rtl = getComputedStyle(this).direction == 'rtl';
-		if (this.rtl) {
-			this.setAttribute('dir', 'rtl');
+	render() {
+		if (!this.config || !this.hass) {
+			return html``;
 		}
 
-		const platform = this.renderTemplate(
-			this.config.platform ?? 'Android TV',
-			context,
-		) as Platform;
-		if (platform != this.PLATFORM) {
-			this.PLATFORM = platform;
-			[this.DEFAULT_KEYS, this.DEFAULT_SOURCES] =
-				getDefaultActions(platform);
-		}
-
+		const context = this.getContext();
 		const content: TemplateResult[] = [];
-
-		this.nRows = 0;
-		this.nColumns = 0;
-		this.nPads = 0;
 		for (const row of this.layout ?? []) {
 			const rowContent = this.buildElements(
 				row as string[],
@@ -728,20 +702,32 @@ class UniversalRemoteCard extends LitElement {
 		dialog.showDialog(e.detail);
 	}
 
+	willUpdate() {
+		this.editMode = Boolean(
+			document
+				.querySelector('home-assistant')
+				?.shadowRoot?.querySelector('hui-dialog-edit-card')
+				?.shadowRoot?.querySelector('ha-dialog'),
+		);
+
+		this.rtl = getComputedStyle(this).direction == 'rtl';
+		if (this.rtl) {
+			this.setAttribute('dir', 'rtl');
+		}
+
+		this.nRows = 0;
+		this.nColumns = 0;
+		this.nPads = 0;
+	}
+
 	shouldUpdate(changedProperties: PropertyValues) {
 		if (changedProperties.has('hass')) {
-			const context = {
-				config: {
-					...this.config,
-					entity: this.renderTemplate(
-						this.config.remote_id ??
-							this.config.media_player_id ??
-							this.config.keyboard_id ??
-							'',
-					),
-					attribute: 'state',
-				},
-			};
+			const context = this.getContext();
+
+			const platform = this.renderTemplate(
+				this.config.platform ?? 'Android TV',
+				context,
+			) as Platform;
 
 			const layout = this.buildLayout(
 				(this.config.rows as Row) ?? [],
@@ -753,10 +739,28 @@ class UniversalRemoteCard extends LitElement {
 				context,
 			);
 
+			const customActionsFile = this.renderTemplate(
+				this.config.custom_actions_file ?? '',
+				context,
+			) as string;
+
 			if (
-				JSON.stringify(this.layout) != JSON.stringify(layout) ||
-				this.styles != styles
+				this.platform != platform ||
+				this.styles != styles ||
+				this.customActionsFile != customActionsFile ||
+				JSON.stringify(this.layout) != JSON.stringify(layout)
 			) {
+				if (this.platform != platform) {
+					this.platform = platform;
+					[this.DEFAULT_KEYS, this.DEFAULT_SOURCES] =
+						getDefaultActions(platform);
+				}
+
+				if (this.customActionsFile != customActionsFile) {
+					this.customActionsFile = customActionsFile;
+					this.fetchCustomActionsFromFile(customActionsFile);
+				}
+
 				this.layout = layout as Row[];
 				this.styles = styles as string;
 				return true;
@@ -764,20 +768,22 @@ class UniversalRemoteCard extends LitElement {
 		}
 
 		if (changedProperties.has('config')) {
-			return (
+			if (
 				JSON.stringify(this.config) !=
 				JSON.stringify(changedProperties.get('config'))
-			);
+			) {
+				return true;
+			}
 		}
 
+		// Explicitly requested update
 		if (changedProperties.size == 0) {
-			// Explicitly request update
 			return true;
 		}
 
 		// Update child hass objects if not updating
 		const children = (this.shadowRoot?.querySelectorAll(
-			'remote-button, remote-slider, remote-circlepad, remote-touchpad',
+			'remote-button, remote-slider, remote-circlepad, remote-touchpad, remote-dialog',
 		) ?? []) as BaseRemoteElement[];
 		for (const child of children) {
 			child.hass = this.hass;
