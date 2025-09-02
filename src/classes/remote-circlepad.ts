@@ -285,6 +285,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			super.styles as CSSResult,
 			css`
 				:host {
+					display: contents;
 					aspect-ratio: 1 / 1;
 					height: 100%;
 					width: 340px;
