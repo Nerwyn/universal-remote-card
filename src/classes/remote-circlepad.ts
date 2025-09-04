@@ -299,6 +299,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 
 				.circlepad {
 					all: inherit;
+					aspect-ratio: 1 / 1;
 					border-radius: 999px;
 					display: flex;
 					flex-direction: column;
