@@ -6,6 +6,7 @@ import {
 	appleTVDefaultSources,
 	braviaTVDefaultKeys,
 	braviaTVDefaultSources,
+	denonAVRDefaultKeys,
 	fireTVDefaultKeys,
 	fireTVDefaultSources,
 	genericRemoteDefaultKeys,
@@ -71,6 +72,10 @@ export function getDefaultActions(platform: Platform) {
 			break;
 		case 'Unified Remote':
 			defaultKeys = unifiedRemoteDefaultKeys;
+			defaultSources = [];
+			break;
+		case 'Denon AVR':
+			defaultKeys = denonAVRDefaultKeys;
 			defaultSources = [];
 			break;
 		case 'LG webOS':

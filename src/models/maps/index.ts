@@ -2,6 +2,7 @@ export * from './android_tv';
 export * from './apple_tv';
 export * from './bravia';
 export * from './defaultIcons';
+export * from './denon_avr';
 export * from './fire_tv';
 export * from './generic_remote';
 export * from './jellyfin';

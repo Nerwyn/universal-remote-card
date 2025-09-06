@@ -13,6 +13,7 @@ export const Platforms = [
 	...KeyboardPlatforms,
 	'Apple TV',
 	'Philips TV',
+	'Denon AVR',
 	'Jellyfin',
 	'Unfolded Circle',
 	'Generic Remote',
@@ -49,6 +50,7 @@ export const MediaPlayerPlatforms: Platform[] = [
 	'Kodi',
 	'Apple TV',
 	'Philips TV',
+	'Denon AVR',
 	'Jellyfin',
 ];
 export const DevicePlatforms: Platform[] = ['Unified Remote', 'Generic Remote'];

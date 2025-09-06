@@ -229,6 +229,12 @@ export class BaseRemoteElement extends LitElement {
 					method: action.key,
 				});
 				break;
+			case 'Denon AVR':
+				this.hass.callService('denonavr', 'get_command', {
+					entity_id: action.media_player_id,
+					command: `/goform/formiPhoneAppDirect.xml?${action.key}`,
+				});
+				break;
 			case 'LG webOS':
 				this.hass.callService('webostv', 'button', {
 					entity_id: action.media_player_id,
@@ -272,6 +278,7 @@ export class BaseRemoteElement extends LitElement {
 			case 'Generic Remote':
 			case 'Jellyfin':
 			case 'Philips TV':
+			case 'Denon AVR':
 				break;
 			case 'Kodi':
 				this.hass.callService('kodi', 'call_method', {
