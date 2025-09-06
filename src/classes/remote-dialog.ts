@@ -6,6 +6,7 @@ import './dialogs/keyboards/adb-keyboard';
 import './dialogs/keyboards/android-tv-keyboard';
 import './dialogs/keyboards/kodi-keyboard';
 import './dialogs/keyboards/roku-keyboard';
+import './dialogs/keyboards/samsung-tv-keyboard';
 import './dialogs/keyboards/unified-remote-keyboard';
 import './dialogs/keyboards/webos-keyboard';
 
@@ -78,6 +79,12 @@ export class RemoteDialog extends LitElement {
 						.open=${open}
 					></kodi-keyboard>`;
 					break;
+				case 'Samsung TV':
+					content = html`<samsung-tv-keyboard
+						.hass=${this.hass}
+						.action=${this.config ?? {}}
+						.open=${open}
+					></samsung-tv-keyboard>`;
 				case 'LG webOS':
 					content = html`<webos-keyboard
 						.hass=${this.hass}

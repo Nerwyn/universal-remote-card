@@ -4,6 +4,7 @@ export const KeyboardPlatforms = [
 	'Fire TV',
 	'Roku',
 	'LG webOS',
+	'Samsung TV',
 	'Kodi',
 	'Unified Remote',
 ] as const;
@@ -11,7 +12,6 @@ export type KeyboardPlatform = (typeof KeyboardPlatforms)[number];
 export const Platforms = [
 	...KeyboardPlatforms,
 	'Apple TV',
-	'Samsung TV',
 	'Philips TV',
 	'Jellyfin',
 	'Unfolded Circle',
@@ -32,8 +32,8 @@ export const RemotePlatforms: Platform[] = [
 	'Sony BRAVIA',
 	'Fire TV',
 	'Roku',
-	'Apple TV',
 	'Samsung TV',
+	'Apple TV',
 	'Philips TV',
 	'Jellyfin',
 	'Unfolded Circle',
@@ -45,9 +45,9 @@ export const MediaPlayerPlatforms: Platform[] = [
 	'Fire TV',
 	'Roku',
 	'LG webOS',
+	'Samsung TV',
 	'Kodi',
 	'Apple TV',
-	'Samsung TV',
 	'Philips TV',
 	'Jellyfin',
 ];

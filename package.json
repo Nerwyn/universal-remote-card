@@ -1,6 +1,6 @@
 {
 	"name": "universal-remote-card",
-	"version": "4.7.2",
+	"version": "4.8.0",
 	"description": "Universal Remote Card",
 	"main": "./dist/universal-remote-card.min.js",
 	"scripts": {
