@@ -510,13 +510,13 @@ export const philipsTVDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
-		name: 'soundstyle',
+		name: 'sound_style',
 		tap_action: { action: 'key', key: 'SoundStyle' },
 		icon: 'mdi:volume-low',
 	},
 	{
 		type: 'button',
-		name: 'surroundmode',
+		name: 'surround_mode',
 		tap_action: { action: 'key', key: 'SurroundMode' },
 		icon: 'mdi:surround-sound',
 	},
@@ -528,7 +528,7 @@ export const philipsTVDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
-		name: '2playergaming',
+		name: 'two_player_gaming',
 		tap_action: { action: 'key', key: '2PlayerGaming' },
 		icon: 'mdi:gamepad-variant',
 	},
@@ -540,7 +540,7 @@ export const philipsTVDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
-		name: 'whitecolour',
+		name: 'white_color',
 		tap_action: { action: 'key', key: 'WhiteColour' },
 		icon: 'mdi:white-balance-incandescent',
 	},
