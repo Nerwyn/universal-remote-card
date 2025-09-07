@@ -296,6 +296,18 @@ export const samsungTVDefaultKeys: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 'keyboard',
+		tap_action: { action: 'keyboard' },
+		icon: 'mdi:keyboard',
+	},
+	{
+		type: 'button',
+		name: 'textbox',
+		tap_action: { action: 'textbox' },
+		icon: 'mdi:text-box',
+	},
+	{
+		type: 'button',
 		name: 'channel_up',
 		tap_action: { action: 'key', key: 'KEY_CHUP' },
 		icon: 'mdi:arrow-up-circle',
