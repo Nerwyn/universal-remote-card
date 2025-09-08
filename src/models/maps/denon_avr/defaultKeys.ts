@@ -20,7 +20,7 @@ export const denonAVRDefaultKeys: IElementConfig[] = [
 	{
 		type: 'button',
 		name: 'power_off',
-		tap_action: { action: 'key', key: 'PWSTANDY' },
+		tap_action: { action: 'key', key: 'PWSTANDBY' },
 		icon: 'mdi:power-off',
 	},
 	{
