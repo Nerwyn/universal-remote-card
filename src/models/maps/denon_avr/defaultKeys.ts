@@ -306,7 +306,7 @@ export const denonAVRDefaultKeys: IElementConfig[] = [
 		type: 'button',
 		name: 'tuner',
 		tap_action: { action: 'key', key: 'SITUNER' },
-		icon: 'mdi:antenna',
+		icon: 'mdi:radio',
 	},
 	{
 		type: 'button',
@@ -348,7 +348,7 @@ export const denonAVRDefaultKeys: IElementConfig[] = [
 		type: 'button',
 		name: 'hd_radio',
 		tap_action: { action: 'key', key: 'SIHDRADIO' },
-		icon: 'mdi:radio',
+		icon: 'mdi:antenna',
 	},
 	{
 		type: 'button',
