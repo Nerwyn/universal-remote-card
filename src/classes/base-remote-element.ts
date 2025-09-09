@@ -282,6 +282,7 @@ export class BaseRemoteElement extends LitElement {
 				break;
 			case 'Kodi':
 				this.hass.callService('kodi', 'call_method', {
+					entity_id: action.media_player_id,
 					method: 'Addons.ExecuteAddon',
 					addonid: action.source,
 				});

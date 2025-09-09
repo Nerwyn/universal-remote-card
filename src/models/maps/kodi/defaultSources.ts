@@ -9,12 +9,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'crunchyroll',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.crunchyroll',
-			},
+			action: 'source',
+			source: 'plugin.video.crunchyroll',
 		},
 		icon: 'crunchyroll',
 	},
@@ -22,12 +18,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'discoveryplus',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.discoveryplus',
-			},
+			action: 'source',
+			source: 'plugin.video.discoveryplus',
 		},
 		icon: 'discovery',
 	},
@@ -35,12 +27,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'disney',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'slyguy.disney.plus',
-			},
+			action: 'source',
+			source: 'slyguy.disney.plus',
 		},
 		icon: 'disney',
 	},
@@ -48,12 +36,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'espn',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'slyguy.espn',
-			},
+			action: 'source',
+			source: 'slyguy.espn',
 		},
 		icon: 'espn',
 	},
@@ -61,12 +45,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'hulu',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'slyguy.hulu',
-			},
+			action: 'source',
+			source: 'slyguy.hulu',
 		},
 		icon: 'mdi:hulu',
 	},
@@ -74,12 +54,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'max',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'slyguy.max',
-			},
+			action: 'source',
+			source: 'slyguy.max',
 		},
 		icon: 'max',
 	},
@@ -87,12 +63,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'netflix',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.netflix',
-			},
+			action: 'source',
+			source: 'plugin.video.netflix',
 		},
 		icon: 'mdi:netflix',
 	},
@@ -100,12 +72,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'paramount',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'slyguy.paramount.plus',
-			},
+			action: 'source',
+			source: 'slyguy.paramount.plus',
 		},
 		icon: 'paramount',
 	},
@@ -113,12 +81,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'peacock',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.skyott',
-			},
+			action: 'source',
+			source: 'plugin.video.skyott',
 		},
 		icon: 'peacock',
 	},
@@ -126,12 +90,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'primevideo',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.amazon-test',
-			},
+			action: 'source',
+			source: 'plugin.video.amazon-test',
 		},
 		icon: 'primevideo',
 	},
@@ -139,12 +99,8 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'twitch',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.twitch',
-			},
+			action: 'source',
+			source: 'plugin.video.twitch',
 		},
 		icon: 'mdi:twitch',
 	},
@@ -152,14 +108,9 @@ export const kodiDefaultSources: IElementConfig[] = [
 		type: 'button',
 		name: 'youtube',
 		tap_action: {
-			action: 'perform-action',
-			perform_action: 'kodi.call_method',
-			data: {
-				method: 'Addons.ExecuteAddon',
-				addonid: 'plugin.video.youtube',
-			},
+			action: 'source',
+			source: 'plugin.video.youtube',
 		},
 		icon: 'mdi:youtube',
 	},
 ];
-
