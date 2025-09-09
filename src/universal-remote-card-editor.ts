@@ -1221,7 +1221,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 									? this.PLATFORM ?? 'Android TV'
 									: 'Android TV',
 							)}
-							${['Kodi', 'LG webOS'].includes(platform)
+							${['Kodi', 'LG webOS', 'Denon AVR'].includes(
+								platform,
+							)
 								? this.buildSelector(
 										'Media Player ID',
 										`${actionType}.media_player_id`,
@@ -1388,6 +1390,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												: undefined,
 										);
 										break;
+									case 'Samsung TV':
 									case 'LG webOS':
 										if (action == 'search') {
 											break;
