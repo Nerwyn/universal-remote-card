@@ -1,4 +1,4 @@
-export const KeyboardPlatforms = [
+export const Platforms = [
 	'Android TV',
 	'Sony BRAVIA',
 	'Fire TV',
@@ -7,10 +7,6 @@ export const KeyboardPlatforms = [
 	'Samsung TV',
 	'Kodi',
 	'Unified Remote',
-] as const;
-export type KeyboardPlatform = (typeof KeyboardPlatforms)[number];
-export const Platforms = [
-	...KeyboardPlatforms,
 	'Apple TV',
 	'Philips TV',
 	'Denon AVR',
@@ -19,45 +15,15 @@ export const Platforms = [
 	'Generic Remote',
 ] as const;
 export type Platform = (typeof Platforms)[number];
-export const SearchPlatforms: Platform[] = [
-	'Android TV',
-	'Sony BRAVIA',
-	'Fire TV',
-	'Roku',
-	'Kodi',
-] as const;
-export type SearchPlatform = (typeof SearchPlatforms)[number];
 
-export const RemotePlatforms: Platform[] = [
-	'Android TV',
-	'Sony BRAVIA',
-	'Fire TV',
-	'Roku',
-	'Samsung TV',
-	'Apple TV',
-	'Philips TV',
-	'Jellyfin',
-	'Unfolded Circle',
-	'Generic Remote',
-];
-export const MediaPlayerPlatforms: Platform[] = [
-	'Android TV',
-	'Sony BRAVIA',
-	'Fire TV',
-	'Roku',
-	'LG webOS',
-	'Samsung TV',
-	'Kodi',
-	'Apple TV',
-	'Philips TV',
-	'Denon AVR',
-	'Jellyfin',
-];
-export const DevicePlatforms: Platform[] = ['Unified Remote', 'Generic Remote'];
-export const ADBKeyboardPlatforms: KeyboardPlatform[] = [
-	'Sony BRAVIA',
-	// 'Fire TV', // Fire TV uses ADB for everything and does not need to be listed here.
-];
+export interface IPlatformFeatures {
+	remote_id?: boolean;
+	media_player_id?: boolean;
+	device?: boolean;
+	keyboard?: boolean;
+	search?: boolean;
+	adb?: boolean;
+}
 
 export const Actions = [
 	'more-info',

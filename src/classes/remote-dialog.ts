@@ -1,6 +1,6 @@
 import { LitElement, PropertyValues, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { HomeAssistant, IAction, KeyboardPlatform } from '../models/interfaces';
+import { HomeAssistant, IAction } from '../models/interfaces';
 
 import './dialogs/keyboards/adb-keyboard';
 import './dialogs/keyboards/android-tv-keyboard';
@@ -64,7 +64,7 @@ export class RemoteDialog extends LitElement {
 		let content = html``;
 		const open = this.open && this.fadedIn;
 		if (this.config) {
-			switch (this.config?.platform as KeyboardPlatform) {
+			switch (this.config?.platform) {
 				case 'Unified Remote':
 					content = html`<unified-remote-keyboard
 						.hass=${this.hass}
@@ -85,6 +85,7 @@ export class RemoteDialog extends LitElement {
 						.action=${this.config ?? {}}
 						.open=${open}
 					></samsung-tv-keyboard>`;
+					break;
 				case 'LG webOS':
 					content = html`<webos-keyboard
 						.hass=${this.hass}

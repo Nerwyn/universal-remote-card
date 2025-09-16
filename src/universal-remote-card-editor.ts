@@ -3,15 +3,7 @@ import { LitElement, TemplateResult, css, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { dump, load } from 'js-yaml';
-import {
-	ADBKeyboardPlatforms,
-	Action,
-	DevicePlatforms,
-	HomeAssistant,
-	MediaPlayerPlatforms,
-	RemotePlatforms,
-	SearchPlatforms,
-} from './models/interfaces';
+import { Action, HomeAssistant } from './models/interfaces';
 
 import {
 	AUTOFILL,
@@ -38,8 +30,6 @@ import {
 	IElementConfig,
 	IIconConfig,
 	ITarget,
-	KeyboardPlatform,
-	KeyboardPlatforms,
 	Platform,
 	Platforms,
 	RemoteElementType,
@@ -47,6 +37,7 @@ import {
 	Row,
 } from './models/interfaces';
 import { defaultIcons } from './models/maps';
+import { PlatformConfig } from './models/platforms';
 import { deepGet, deepSet, getDefaultActions, mergeDeep } from './utils';
 import { capitalizeWords } from './utils/styles';
 
@@ -73,6 +64,25 @@ export class UniversalRemoteCardEditor extends LitElement {
 	PLATFORM?: Platform;
 	DEFAULT_KEYS: IElementConfig[] = [];
 	DEFAULT_SOURCES: IElementConfig[] = [];
+
+	RemotePlatforms = Platforms.filter(
+		(platform) => PlatformConfig[platform].remote_id,
+	);
+	MediaPlayerPlatforms = Platforms.filter(
+		(platform) => PlatformConfig[platform].media_player_id,
+	);
+	DevicePlatforms = Platforms.filter(
+		(platform) => PlatformConfig[platform].device,
+	);
+	KeyboardPlatforms = Platforms.filter(
+		(platform) => PlatformConfig[platform].keyboard,
+	);
+	SearchPlatforms = Platforms.filter(
+		(platform) => PlatformConfig[platform].search,
+	);
+	ADBKeyboardPlatforms = Platforms.filter(
+		(platform) => PlatformConfig[platform].adb,
+	);
 
 	customActionsFromFile?: IElementConfig[];
 
@@ -1127,11 +1137,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 				'Android TV',
 			context,
 		) as Platform;
-		const keyboardPlatform = KeyboardPlatforms.includes(
-			platform as KeyboardPlatform,
-		)
-			? platform
-			: 'Android TV';
 
 		return html`<div class="action-options">
 			${this.buildSelector(label, actionType, selector)}
@@ -1317,15 +1322,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 										mode: 'dropdown',
 										options:
 											action == 'search'
-												? SearchPlatforms
-												: KeyboardPlatforms,
+												? this.SearchPlatforms
+												: this.KeyboardPlatforms,
 										reorder: false,
 									},
 								},
 								autofill
-									? KeyboardPlatforms.includes(
-											this.config
-												.platform as KeyboardPlatform,
+									? this.KeyboardPlatforms.includes(
+											this.config.platform ??
+												'Android TV',
 									  )
 										? this.PLATFORM
 										: 'Android TV'
@@ -1333,6 +1338,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 							)}
 							${(() => {
 								let options = html``;
+								const keyboardPlatform =
+									PlatformConfig[platform].keyboard ||
+									PlatformConfig[platform].search
+										? platform
+										: 'Android TV';
 								switch (keyboardPlatform) {
 									case 'Android TV':
 										options = this.buildSelector(
@@ -2163,7 +2173,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							'Android TV',
 						)}
 						<div class="form">
-							${RemotePlatforms.includes(platform)
+							${this.RemotePlatforms.includes(platform)
 								? this.buildSelector('Remote ID', 'remote_id', {
 										entity: {
 											filter: {
@@ -2172,7 +2182,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										},
 								  })
 								: ''}
-							${MediaPlayerPlatforms.includes(platform)
+							${this.MediaPlayerPlatforms.includes(platform)
 								? this.buildSelector(
 										'Media Player ID',
 										'media_player_id',
@@ -2185,9 +2195,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										},
 								  )
 								: ''}
-							${ADBKeyboardPlatforms.includes(
-								platform as KeyboardPlatform,
-							)
+							${this.ADBKeyboardPlatforms.includes(platform)
 								? this.buildSelector(
 										'Keyboard ID',
 										'keyboard_id',
@@ -2203,7 +2211,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										},
 								  )
 								: ''}
-							${DevicePlatforms.includes(platform)
+							${this.DevicePlatforms.includes(platform)
 								? this.buildSelector(
 										'Remote/Device Name',
 										'device',
