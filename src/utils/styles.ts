@@ -19,7 +19,7 @@ export function buildStyles(styles?: string): TemplateResult<1> {
 	// Initial check to avoid expensive regex for most user styles
 	if (importantStyles.includes('@keyframes')) {
 		const keyframeses = importantStyles.match(
-			/@keyframes .*?\s{(.|\s)*?}\s}/g,
+			/@keyframes\s.*?\s{(.|\n)*?}\n}/g,
 		);
 		for (const keyframes of keyframeses ?? []) {
 			importantStyles = importantStyles.replace(
@@ -50,7 +50,7 @@ export function getNumericPixels(pixels: string) {
  */
 export function capitalizeWords(word: unknown): string {
 	if (!word) return '';
-	if (typeof word !== 'string') return word.toString()
+	if (typeof word !== 'string') return word.toString();
 
 	let result = '';
 	let upperNext = true;
