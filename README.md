@@ -516,22 +516,22 @@ data: |
 
 ##### Keys
 
-| Platform                                                                                                                   | Action                             | Data                                                                                                                                   |
-| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Android TV</br>Sony BRAVIA</br>Fire TV</br>Roku</br>Apple TV</br>Samsung TV</br>Philips TV</br>Jellyfin</br>Generic Remote | remote.send_command                | command: action.key</br>Adds `hold_secs: 1` if hold action performed but a hold action is not defined.</br>Adds `device` if defined. |
-| LG webOS                                                                                                                   | webostv.button                     | button: action.key                                                                                                                     |
-| Kodi                                                                                                                       | kodi.call_method                   | method: action.key                                                                                                                     |
-| Denon AVR                                                                                                                  | denonavr.get_command               | command: /goform/formiPhoneAppDirect.xml?{{action.key}}                                                                                |
-| Unfolded Circle                                                                                                            | unfoldedcircle.send_button_command | button: action.key                                                                                                                     |
+| Platform                                                                                                                   | Action                             | Data                                                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Android TV</br>Sony BRAVIA</br>Fire TV</br>Roku</br>Apple TV</br>Samsung TV</br>Philips TV</br>Jellyfin</br>Generic Remote | remote.send_command                | <code>{</br>&nbsp;&nbsp;command: action.key,</br>&nbsp;&nbsp;device: config.device, // if defined</br>&nbsp;&nbsp;hold_secs: 1 // if hold action performed but not defined</br>}</code> |
+| LG webOS                                                                                                                   | webostv.button                     | <code>{</br>&nbsp;&nbsp;button: action.key</br>}</code>                                                                                                                                 |
+| Kodi                                                                                                                       | kodi.call_method                   | <code>{</br>&nbsp;&nbsp;method: action.key</br>}</code>                                                                                                                                 |
+| Denon AVR                                                                                                                  | denonavr.get_command               | <code>{</br>&nbsp;&nbsp;command: \`/goform/formiPhoneAppDirect.xml?${action.key}\`</br>}</code>                                                                                         |
+| Unfolded Circle                                                                                                            | unfoldedcircle.send_button_command | <code>{</br>&nbsp;&nbsp;button: action.key</br>}</code>                                                                                                                                 |
 
-###### Sources
+##### Sources
 
-| Platform                                                  | Action                     | Data                                                       |
-| --------------------------------------------------------- | -------------------------- | ---------------------------------------------------------- |
-| Android TV                                                | remote.turn_on             | activity: action.source                                    |
-| Sony BRAVIA                                               | media_player.play_media    | media_content_id: action.source, media_content_type: "app" |
-| Fire TV</br>Roku</br>LG webOS</br>Samsung TV</br>Apple TV | media_player.select_source | source: action.source                                      |
-| Kodi                                                      | kodi.call_method           | addonid: action.source, method: "Addons.ExecuteAddon"      |
+| Platform                                                  | Action                     | Data                                                                                                            |
+| --------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Android TV                                                | remote.turn_on             | <code>{</br>&nbsp;&nbsp;activity: action.source</br>}</code>                                                    |
+| Sony BRAVIA                                               | media_player.play_media    | <code>{</br>&nbsp;&nbsp;media_content_id: action.source,</br>&nbsp;&nbsp;media_content_type: "app"</br>}</code> |
+| Fire TV</br>Roku</br>LG webOS</br>Samsung TV</br>Apple TV | media_player.select_source | <code>{</br>&nbsp;&nbsp;source: action.source</br>}</code>                                                      |
+| Kodi                                                      | kodi.call_method           | <code>{</br>&nbsp;&nbsp;addonid: action.source,</br>&nbsp;&nbsp;method: "Addons.ExecuteAddon"</br>}</code>      |
 
 Read the Home Assistant documentation as linked above [in this table](#media-platform-and-entity-ids) for more information on the actions performed by each platform. You can also look at the default key and source map files [here](https://github.com/Nerwyn/universal-remote-card/tree/main/src/models/maps). They will use the general remote or media player ID if set but can be overridden at the custom element level.
 
