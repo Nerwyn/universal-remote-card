@@ -825,7 +825,9 @@ export class BaseRemoteElement extends LitElement {
 			typeof value == 'number' &&
 			this.precision != undefined
 		) {
-			value = Number(value).toFixed(this.precision);
+			value = Number(value).toLocaleString(this.hass.language, {
+				minimumFractionDigits: this.precision,
+			});
 			context = {
 				...context,
 				value: value,
