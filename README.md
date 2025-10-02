@@ -1661,6 +1661,8 @@ custom_actions:
     down:
       styles: |-
         .label {
+          font-size: 16px;
+          line-height: 16px;
           color: var(--icon-color);
           font-weight: 500;
           width: -webkit-fill-available;
