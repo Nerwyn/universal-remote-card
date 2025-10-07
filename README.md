@@ -1996,7 +1996,7 @@ custom_actions:
     range:
       - 0
       - 360
-    value_attribute: hs_color[0]
+    value_attribute: hs_color.0
     tap_action:
       action: perform-action
       perform_action: light.turn_on
