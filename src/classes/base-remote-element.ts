@@ -622,35 +622,16 @@ export class BaseRemoteElement extends LitElement {
 			} else if (this.valueAttribute == 'state') {
 				this.value = this.hass.states[this.entityId].state;
 			} else {
-				let value:
+				const value = deepGet(
+					this.hass.states[this.entityId].attributes,
+					this.valueAttribute,
+				) as
 					| string
 					| number
 					| boolean
 					| string[]
 					| number[]
 					| undefined;
-				const indexMatch = this.valueAttribute.match(/\[\d+\]$/);
-				if (indexMatch) {
-					const index = parseInt(indexMatch[0].replace(/\[|\]/g, ''));
-					this.valueAttribute = this.valueAttribute.replace(
-						indexMatch[0],
-						'',
-					);
-					value =
-						this.hass.states[this.entityId]?.attributes?.[
-							this.valueAttribute
-						];
-					if (value && Array.isArray(value) && value.length) {
-						value = value[index];
-					} else {
-						value = undefined;
-					}
-				} else {
-					value =
-						this.hass.states[this.entityId]?.attributes?.[
-							this.valueAttribute
-						];
-				}
 
 				if (value != undefined || this.valueAttribute == 'elapsed') {
 					switch (this.valueAttribute) {
@@ -825,9 +806,7 @@ export class BaseRemoteElement extends LitElement {
 			typeof value == 'number' &&
 			this.precision != undefined
 		) {
-			value = Number(value).toLocaleString(this.hass.language, {
-				minimumFractionDigits: this.precision,
-			});
+			value = Number(value).toFixed(this.precision);
 			context = {
 				...context,
 				value: value,
@@ -1003,7 +982,7 @@ export class BaseRemoteElement extends LitElement {
 			const value = changedProperties.get('value') || this.value;
 			this.setValue();
 
-			const unitOfMeasurement =
+			this.unitOfMeasurement =
 				(this.renderTemplate(
 					this.config.unit_of_measurement as string,
 				) as string) ?? '';
@@ -1022,12 +1001,10 @@ export class BaseRemoteElement extends LitElement {
 
 			if (
 				value != this.value ||
-				unitOfMeasurement != this.unitOfMeasurement ||
 				icon != this.icon ||
 				label != this.label ||
 				styles != this.styles
 			) {
-				this.unitOfMeasurement = unitOfMeasurement;
 				this.icon = icon;
 				this.label = label;
 				this.styles = styles;
