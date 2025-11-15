@@ -13,3 +13,4 @@ export * from './samsung_tv';
 export * from './unfolded_circle';
 export * from './unified_remote';
 export * from './webos';
+export * from './yamaha_ynca';

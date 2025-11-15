@@ -63,6 +63,10 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 	'Unfolded Circle': {
 		remote_id: true,
 	},
+	'Yamaha YNCA': {
+		remote_id: true,
+		media_player_id: true,
+	},
 	'Generic Remote': {
 		remote_id: true,
 		device: true,

@@ -22,6 +22,8 @@ import {
 	unifiedRemoteDefaultKeys,
 	webosDefaultKeys,
 	webosDefaultSources,
+	yamahaYNCADefaultKeys,
+	yamahaYNCADefaultSources,
 } from '../models/maps';
 
 export function getDefaultActions(platform: Platform) {
@@ -65,6 +67,10 @@ export function getDefaultActions(platform: Platform) {
 					}
 				}
 			}
+			break;
+		case 'Yamaha YNCA':
+			defaultKeys = yamahaYNCADefaultKeys;
+			defaultSources = yamahaYNCADefaultSources;
 			break;
 		case 'Unfolded Circle':
 			defaultKeys = unfoldedCircleDefaultKeys;

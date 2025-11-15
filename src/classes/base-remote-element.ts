@@ -26,7 +26,7 @@ import { deepGet, deepSet, getDeepKeys } from '../utils';
 export class BaseRemoteElement extends LitElement {
 	@property() hass!: HomeAssistant;
 	@property() config!: IElementConfig;
-	@property() icons: IIconConfig[] = [];
+	@property() icons?: IIconConfig[] = [];
 
 	rippleEndTimer?: ReturnType<typeof setTimeout>;
 
@@ -249,6 +249,7 @@ export class BaseRemoteElement extends LitElement {
 			case 'Samsung TV':
 			case 'Philips TV':
 			case 'Jellyfin':
+			case 'Yamaha YNCA':
 			case 'Generic Remote':
 			default: {
 				const data: IData = {
@@ -302,6 +303,13 @@ export class BaseRemoteElement extends LitElement {
 					entity_id: action.media_player_id,
 					media_content_id: action.source,
 					media_content_type: 'app',
+				});
+				break;
+			case 'Yamaha YNCA':
+				this.hass.callService('media_player', 'play_media', {
+					entity_id: action.media_player_id,
+					media_content_id: action.source,
+					media_content_type: 'music',
 				});
 				break;
 			case 'Android TV':

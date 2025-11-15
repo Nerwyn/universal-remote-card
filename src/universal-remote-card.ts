@@ -5,7 +5,14 @@ import { property } from 'lit/decorators.js';
 
 import { hasTemplate, renderTemplate } from 'ha-nunjucks';
 import { load } from 'js-yaml';
-import { HomeAssistant, Row } from './models/interfaces';
+import {
+	HomeAssistant,
+	IButtonConfig,
+	ICirclepadConfig,
+	ISliderConfig,
+	ITouchpadConfig,
+	Row,
+} from './models/interfaces';
 
 import {
 	ActionTypes,
@@ -393,7 +400,7 @@ class UniversalRemoteCard extends LitElement {
 		`;
 	}
 
-	buildButton(elementName: string, actions: IElementConfig): TemplateResult {
+	buildButton(elementName: string, actions: IButtonConfig): TemplateResult {
 		if (!Object.keys(actions).length) {
 			return html`<div class="empty-button"></div>`;
 		}
@@ -406,7 +413,7 @@ class UniversalRemoteCard extends LitElement {
 		></remote-button>`;
 	}
 
-	buildSlider(elementName: string, actions: IElementConfig): TemplateResult {
+	buildSlider(elementName: string, actions: ISliderConfig): TemplateResult {
 		return html`<remote-slider
 			id="${elementName}"
 			title="${capitalizeWords(elementName)}"
@@ -418,7 +425,7 @@ class UniversalRemoteCard extends LitElement {
 
 	buildTouchpad(
 		elementName: string,
-		actions: IElementConfig,
+		actions: ITouchpadConfig,
 	): TemplateResult {
 		return html`<remote-touchpad
 			id="${elementName}"
@@ -431,7 +438,7 @@ class UniversalRemoteCard extends LitElement {
 
 	buildCirclepad(
 		elementName: string,
-		actions: IElementConfig,
+		actions: ICirclepadConfig,
 	): TemplateResult {
 		return html`<remote-circlepad
 			id="${elementName}"
@@ -439,7 +446,7 @@ class UniversalRemoteCard extends LitElement {
 			.hass=${this.hass}
 			.config=${actions}
 			.icons=${this.config.custom_icons}
-		></remote-touchpad>`;
+		></remote-circlepad>`;
 	}
 
 	buildVolumeButtons(): TemplateResult[] {
