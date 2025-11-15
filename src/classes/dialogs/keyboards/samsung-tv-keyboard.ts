@@ -3,14 +3,6 @@ import { BaseKeyboard } from './base-keyboard';
 
 @customElement('samsung-tv-keyboard')
 export class SamsungTVKeyboard extends BaseKeyboard {
-	keyMap = {
-		Backspace: 'Backspace',
-		Enter: 'Enter',
-	};
-	inputMap = {
-		deleteContentBackward: 'Backspace',
-		insertLineBreak: 'Enter',
-	};
 	replaceOnSend = true;
 
 	sendText() {

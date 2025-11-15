@@ -70,7 +70,7 @@ export class AndroidTVKeyboard extends BaseKeyboard {
 									delay_secs: 0.4,
 								})
 								.then(() => (this.searchReady = true)),
-						1000,
+						1500,
 					);
 				});
 		}

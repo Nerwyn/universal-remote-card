@@ -13,8 +13,14 @@ export class BaseKeyboard extends BaseDialog {
 	textarea?: HTMLTextAreaElement;
 	onKeyDownFired: boolean = false;
 
-	keyMap: Record<string, string> = {};
-	inputMap: Record<string, string> = {};
+	keyMap: Record<string, string> = {
+		Backspace: 'Backspace',
+		Enter: 'Enter',
+	};
+	inputMap: Record<string, string> = {
+		deleteContentBackward: 'Backspace',
+		insertLineBreak: 'Enter',
+	};
 
 	closeOnEnter: boolean = true;
 	replaceOnSend: boolean = false;
@@ -55,6 +61,15 @@ export class BaseKeyboard extends BaseDialog {
 		this.onKeyDownFired = false;
 	}
 
+	onInputSearch(e: InputEvent) {
+		const inputType = e.inputType ?? '';
+
+		if (!this.onKeyDownFired && inputType == 'insertLineBreak') {
+			e.stopImmediatePropagation();
+			this.search();
+		}
+	}
+
 	onKeyDown(e: KeyboardEvent) {
 		e.stopImmediatePropagation();
 		this.forceCursorToEnd();
@@ -79,6 +94,16 @@ export class BaseKeyboard extends BaseDialog {
 		}
 	}
 
+	onKeyDownSearch(e: KeyboardEvent) {
+		const inKey = e.key;
+
+		if (inKey == 'Enter') {
+			e.stopImmediatePropagation();
+			this.onKeyDownFired = true;
+			this.search();
+		}
+	}
+
 	onPaste(e: ClipboardEvent) {
 		e.stopImmediatePropagation();
 
@@ -92,7 +117,7 @@ export class BaseKeyboard extends BaseDialog {
 		}
 	}
 
-	textBox(_e: MouseEvent) {
+	textBox(_e?: MouseEvent) {
 		const text = this.textarea?.value;
 		if (text) {
 			this.sendText(text);
@@ -100,7 +125,7 @@ export class BaseKeyboard extends BaseDialog {
 		this.closeDialog();
 	}
 
-	search(_e: MouseEvent) {
+	search(_e?: MouseEvent) {
 		const text = this.textarea?.value;
 		if (text) {
 			this.sendSearch(text);
@@ -148,6 +173,8 @@ export class BaseKeyboard extends BaseDialog {
 					'Close',
 					this.closeDialog,
 				)}${this.buildDialogButton('Search', this.search)}`;
+				inputHandler = this.onInputSearch;
+				keyDownHandler = this.onKeyDownSearch;
 				break;
 			case 'textbox':
 				placeholder = 'Send something...';

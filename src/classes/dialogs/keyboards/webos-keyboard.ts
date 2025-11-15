@@ -3,14 +3,6 @@ import { BaseKeyboard } from './base-keyboard';
 
 @customElement('webos-keyboard')
 export class WebOSKeyboard extends BaseKeyboard {
-	keyMap = {
-		Backspace: 'Backspace',
-		Enter: 'Enter',
-	};
-	inputMap = {
-		deleteContentBackward: 'Backspace',
-		insertLineBreak: 'Enter',
-	};
 	replaceOnSend = true;
 
 	sendText(_text?: string) {
