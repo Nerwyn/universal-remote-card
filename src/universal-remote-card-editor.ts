@@ -1,5 +1,5 @@
 import { hasTemplate, renderTemplate } from 'ha-nunjucks';
-import { LitElement, TemplateResult, css, html } from 'lit';
+import { LitElement, TemplateResult, css, html, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { dump, load } from 'js-yaml';
@@ -1998,7 +1998,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				${title ? html`<div class="style-header">${title}</div>` : ''}
 				<ha-code-editor
 					mode="${codeEditorMode}"
-					id="${id}"
+					id="${id || nothing}"
 					dir="ltr"
 					?autocomplete-entities="${autocompleteEntities}"
 					?autocomplete-icons="${autocompleteIcons}"
@@ -2334,7 +2334,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		type: 'info' | 'warning' | 'error' | 'success' = 'info',
 	) {
 		return html`<ha-alert
-			.title="${title}"
+			.title="${title as string}"
 			.alertType="${type}"
 		></ha-alert>`;
 	}
