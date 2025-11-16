@@ -116,7 +116,7 @@ export const fireTVDefaultSources: IElementConfig[] = [
 			action: 'source',
 			source: 'com.hbo.hbonow',
 		},
-		icon: 'max',
+		icon: 'hbomax',
 	},
 	{
 		type: 'button',
@@ -142,7 +142,7 @@ export const fireTVDefaultSources: IElementConfig[] = [
 		},
 		icon: 'mdi:netflix',
 	},
-	
+
 	{
 		type: 'button',
 		name: 'nrktv',

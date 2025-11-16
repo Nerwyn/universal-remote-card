@@ -84,7 +84,10 @@ export const androidTVDefaultSources: IElementConfig[] = [
 	{
 		type: 'button',
 		name: 'globoplay',
-		tap_action: { action: 'source', source: 'https://globoplay.globo.com/' },
+		tap_action: {
+			action: 'source',
+			source: 'https://globoplay.globo.com/',
+		},
 		icon: 'globoplay',
 	},
 	{
@@ -124,7 +127,7 @@ export const androidTVDefaultSources: IElementConfig[] = [
 			action: 'source',
 			source: 'https://play.max.com',
 		},
-		icon: 'max',
+		icon: 'hbomax',
 	},
 	{
 		type: 'button',

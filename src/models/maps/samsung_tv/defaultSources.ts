@@ -74,7 +74,7 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 			action: 'source',
 			source: 'Max',
 		},
-		icon: 'max',
+		icon: 'hbomax',
 	},
 	{
 		type: 'button',

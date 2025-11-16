@@ -134,7 +134,7 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 			action: 'source',
 			source: 'Max', // Substring matching might fail us here...
 		},
-		icon: 'max',
+		icon: 'hbomax',
 	},
 	{
 		type: 'button',

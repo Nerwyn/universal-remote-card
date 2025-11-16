@@ -57,7 +57,7 @@ export const kodiDefaultSources: IElementConfig[] = [
 			action: 'source',
 			source: 'slyguy.max',
 		},
-		icon: 'max',
+		icon: 'hbomax',
 	},
 	{
 		type: 'button',
