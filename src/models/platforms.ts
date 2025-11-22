@@ -56,16 +56,16 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 	'Denon AVR': {
 		media_player_id: true,
 	},
+	'Yamaha YNCA': {
+		remote_id: true,
+		media_player_id: true,
+	},
 	Jellyfin: {
 		remote_id: true,
 		media_player_id: true,
 	},
 	'Unfolded Circle': {
 		remote_id: true,
-	},
-	'Yamaha YNCA': {
-		remote_id: true,
-		media_player_id: true,
 	},
 	'Generic Remote': {
 		remote_id: true,

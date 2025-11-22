@@ -10,9 +10,9 @@ export const Platforms = [
 	'Apple TV',
 	'Philips TV',
 	'Denon AVR',
+	'Yamaha YNCA',
 	'Jellyfin',
 	'Unfolded Circle',
-	'Yamaha YNCA',
 	'Generic Remote',
 ] as const;
 export type Platform = (typeof Platforms)[number];
