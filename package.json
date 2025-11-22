@@ -35,7 +35,7 @@
 	},
 	"homepage": "https://github.com/Nerwyn/universal-remote-card#readme",
 	"dependencies": {
-		"ha-nunjucks": "github:nerwyn/ha-nunjucks#dev",
+		"ha-nunjucks": "latest",
 		"js-yaml": "latest",
 		"lit": "latest"
 	},
