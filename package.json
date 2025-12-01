@@ -3,6 +3,7 @@
 	"version": "4.9.0",
 	"description": "Universal Remote Card",
 	"main": "./dist/universal-remote-card.min.js",
+	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "npx rspack && gzip -fk dist/universal-remote-card.min.js",
