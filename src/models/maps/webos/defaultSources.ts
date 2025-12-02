@@ -60,6 +60,12 @@ export const webosDefaultSources: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 'twitch',
+		tap_action: { action: 'source', source: 'Twitch' },
+		icon: 'mdi:twitch',
+	},
+	{
+		type: 'button',
 		name: 'waiputv',
 		tap_action: {
 			action: 'source',

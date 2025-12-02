@@ -105,6 +105,12 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 'twitch',
+		tap_action: { action: 'source', source: 'Twitch' },
+		icon: 'mdi:twitch',
+	},
+	{
+		type: 'button',
 		name: 'youtube',
 		tap_action: {
 			action: 'source',

@@ -208,6 +208,12 @@ export const fireTVDefaultSources: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 's0undtv',
+		tap_action: { action: 'source', source: 'com.s0und.s0undtv' },
+		icon: 'mdi:twitch',
+	},
+	{
+		type: 'button',
 		name: 'skyshowtime',
 		tap_action: {
 			action: 'source',
@@ -250,6 +256,12 @@ export const fireTVDefaultSources: IElementConfig[] = [
 			source: 'com.surfshark.vpnclient.android',
 		},
 		icon: 'surfshark',
+	},
+	{
+		type: 'button',
+		name: 'twitch',
+		tap_action: { action: 'source', source: 'tv.twitch.android.app' },
+		icon: 'mdi:twitch',
 	},
 	{
 		type: 'button',

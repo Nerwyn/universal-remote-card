@@ -246,6 +246,12 @@ export const androidTVDefaultSources: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 's0undtv',
+		tap_action: { action: 'source', source: 's0undtv://' },
+		icon: 'mdi:twitch',
+	},
+	{
+		type: 'button',
 		name: 'sbsondemand',
 		tap_action: { action: 'source', source: 'com.sbs.ondemand.tv' },
 		icon: 'sbsondemand',
@@ -318,6 +324,12 @@ export const androidTVDefaultSources: IElementConfig[] = [
 			source: 'dk.tv2.tv2playtv://*.tv2.dk/android/dk.tv2.tv2playtv/callback',
 		}, // UNTESTED
 		icon: 'tv2play',
+	},
+	{
+		type: 'button',
+		name: 'twitch',
+		tap_action: { action: 'source', source: 'twitch://home' },
+		icon: 'mdi:twitch',
 	},
 	{
 		type: 'button',

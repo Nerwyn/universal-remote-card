@@ -258,6 +258,12 @@ export const appleTVDefaultSources: IElementConfig[] = [
 	},
 	{
 		type: 'button',
+		name: 'twitch',
+		tap_action: { action: 'source', source: 'Twitch' },
+		icon: 'mdi:twitch',
+	},
+	{
+		type: 'button',
 		name: 'viaplay',
 		tap_action: {
 			action: 'source',
