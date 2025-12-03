@@ -40,7 +40,6 @@ export function getDefaultActions(platform: Platform) {
 					if (key.type == 'button' && !names.has(key.name)) {
 						names.add(key.name);
 						const action: IElementConfig = {
-							type: 'button',
 							name: key.name,
 							icon: key.icon,
 							tap_action: { action: 'key', key: key.name },
@@ -55,7 +54,6 @@ export function getDefaultActions(platform: Platform) {
 					if (!names.has(source.name)) {
 						names.add(source.name);
 						const action: IElementConfig = {
-							type: 'button',
 							name: source.name,
 							icon: source.icon,
 							tap_action: { action: 'key', key: source.name },

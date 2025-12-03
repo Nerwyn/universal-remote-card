@@ -8,7 +8,6 @@ import { IElementConfig } from '../../interfaces';
  */
 export const braviaTVDefaultSources: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'appletv',
 		tap_action: {
 			action: 'source',
@@ -17,7 +16,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'appletv',
 	},
 	{
-		type: 'button',
 		name: 'crunchyroll',
 		tap_action: {
 			action: 'source',
@@ -26,7 +24,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'crunchyroll',
 	},
 	{
-		type: 'button',
 		name: 'dazn',
 		tap_action: {
 			action: 'source',
@@ -35,7 +32,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'dazn',
 	},
 	{
-		type: 'button',
 		name: 'discoveryplus',
 		tap_action: {
 			action: 'source',
@@ -44,7 +40,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'discovery',
 	},
 	{
-		type: 'button',
 		name: 'disney',
 
 		tap_action: {
@@ -54,7 +49,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'disney',
 	},
 	{
-		type: 'button',
 		name: 'dropout',
 
 		tap_action: {
@@ -64,7 +58,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'dropout',
 	},
 	{
-		type: 'button',
 		name: 'emby',
 
 		tap_action: {
@@ -74,7 +67,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:emby',
 	},
 	{
-		type: 'button',
 		name: 'filmplus',
 		tap_action: {
 			action: 'source',
@@ -83,7 +75,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'filmplus',
 	},
 	{
-		type: 'button',
 		name: 'foxsports',
 		tap_action: {
 			action: 'source',
@@ -92,7 +83,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'foxsports',
 	},
 	{
-		type: 'button',
 		name: 'globoplay',
 		tap_action: {
 			action: 'source',
@@ -101,7 +91,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'globoplay',
 	},
 	{
-		type: 'button',
 		name: 'hulu',
 		tap_action: {
 			action: 'source',
@@ -110,7 +99,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:hulu',
 	},
 	{
-		type: 'button',
 		name: 'jellyfin',
 		tap_action: {
 			action: 'source',
@@ -119,7 +107,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'jellyfin',
 	},
 	{
-		type: 'button',
 		name: 'kijk',
 		tap_action: {
 			action: 'source',
@@ -128,7 +115,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'kijk',
 	},
 	{
-		type: 'button',
 		name: 'max',
 		tap_action: {
 			action: 'source',
@@ -137,7 +123,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'hbomax',
 	},
 	{
-		type: 'button',
 		name: 'mlbtv',
 		tap_action: {
 			action: 'source',
@@ -146,7 +131,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'mlbtv',
 	},
 	{
-		type: 'button',
 		name: 'nba',
 		tap_action: {
 			action: 'source',
@@ -155,7 +139,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'nba',
 	},
 	{
-		type: 'button',
 		name: 'nebula',
 		tap_action: {
 			action: 'source',
@@ -164,13 +147,11 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'nebula',
 	},
 	{
-		type: 'button',
 		name: 'netflix',
 		tap_action: { action: 'key', key: 'Netflix' },
 		icon: 'mdi:netflix',
 	},
 	{
-		type: 'button',
 		name: 'npostart',
 		tap_action: {
 			action: 'source',
@@ -179,7 +160,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'npo',
 	},
 	{
-		type: 'button',
 		name: 'nrktv',
 		tap_action: {
 			action: 'source',
@@ -188,7 +168,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'nrktv',
 	},
 	{
-		type: 'button',
 		name: 'paramount',
 		tap_action: {
 			action: 'source',
@@ -197,7 +176,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'paramount',
 	},
 	{
-		type: 'button',
 		name: 'peacock',
 		tap_action: {
 			action: 'source',
@@ -206,7 +184,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'peacock',
 	},
 	{
-		type: 'button',
 		name: 'pia',
 		tap_action: {
 			action: 'source',
@@ -215,7 +192,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'pia',
 	},
 	{
-		type: 'button',
 		name: 'plex',
 		tap_action: {
 			action: 'source',
@@ -224,7 +200,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:plex',
 	},
 	{
-		type: 'button',
 		name: 'primevideo',
 		tap_action: {
 			action: 'source',
@@ -233,7 +208,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'primevideo',
 	},
 	{
-		type: 'button',
 		name: 'rakutentv',
 		tap_action: {
 			action: 'source',
@@ -242,7 +216,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'rakutentv',
 	},
 	{
-		type: 'button',
 		name: 'rakutenviki',
 		tap_action: {
 			action: 'source',
@@ -251,7 +224,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'rakutenviki',
 	},
 	{
-		type: 'button',
 		name: 'skyshowtime',
 		tap_action: {
 			action: 'source',
@@ -260,7 +232,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'showtime',
 	},
 	{
-		type: 'button',
 		name: 'spotify',
 		tap_action: {
 			action: 'source',
@@ -269,7 +240,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:spotify',
 	},
 	{
-		type: 'button',
 		name: 'starplus',
 		tap_action: {
 			action: 'source',
@@ -278,7 +248,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'starplus',
 	},
 	{
-		type: 'button',
 		name: 'stremio',
 		tap_action: {
 			action: 'source',
@@ -287,7 +256,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'stremio',
 	},
 	{
-		type: 'button',
 		name: 'surfshark',
 		tap_action: {
 			action: 'source',
@@ -296,7 +264,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'surfshark',
 	},
 	{
-		type: 'button',
 		name: 'tv2play',
 		tap_action: {
 			action: 'source',
@@ -305,13 +272,11 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'tv2play',
 	},
 	{
-		type: 'button',
 		name: 'twitch',
 		tap_action: { action: 'source', source: 'Twitch' },
 		icon: 'mdi:twitch',
 	},
 	{
-		type: 'button',
 		name: 'viaplay',
 		tap_action: {
 			action: 'source',
@@ -320,7 +285,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'viaplay',
 	},
 	{
-		type: 'button',
 		name: 'videoland',
 		tap_action: {
 			action: 'source',
@@ -329,7 +293,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'videoland',
 	},
 	{
-		type: 'button',
 		name: 'vudu',
 		tap_action: {
 			action: 'source',
@@ -338,7 +301,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'vudu',
 	},
 	{
-		type: 'button',
 		name: 'youtube',
 		tap_action: {
 			action: 'source',
@@ -347,7 +309,6 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:youtube',
 	},
 	{
-		type: 'button',
 		name: 'youtubetv',
 		tap_action: {
 			action: 'source',

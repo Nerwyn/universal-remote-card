@@ -264,7 +264,10 @@ class UniversalRemoteCard extends LitElement {
 		}
 
 		// Set element entity
-		const elementType = this.renderTemplate(updatedElement.type, context);
+		const elementType = this.renderTemplate(
+			updatedElement.type || 'button',
+			context,
+		);
 		if (
 			elementType == 'slider' &&
 			this.renderTemplate(updatedElement.name, context) == 'slider'

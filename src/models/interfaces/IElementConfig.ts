@@ -23,7 +23,7 @@ export interface IElementConfig
 		IActions {}
 
 interface IBaseElementConfig extends IDisplayConfig {
-	type: RemoteElementType;
+	type?: RemoteElementType;
 	name: string;
 	haptics?: boolean;
 	card?: IConfig;

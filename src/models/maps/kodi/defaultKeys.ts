@@ -6,7 +6,6 @@ import { IElementConfig } from '../../interfaces';
  */
 export const kodiDefaultKeys: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'power',
 		tap_action: {
 			action: 'perform-action',
@@ -19,7 +18,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:power',
 	},
 	{
-		type: 'button',
 		name: 'home',
 		tap_action: {
 			action: 'key',
@@ -28,7 +26,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:home',
 	},
 	{
-		type: 'button',
 		name: 'back',
 		tap_action: {
 			action: 'key',
@@ -37,7 +34,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:keyboard-backspace',
 	},
 	{
-		type: 'button',
 		name: 'menu',
 		tap_action: {
 			action: 'key',
@@ -46,7 +42,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:menu',
 	},
 	{
-		type: 'button',
 		name: 'volume_up',
 		tap_action: {
 			action: 'perform-action',
@@ -60,7 +55,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:volume-high',
 	},
 	{
-		type: 'button',
 		name: 'volume_down',
 		tap_action: {
 			action: 'perform-action',
@@ -74,7 +68,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:volume-medium',
 	},
 	{
-		type: 'button',
 		name: 'volume_mute',
 		tap_action: {
 			action: 'perform-action',
@@ -87,7 +80,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:volume-low',
 	},
 	{
-		type: 'button',
 		name: 'volume_buttons',
 		icon: 'mdi:volume-plus',
 	},
@@ -106,7 +98,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		},
 	},
 	{
-		type: 'button',
 		name: 'up',
 		tap_action: {
 			action: 'key',
@@ -116,7 +107,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-up',
 	},
 	{
-		type: 'button',
 		name: 'down',
 		tap_action: {
 			action: 'key',
@@ -126,7 +116,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-down',
 	},
 	{
-		type: 'button',
 		name: 'left',
 		tap_action: {
 			action: 'key',
@@ -136,7 +125,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-left',
 	},
 	{
-		type: 'button',
 		name: 'right',
 		tap_action: {
 			action: 'key',
@@ -146,7 +134,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-right',
 	},
 	{
-		type: 'button',
 		name: 'center',
 		tap_action: {
 			action: 'key',
@@ -155,12 +142,10 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:circle',
 	},
 	{
-		type: 'button',
 		name: 'navigation_buttons',
 		icon: 'mdi:gamepad',
 	},
 	{
-		type: 'button',
 		name: 'dpad',
 		icon: 'mdi:gamepad',
 	},
@@ -325,7 +310,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:drag-variant',
 	},
 	{
-		type: 'button',
 		name: 'play_pause',
 		tap_action: {
 			action: 'perform-action',
@@ -338,7 +322,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:play-pause',
 	},
 	{
-		type: 'button',
 		name: 'play',
 		tap_action: {
 			action: 'perform-action',
@@ -352,7 +335,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:play',
 	},
 	{
-		type: 'button',
 		name: 'pause',
 		tap_action: {
 			action: 'perform-action',
@@ -366,7 +348,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:pause',
 	},
 	{
-		type: 'button',
 		name: 'music_play_pause',
 		tap_action: {
 			action: 'perform-action',
@@ -379,7 +360,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:music',
 	},
 	{
-		type: 'button',
 		name: 'picture_play_pause',
 		tap_action: {
 			action: 'perform-action',
@@ -392,7 +372,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:image',
 	},
 	{
-		type: 'button',
 		name: 'rewind',
 		tap_action: {
 			action: 'perform-action',
@@ -405,7 +384,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:rewind',
 	},
 	{
-		type: 'button',
 		name: 'fast_forward',
 		tap_action: {
 			action: 'perform-action',
@@ -418,25 +396,21 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:fast-forward',
 	},
 	{
-		type: 'button',
 		name: 'keyboard',
 		tap_action: { action: 'keyboard' },
 		icon: 'mdi:keyboard',
 	},
 	{
-		type: 'button',
 		name: 'textbox',
 		tap_action: { action: 'textbox' },
 		icon: 'mdi:text-box',
 	},
 	{
-		type: 'button',
 		name: 'search',
 		tap_action: { action: 'search' },
 		icon: 'mdi:kodi',
 	},
 	{
-		type: 'button',
 		name: 'channel_up',
 		tap_action: {
 			action: 'perform-action',
@@ -449,7 +423,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:arrow-up-bold-circle',
 	},
 	{
-		type: 'button',
 		name: 'channel_down',
 		tap_action: {
 			action: 'perform-action',
@@ -462,7 +435,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:arrow-down-bold-circle',
 	},
 	{
-		type: 'button',
 		name: 'info',
 		tap_action: {
 			action: 'key',
@@ -471,7 +443,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:information',
 	},
 	{
-		type: 'button',
 		name: 'codec',
 		tap_action: {
 			action: 'key',
@@ -480,7 +451,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:information-box',
 	},
 	{
-		type: 'button',
 		name: 'osd',
 		tap_action: {
 			action: 'key',
@@ -489,7 +459,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:television-guide',
 	},
 	{
-		type: 'button',
 		name: 'process_info',
 		tap_action: {
 			action: 'key',
@@ -498,7 +467,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:information-variant-circle',
 	},
 	{
-		type: 'button',
 		name: 'guide',
 		tap_action: {
 			action: 'perform-action',

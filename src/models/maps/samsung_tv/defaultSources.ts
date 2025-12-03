@@ -5,7 +5,6 @@ import { IElementConfig } from '../../interfaces';
  */
 export const samsungTVDefaultSources: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'appletv',
 		tap_action: {
 			action: 'source',
@@ -14,7 +13,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'appletv',
 	},
 	{
-		type: 'button',
 		name: 'dazn',
 		tap_action: {
 			action: 'source',
@@ -23,7 +21,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'dazn',
 	},
 	{
-		type: 'button',
 		name: 'disney',
 		tap_action: {
 			action: 'source',
@@ -32,7 +29,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'disney',
 	},
 	{
-		type: 'button',
 		name: 'dropout',
 		tap_action: {
 			action: 'source',
@@ -41,7 +37,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'dropout',
 	},
 	{
-		type: 'button',
 		name: 'hulu',
 		tap_action: {
 			action: 'source',
@@ -50,7 +45,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:hulu',
 	},
 	{
-		type: 'button',
 		name: 'nebula',
 		tap_action: {
 			action: 'source',
@@ -59,7 +53,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'nebula',
 	},
 	{
-		type: 'button',
 		name: 'netflix',
 		tap_action: {
 			action: 'source',
@@ -68,7 +61,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:netflix',
 	},
 	{
-		type: 'button',
 		name: 'max',
 		tap_action: {
 			action: 'source',
@@ -77,7 +69,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'hbomax',
 	},
 	{
-		type: 'button',
 		name: 'paramount',
 		tap_action: {
 			action: 'source',
@@ -86,7 +77,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'paramount',
 	},
 	{
-		type: 'button',
 		name: 'peacock',
 		tap_action: {
 			action: 'source',
@@ -95,7 +85,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'peacock',
 	},
 	{
-		type: 'button',
 		name: 'primevideo',
 		tap_action: {
 			action: 'source',
@@ -104,13 +93,11 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'primevideo',
 	},
 	{
-		type: 'button',
 		name: 'twitch',
 		tap_action: { action: 'source', source: 'Twitch' },
 		icon: 'mdi:twitch',
 	},
 	{
-		type: 'button',
 		name: 'youtube',
 		tap_action: {
 			action: 'source',
@@ -119,7 +106,6 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 		icon: 'mdi:youtube',
 	},
 	{
-		type: 'button',
 		name: 'youtubetv',
 		tap_action: {
 			action: 'source',

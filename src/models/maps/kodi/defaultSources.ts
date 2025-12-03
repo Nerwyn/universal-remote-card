@@ -6,7 +6,6 @@ import { IElementConfig } from '../../interfaces';
  */
 export const kodiDefaultSources: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'crunchyroll',
 		tap_action: {
 			action: 'source',
@@ -15,7 +14,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'crunchyroll',
 	},
 	{
-		type: 'button',
 		name: 'discoveryplus',
 		tap_action: {
 			action: 'source',
@@ -24,7 +22,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'discovery',
 	},
 	{
-		type: 'button',
 		name: 'disney',
 		tap_action: {
 			action: 'source',
@@ -33,7 +30,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'disney',
 	},
 	{
-		type: 'button',
 		name: 'espn',
 		tap_action: {
 			action: 'source',
@@ -42,7 +38,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'espn',
 	},
 	{
-		type: 'button',
 		name: 'hulu',
 		tap_action: {
 			action: 'source',
@@ -51,7 +46,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'mdi:hulu',
 	},
 	{
-		type: 'button',
 		name: 'max',
 		tap_action: {
 			action: 'source',
@@ -60,7 +54,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'hbomax',
 	},
 	{
-		type: 'button',
 		name: 'netflix',
 		tap_action: {
 			action: 'source',
@@ -69,7 +62,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'mdi:netflix',
 	},
 	{
-		type: 'button',
 		name: 'paramount',
 		tap_action: {
 			action: 'source',
@@ -78,7 +70,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'paramount',
 	},
 	{
-		type: 'button',
 		name: 'peacock',
 		tap_action: {
 			action: 'source',
@@ -87,7 +78,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'peacock',
 	},
 	{
-		type: 'button',
 		name: 'primevideo',
 		tap_action: {
 			action: 'source',
@@ -96,7 +86,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'primevideo',
 	},
 	{
-		type: 'button',
 		name: 'twitch',
 		tap_action: {
 			action: 'source',
@@ -105,7 +94,6 @@ export const kodiDefaultSources: IElementConfig[] = [
 		icon: 'mdi:twitch',
 	},
 	{
-		type: 'button',
 		name: 'youtube',
 		tap_action: {
 			action: 'source',

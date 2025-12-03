@@ -5,14 +5,12 @@ import { IElementConfig } from '../../interfaces';
  */
 export const appleTVDefaultKeys: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'power',
 		tap_action: { action: 'key', key: 'wakeup' },
 		hold_action: { action: 'key', key: 'suspend' },
 		icon: 'mdi:power',
 	},
 	{
-		type: 'button',
 		name: 'wakeup',
 		tap_action: {
 			action: 'key',
@@ -21,7 +19,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:power-on',
 	},
 	{
-		type: 'button',
 		name: 'suspend',
 		tap_action: {
 			action: 'key',
@@ -30,7 +27,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:power-off',
 	},
 	{
-		type: 'button',
 		name: 'home',
 		tap_action: {
 			action: 'key',
@@ -39,7 +35,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:home',
 	},
 	{
-		type: 'button',
 		name: 'menu',
 		tap_action: {
 			action: 'key',
@@ -48,7 +43,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:menu',
 	},
 	{
-		type: 'button',
 		name: 'top_menu',
 		tap_action: {
 			action: 'key',
@@ -57,7 +51,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:apple',
 	},
 	{
-		type: 'button',
 		name: 'volume_up',
 		tap_action: {
 			action: 'key',
@@ -67,7 +60,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:volume-high',
 	},
 	{
-		type: 'button',
 		name: 'volume_down',
 		tap_action: {
 			action: 'key',
@@ -91,7 +83,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		},
 	},
 	{
-		type: 'button',
 		name: 'up',
 		tap_action: {
 			action: 'key',
@@ -101,7 +92,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-up',
 	},
 	{
-		type: 'button',
 		name: 'down',
 		tap_action: {
 			action: 'key',
@@ -111,7 +101,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-down',
 	},
 	{
-		type: 'button',
 		name: 'left',
 		tap_action: {
 			action: 'key',
@@ -121,7 +110,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-left',
 	},
 	{
-		type: 'button',
 		name: 'right',
 		tap_action: {
 			action: 'key',
@@ -131,7 +119,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:chevron-right',
 	},
 	{
-		type: 'button',
 		name: 'center',
 		tap_action: {
 			action: 'key',
@@ -140,12 +127,10 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:circle',
 	},
 	{
-		type: 'button',
 		name: 'navigation_buttons',
 		icon: 'mdi:gamepad',
 	},
 	{
-		type: 'button',
 		name: 'dpad',
 		icon: 'mdi:gamepad',
 	},
@@ -270,7 +255,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:drag-variant',
 	},
 	{
-		type: 'button',
 		name: 'play_pause',
 		tap_action: {
 			action: 'perform-action',
@@ -279,7 +263,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:play-pause',
 	},
 	{
-		type: 'button',
 		name: 'play',
 		tap_action: {
 			action: 'key',
@@ -288,7 +271,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:play',
 	},
 	{
-		type: 'button',
 		name: 'pause',
 		tap_action: {
 			action: 'key',
@@ -297,7 +279,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:pause',
 	},
 	{
-		type: 'button',
 		name: 'skip_backward',
 		tap_action: {
 			action: 'key',
@@ -306,7 +287,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:skip-backward',
 	},
 	{
-		type: 'button',
 		name: 'skip_forward',
 		tap_action: {
 			action: 'key',
@@ -315,7 +295,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:skip-forward',
 	},
 	{
-		type: 'button',
 		name: 'previous',
 		tap_action: {
 			action: 'key',
@@ -324,7 +303,6 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:skip-previous',
 	},
 	{
-		type: 'button',
 		name: 'next',
 		tap_action: {
 			action: 'key',

@@ -140,7 +140,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				oldEntry = entries[this.entryIndex] as IElementConfig;
 				switch (
 					this.renderTemplate(
-						oldEntry?.type,
+						oldEntry?.type || 'button',
 						this.getEntryContext(oldEntry),
 					)
 				) {
@@ -186,7 +186,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				entry = (this.config.custom_actions ?? [])[this.entryIndex];
 				switch (
 					this.renderTemplate(
-						entry?.type,
+						entry?.type || 'button',
 						this.getEntryContext(entry),
 					)
 				) {
@@ -248,7 +248,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 					);
 					switch (
 						this.renderTemplate(
-							entries[this.entryIndex].type,
+							entries[this.entryIndex].type || 'button',
 							this.getEntryContext(yamlObj as IElementConfig),
 						)
 					) {
@@ -556,7 +556,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 	setActionsTab(i: number) {
 		let entry = this.config.custom_actions?.[i] ?? {
-			type: 'button',
 			name: '',
 		};
 		let context;
@@ -653,7 +652,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 		if (!icon.length) {
 			switch (
-				this.renderTemplate((entry as IElementConfig)?.type, context)
+				this.renderTemplate(
+					(entry as IElementConfig)?.type || 'button',
+					context,
+				)
 			) {
 				case 'touchpad':
 					icon = 'mdi:gesture-tap-button';
@@ -838,7 +840,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 						'button',
 					this.getEntryContext(
 						(this.activeEntry as IElementConfig) ?? {
-							type: 'button',
 							name: '',
 						},
 					),
@@ -1054,7 +1055,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 	buildCommonAppearanceOptions() {
 		const context = this.getEntryContext(
 			(this.activeEntry as IElementConfig) ?? {
-				type: 'button',
 				name: '',
 			},
 		);
@@ -2041,7 +2041,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				this.customActionsFromFile?.find(
 					(entry) => entry.name == name,
 				) ??
-				({ type: 'button', name: '' } as IElementConfig),
+				({ name: '' } as IElementConfig),
 		);
 
 		const defaultKeysList = this.DEFAULT_KEYS.map((entry) => {

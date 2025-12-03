@@ -5,7 +5,6 @@ import { IElementConfig } from '../../interfaces';
  */
 export const webosDefaultSources: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'disney',
 		tap_action: {
 			action: 'source',
@@ -14,7 +13,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'disney',
 	},
 	{
-		type: 'button',
 		name: 'dropout',
 		tap_action: {
 			action: 'source',
@@ -23,7 +21,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'dropout',
 	},
 	{
-		type: 'button',
 		name: 'nebula',
 		tap_action: {
 			action: 'source',
@@ -32,7 +29,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'nebula',
 	},
 	{
-		type: 'button',
 		name: 'netflix',
 		tap_action: {
 			action: 'key',
@@ -41,7 +37,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'mdi:netflix',
 	},
 	{
-		type: 'button',
 		name: 'primevideo',
 		tap_action: {
 			action: 'key',
@@ -50,7 +45,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'primevideo',
 	},
 	{
-		type: 'button',
 		name: 'rakutentv',
 		tap_action: {
 			action: 'source',
@@ -59,13 +53,11 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'rakutentv',
 	},
 	{
-		type: 'button',
 		name: 'twitch',
 		tap_action: { action: 'source', source: 'Twitch' },
 		icon: 'mdi:twitch',
 	},
 	{
-		type: 'button',
 		name: 'waiputv',
 		tap_action: {
 			action: 'source',
@@ -74,7 +66,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'waiputv',
 	},
 	{
-		type: 'button',
 		name: 'wow',
 		tap_action: {
 			action: 'source',
@@ -83,7 +74,6 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'wow',
 	},
 	{
-		type: 'button',
 		name: 'youtube',
 		tap_action: {
 			action: 'source',

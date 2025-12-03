@@ -5,7 +5,6 @@ import { IElementConfig } from '../../interfaces';
  */
 export const rokuDefaultSources: IElementConfig[] = [
 	{
-		type: 'button',
 		name: 'appletv',
 		tap_action: {
 			action: 'source',
@@ -14,7 +13,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'appletv',
 	},
 	{
-		type: 'button',
 		name: 'crunchyroll',
 		tap_action: {
 			action: 'source',
@@ -23,7 +21,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'crunchyroll',
 	},
 	{
-		type: 'button',
 		name: 'dazn',
 		tap_action: {
 			action: 'source',
@@ -32,7 +29,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'dazn',
 	},
 	{
-		type: 'button',
 		name: 'discoveryplus',
 		tap_action: {
 			action: 'source',
@@ -41,7 +37,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'discovery',
 	},
 	{
-		type: 'button',
 		name: 'disney',
 		tap_action: {
 			action: 'source',
@@ -50,7 +45,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'disney',
 	},
 	{
-		type: 'button',
 		name: 'dropout',
 		tap_action: {
 			action: 'source',
@@ -59,7 +53,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'dropout',
 	},
 	{
-		type: 'button',
 		name: 'emby',
 		tap_action: {
 			action: 'source',
@@ -68,7 +61,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:emby',
 	},
 	{
-		type: 'button',
 		name: 'f1tv',
 		tap_action: {
 			action: 'source',
@@ -77,7 +69,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'f1tv',
 	},
 	{
-		type: 'button',
 		name: 'foxsports',
 		tap_action: {
 			action: 'source',
@@ -86,7 +77,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'foxsports',
 	},
 	{
-		type: 'button',
 		name: 'hulu',
 		tap_action: {
 			action: 'source',
@@ -95,7 +85,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:hulu',
 	},
 	{
-		type: 'button',
 		name: 'jellyfin',
 		tap_action: {
 			action: 'source',
@@ -104,7 +93,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'jellyfin',
 	},
 	{
-		type: 'button',
 		name: 'max',
 		tap_action: {
 			action: 'source',
@@ -113,7 +101,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'hbomax',
 	},
 	{
-		type: 'button',
 		name: 'mlbtv',
 		tap_action: {
 			action: 'source',
@@ -122,7 +109,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mlbtv',
 	},
 	{
-		type: 'button',
 		name: 'nba',
 		tap_action: {
 			action: 'source',
@@ -131,7 +117,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'nba',
 	},
 	{
-		type: 'button',
 		name: 'nebula',
 		tap_action: {
 			action: 'source',
@@ -140,7 +125,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'nebula',
 	},
 	{
-		type: 'button',
 		name: 'netflix',
 		tap_action: {
 			action: 'source',
@@ -149,7 +133,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:netflix',
 	},
 	{
-		type: 'button',
 		name: 'pandora',
 		tap_action: {
 			action: 'source',
@@ -158,7 +141,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:pandora',
 	},
 	{
-		type: 'button',
 		name: 'paramount',
 		tap_action: {
 			action: 'source',
@@ -167,7 +149,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'paramount',
 	},
 	{
-		type: 'button',
 		name: 'peacock',
 		tap_action: {
 			action: 'source',
@@ -176,7 +157,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'peacock',
 	},
 	{
-		type: 'button',
 		name: 'plex',
 		tap_action: {
 			action: 'source',
@@ -185,7 +165,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:plex',
 	},
 	{
-		type: 'button',
 		name: 'primevideo',
 		tap_action: {
 			action: 'source',
@@ -194,7 +173,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'primevideo',
 	},
 	{
-		type: 'button',
 		name: 'spotify',
 		tap_action: {
 			action: 'source',
@@ -203,7 +181,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:spotify',
 	},
 	{
-		type: 'button',
 		name: 'vudu',
 		tap_action: {
 			action: 'source',
@@ -212,7 +189,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'vudu',
 	},
 	{
-		type: 'button',
 		name: 'youtube',
 		tap_action: {
 			action: 'source',
@@ -221,7 +197,6 @@ export const rokuDefaultSources: IElementConfig[] = [
 		icon: 'mdi:youtube',
 	},
 	{
-		type: 'button',
 		name: 'youtubetv',
 		tap_action: {
 			action: 'source',
