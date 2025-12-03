@@ -11,8 +11,8 @@ export async function handleConfirmation(
 	node: HassElement,
 	action: IAction,
 ): Promise<boolean> {
-	const confirmation = action.confirmation;
 	const hass = node.hass;
+	const confirmation = action.confirmation;
 
 	if (
 		confirmation &&
