@@ -3,6 +3,7 @@ export {};
 declare global {
 	interface Window {
 		customCards: CustomCard[];
+		loadCardHelpers: () => Promise<CardHelpers>;
 	}
 
 	interface CustomCard {

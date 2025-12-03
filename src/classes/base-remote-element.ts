@@ -2,12 +2,7 @@ import { CSSResult, LitElement, PropertyValues, css, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { hasTemplate, renderTemplate } from 'ha-nunjucks';
-import {
-	Action,
-	HapticType,
-	HomeAssistant,
-	IConfirmation,
-} from '../models/interfaces';
+import { Action, HapticType, HomeAssistant } from '../models/interfaces';
 
 import { load } from 'js-yaml';
 import { UPDATE_AFTER_ACTION_DELAY } from '../models/constants';
@@ -21,7 +16,7 @@ import {
 } from '../models/interfaces';
 import { MdRipple } from '../models/interfaces/MdRipple';
 import { defaultIcons } from '../models/maps';
-import { deepGet, deepSet, getDeepKeys } from '../utils';
+import { deepGet, deepSet, getDeepKeys, handleConfirmation } from '../utils';
 
 export class BaseRemoteElement extends LitElement {
 	@property() hass!: HomeAssistant;
@@ -138,7 +133,7 @@ export class BaseRemoteElement extends LitElement {
 		}
 
 		action &&= this.deepRenderTemplate(action);
-		if (!action || !(await this.handleConfirmation(action))) {
+		if (!action || !(await handleConfirmation(this, action))) {
 			return;
 		}
 
@@ -480,101 +475,6 @@ export class BaseRemoteElement extends LitElement {
 		});
 		event.detail = action;
 		this.dispatchEvent(event);
-	}
-
-	async handleConfirmation(action: IAction): Promise<boolean> {
-		if (
-			action.confirmation &&
-			(!(action.confirmation as IConfirmation).exemptions ||
-				!(action.confirmation as IConfirmation).exemptions?.some(
-					(e) => e.user == this.hass.user?.id,
-				))
-		) {
-			// Retrieve original confirmation text or get translation
-			let text = (action.confirmation as IConfirmation).text;
-			if (!text) {
-				let serviceName;
-				const [domain, service] = (
-					action.perform_action ??
-					action['service' as 'perform_action'] ??
-					''
-				).split('.');
-				if (this.hass.services[domain]?.[service]) {
-					const localize =
-						await this.hass.loadBackendTranslation('title');
-					serviceName = `${
-						localize(`component.${domain}.title`) || domain
-					}: ${
-						localize(
-							`component.${domain}.services.${service}.name`,
-						) ||
-						this.hass.services[domain][service].name ||
-						service
-					}`;
-				}
-
-				text = this.hass.localize(
-					'ui.panel.lovelace.cards.actions.action_confirmation',
-					{
-						action:
-							serviceName ??
-							this.hass.localize(
-								`ui.panel.lovelace.editor.action-editor.actions.${action.action}`,
-							) ??
-							action.action,
-					},
-				);
-			}
-
-			// Use hass-action to fire a dom event with a confirmation
-			const event = new Event('hass-action', {
-				bubbles: true,
-				composed: true,
-			});
-			event.detail = {
-				action: 'tap',
-				config: {
-					tap_action: {
-						action: 'fire-dom-event',
-						confirmation: {
-							text,
-						},
-						confirmed: true,
-					},
-				},
-			};
-			this.dispatchEvent(event);
-
-			return new Promise((resolve) => {
-				// Cleanup timeout and event listeners
-				let cancelTimeout: ReturnType<typeof setTimeout>;
-				const cleanup = () => {
-					clearTimeout(cancelTimeout);
-					window.removeEventListener('ll-custom', confirmTrue);
-					window.removeEventListener('dialog-closed', confirmFalse);
-				};
-
-				// ll-custom event is fired when the user accepts the confirmation
-				const confirmTrue = (e: Event) => {
-					if (e.detail.confirmed) {
-						cleanup();
-						resolve(true);
-					}
-				};
-				window.addEventListener('ll-custom', confirmTrue);
-
-				// dialog-closed event is always fired
-				// The timeout allows the ll-custom listener to resolve true before this one resolves false
-				const confirmFalse = () => {
-					cancelTimeout = setTimeout(() => {
-						cleanup();
-						resolve(false);
-					}, 100);
-				};
-				window.addEventListener('dialog-closed', confirmFalse);
-			});
-		}
-		return true;
 	}
 
 	showFailureToast(action: Action) {
