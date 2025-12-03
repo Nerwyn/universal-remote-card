@@ -169,7 +169,7 @@ export const androidTVDefaultSources: IElementConfig[] = [
 	},
 	{
 		name: 'paramount',
-		tap_action: { action: 'source', source: 'com.cbs.ott' },
+		tap_action: { action: 'source', source: 'com.cbs.ca' },
 		icon: 'paramount',
 	},
 	{
