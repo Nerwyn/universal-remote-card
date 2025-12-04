@@ -37,7 +37,10 @@ export function getDefaultActions(platform: Platform) {
 			for (const p of Platforms.filter((p) => p != 'Generic Remote')) {
 				const [keys, sources] = getDefaultActions(p);
 				for (const key of keys) {
-					if (key.type == 'button' && !names.has(key.name)) {
+					if (
+						(key.type || 'button') == 'button' &&
+						!names.has(key.name)
+					) {
 						names.add(key.name);
 						const action: IElementConfig = {
 							name: key.name,
