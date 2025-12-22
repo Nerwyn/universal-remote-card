@@ -2664,19 +2664,22 @@ export class UniversalRemoteCardEditor extends LitElement {
 						case 'service' as 'perform-action':
 						case 'perform-action':
 							// Move target IDs from data to target
-							for (const targetId of [
-								'entity_id',
-								'device_id',
-								'area_id',
-								'label_id',
-							]) {
-								if (action.data?.[targetId]) {
-									action.target = action.target ?? {};
-									action.target[targetId as keyof ITarget] =
-										action.data?.[targetId] as
+							if (typeof action.target != 'string') {
+								for (const targetId of [
+									'entity_id',
+									'device_id',
+									'area_id',
+									'label_id',
+								]) {
+									if (action.data?.[targetId]) {
+										action.target = action.target ?? {};
+										action.target[
+											targetId as keyof ITarget
+										] = action.data?.[targetId] as
 											| string
 											| string[];
-									delete action.data?.[targetId];
+										delete action.data?.[targetId];
+									}
 								}
 							}
 						// falls through

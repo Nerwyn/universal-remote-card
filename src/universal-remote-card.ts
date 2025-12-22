@@ -777,13 +777,12 @@ class UniversalRemoteCard extends LitElement {
 			}
 		}
 
-		if (changedProperties.has('config')) {
-			if (
-				JSON.stringify(this.config) !=
+		if (
+			changedProperties.has('config') &&
+			JSON.stringify(this.config) !=
 				JSON.stringify(changedProperties.get('config'))
-			) {
-				return true;
-			}
+		) {
+			return true;
 		}
 
 		// Explicitly requested update

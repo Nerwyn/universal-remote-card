@@ -711,7 +711,8 @@ export class BaseRemoteElement extends LitElement {
 		let value: string | number = context['value' as keyof typeof context];
 		if (
 			value != undefined &&
-			typeof value == 'number' &&
+			!isNaN(value as number) &&
+			(value as string)?.trim?.() != '' &&
 			this.precision != undefined
 		) {
 			value = Number(value).toFixed(this.precision);
@@ -920,11 +921,12 @@ export class BaseRemoteElement extends LitElement {
 			}
 		}
 
-		if (changedProperties.has('config')) {
-			return (
-				JSON.stringify(this.config) !=
+		if (
+			changedProperties.has('config') &&
+			JSON.stringify(this.config) !=
 				JSON.stringify(changedProperties.get('config'))
-			);
+		) {
+			return true;
 		}
 
 		return (
