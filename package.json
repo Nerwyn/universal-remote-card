@@ -1,6 +1,6 @@
 {
 	"name": "universal-remote-card",
-	"version": "4.9.3",
+	"version": "4.9.4",
 	"description": "Universal Remote Card",
 	"main": "./dist/universal-remote-card.min.js",
 	"type": "module",
@@ -38,7 +38,8 @@
 	"dependencies": {
 		"ha-nunjucks": "latest",
 		"js-yaml": "latest",
-		"lit": "latest"
+		"lit": "latest",
+		"process": "latest"
 	},
 	"devDependencies": {
 		"@rspack/cli": "latest",

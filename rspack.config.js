@@ -1,15 +1,9 @@
 import { defineConfig } from '@rspack/cli';
-import { execSync } from 'child_process';
-
-let env =
-	execSync('git branch --show-current').toString().trim() == 'main'
-		? 'production'
-		: 'development';
-env = 'production';
+import rspack from '@rspack/core';
 
 export default defineConfig([
 	{
-		mode: env,
+		mode: 'production',
 		entry: {
 			main: './src/universal-remote-card.ts',
 		},
@@ -38,11 +32,16 @@ export default defineConfig([
 				},
 			],
 		},
+		plugins: [
+			new rspack.ProvidePlugin({
+				process: 'process/browser',
+			}),
+		],
 		performance: {
 			hints: false,
 			maxEntrypointSize: 512000,
 			maxAssetSize: 512000,
 		},
-		devtool: env == 'production' ? false : 'eval',
+		devtool: false,
 	},
 ]);
