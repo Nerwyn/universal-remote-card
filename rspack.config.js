@@ -8,7 +8,7 @@ export default defineConfig([
 			main: './src/universal-remote-card.ts',
 		},
 		output: {
-			filename: './dist/universal-remote-card.min.js',
+			filename: 'universal-remote-card.min.js',
 		},
 		resolve: {
 			extensions: ['.ts', '.tsx', '.js'],
