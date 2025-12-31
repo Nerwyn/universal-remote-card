@@ -13,6 +13,13 @@ export default defineConfig([
 					varsIgnorePattern: '^_',
 				},
 			],
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+				},
+			],
 		},
 		ignores: ['node_modules/*', 'dist/*'],
 	},
