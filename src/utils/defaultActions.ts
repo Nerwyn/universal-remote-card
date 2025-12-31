@@ -30,7 +30,7 @@ export function getDefaultActions(platform: Platform) {
 	let defaultKeys: IElementConfig[];
 	let defaultSources: IElementConfig[];
 	switch (platform) {
-		case 'Generic Remote':
+		case 'Generic Remote': {
 			const names = new Set();
 			defaultKeys = [...genericRemoteDefaultKeys];
 			defaultSources = [];
@@ -69,6 +69,7 @@ export function getDefaultActions(platform: Platform) {
 				}
 			}
 			break;
+		}
 		case 'Yamaha YNCA':
 			defaultKeys = yamahaYNCADefaultKeys;
 			defaultSources = yamahaYNCADefaultSources;

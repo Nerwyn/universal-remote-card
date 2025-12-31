@@ -35,10 +35,11 @@ export class RemoteSlider extends BaseRemoteElement {
 	pressedTimeout?: ReturnType<typeof setTimeout>;
 
 	set _value(value: string | number | boolean | undefined) {
-		value = Math.max(
-			Math.min(Number(value) ?? this.range[0], this.range[1]),
-			this.range[0],
-		);
+		value = Number(value);
+		if (isNaN(value)) {
+			value = this.range[0];
+		}
+		value = Math.max(Math.min(value, this.range[1]), this.range[0]);
 		if (isNaN(value)) {
 			value = this.range[0];
 		}
@@ -365,7 +366,8 @@ export class RemoteSlider extends BaseRemoteElement {
 					--color: var(--primary-text-color);
 					--height: 48px;
 					--thumb-translate: var(--thumb-offset) 0;
-					--thumb-transition: translate 180ms ease-in-out,
+					--thumb-transition:
+						translate 180ms ease-in-out,
 						background 180ms ease-in-out;
 					--tooltip-transform: translate(
 						var(--thumb-offset),

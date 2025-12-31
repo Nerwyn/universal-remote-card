@@ -514,7 +514,7 @@ class UniversalRemoteCard extends LitElement {
 			row = [row];
 		}
 		const rowContent: TemplateResult[] = [];
-		for (let elementName of row) {
+		for (const elementName of row) {
 			if (typeof elementName == 'object' && elementName != null) {
 				rowContent.push(
 					this.buildElements(elementName, !isColumn, context),

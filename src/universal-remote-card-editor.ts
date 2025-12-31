@@ -753,7 +753,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 															.config.attribute
 															? ` ⸱ ${context.config.attribute}`
 															: ''}</span
-												  >`
+													>`
 												: ''}
 										</div>
 									</div>
@@ -1005,7 +1005,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 								},
 							},
 							autofill ? 'state' : undefined,
-					  )
+						)
 					: ''
 			}
 			<div class="actions-form">
@@ -1024,7 +1024,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 					{
 						boolean: {},
 					},
-					autofill ? this.config.haptics ?? HAPTICS : HAPTICS,
+					autofill ? (this.config.haptics ?? HAPTICS) : HAPTICS,
 				)}
 			</div>
 		</div> `;
@@ -1155,61 +1155,63 @@ export class UniversalRemoteCardEditor extends LitElement {
 						(autofill
 							? this.config.double_tap_window
 							: undefined) ?? DOUBLE_TAP_WINDOW,
-				  )
+					)
 				: actionType.includes('hold_action') &&
-				  (this.activeEntry as IElementConfig)[actionType]
-				? html`<div class="actions-form">
-						${this.buildSelector(
-							'Hold time',
-							`${actionType}.hold_time`,
-							{
-								number: {
-									min: 0,
-									step: 0,
-									mode: 'box',
-									unit_of_measurement: 'ms',
-								},
-							},
-							(autofill ? this.config.hold_time : undefined) ??
-								HOLD_TIME,
-						)}
-						${this.renderTemplate(
-							(this.activeEntry as IElementConfig)?.[actionType]
-								?.action as string,
-							context,
-						) == 'repeat'
-							? this.buildSelector(
-									'Repeat delay',
-									`${actionType}.repeat_delay`,
-									{
-										number: {
-											min: 0,
-											step: 0,
-											mode: 'box',
-											unit_of_measurement: 'ms',
-										},
+					  (this.activeEntry as IElementConfig)[actionType]
+					? html`<div class="actions-form">
+							${this.buildSelector(
+								'Hold time',
+								`${actionType}.hold_time`,
+								{
+									number: {
+										min: 0,
+										step: 0,
+										mode: 'box',
+										unit_of_measurement: 'ms',
 									},
-									(autofill
-										? this.config.repeat_delay
-										: undefined) ?? REPEAT_DELAY,
-							  )
-							: ''}
-				  </div>`
-				: action != 'none' && showSamplingDelay
-				? this.buildSelector(
-						'Sampling delay',
-						`${actionType}.repeat_delay`,
-						{
-							number: {
-								min: 0,
-								step: 0,
-								mode: 'box',
-								unit_of_measurement: 'ms',
-							},
-						},
-						0,
-				  )
-				: ''}
+								},
+								(autofill
+									? this.config.hold_time
+									: undefined) ?? HOLD_TIME,
+							)}
+							${this.renderTemplate(
+								(this.activeEntry as IElementConfig)?.[
+									actionType
+								]?.action as string,
+								context,
+							) == 'repeat'
+								? this.buildSelector(
+										'Repeat delay',
+										`${actionType}.repeat_delay`,
+										{
+											number: {
+												min: 0,
+												step: 0,
+												mode: 'box',
+												unit_of_measurement: 'ms',
+											},
+										},
+										(autofill
+											? this.config.repeat_delay
+											: undefined) ?? REPEAT_DELAY,
+									)
+								: ''}
+						</div>`
+					: action != 'none' && showSamplingDelay
+						? this.buildSelector(
+								'Sampling delay',
+								`${actionType}.repeat_delay`,
+								{
+									number: {
+										min: 0,
+										step: 0,
+										mode: 'box',
+										unit_of_measurement: 'ms',
+									},
+								},
+								0,
+							)
+						: ''}
 			${action == 'key'
 				? html`<div class="actions-form">
 							${this.buildSelector(
@@ -1223,7 +1225,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 									},
 								},
 								autofill
-									? this.PLATFORM ?? 'Android TV'
+									? (this.PLATFORM ?? 'Android TV')
 									: 'Android TV',
 							)}
 							${['Kodi', 'LG webOS', 'Denon AVR'].includes(
@@ -1242,7 +1244,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										autofill
 											? this.config.media_player_id
 											: undefined,
-								  )
+									)
 								: this.buildSelector(
 										'Remote ID',
 										`${actionType}.remote_id`,
@@ -1256,7 +1258,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										autofill
 											? this.config.remote_id
 											: undefined,
-								  )}
+									)}
 						</div>
 						${this.buildSelector('Key', `${actionType}.key`, {
 							text: {},
@@ -1275,7 +1277,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 									},
 								},
 								autofill
-									? this.PLATFORM ?? 'Android TV'
+									? (this.PLATFORM ?? 'Android TV')
 									: 'Android TV',
 							)}
 							${['Android TV'].includes(platform)
@@ -1292,7 +1294,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										autofill
 											? this.config.remote_id
 											: undefined,
-								  )
+									)
 								: this.buildSelector(
 										'Media Player ID',
 										`${actionType}.media_player_id`,
@@ -1306,7 +1308,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										autofill
 											? this.config.media_player_id
 											: undefined,
-								  )}
+									)}
 						</div>
 						${this.buildSelector('Source', `${actionType}.source`, {
 							text: {},
@@ -1331,7 +1333,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 									? this.KeyboardPlatforms.includes(
 											this.config.platform ??
 												'Android TV',
-									  )
+										)
 										? this.PLATFORM
 										: 'Android TV'
 									: 'Android TV',
@@ -1380,7 +1382,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												: undefined,
 										);
 										break;
-									case 'Roku':
+									case 'Roku': {
 										const domain =
 											action == 'search'
 												? 'media_player'
@@ -1400,6 +1402,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												: undefined,
 										);
 										break;
+									}
 									case 'Samsung TV':
 									case 'LG webOS':
 										if (action == 'search') {
@@ -1459,17 +1462,18 @@ export class UniversalRemoteCardEditor extends LitElement {
 							entity: {},
 						},
 						autofill
-							? (this.activeEntry as IElementConfig)?.entity_id ??
+							? ((this.activeEntry as IElementConfig)
+									?.entity_id ??
 									this.config.remote_id ??
 									this.config.media_player_id ??
-									this.config.keyboard_id
+									this.config.keyboard_id)
 							: undefined,
-				  )
+					)
 				: ''}
 			${action == 'toggle'
 				? this.buildSelector('Target', `${actionType}.target`, {
 						target: {},
-				  })
+					})
 				: ''}
 			${buildCodeEditor || action == 'fire-dom-event'
 				? this.buildCodeEditor('action', actionType)
@@ -1481,7 +1485,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							'warning',
 						)}
 						${this.buildCodeEditor('eval', actionType)}
-				  `
+					`
 				: ''}
 			${action != 'none'
 				? html`${this.buildSelector(
@@ -1491,8 +1495,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 							boolean: {},
 						},
 						false,
-				  )}
-				  ${(this.activeEntry as IElementConfig)?.[actionType]
+					)}
+					${(this.activeEntry as IElementConfig)?.[actionType]
 						?.confirmation
 						? html`${this.buildSelector(
 								'Text',
@@ -1500,8 +1504,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 								{
 									text: {},
 								},
-						  )}
-						  ${this.buildSelector(
+							)}
+							${this.buildSelector(
 								'Exemptions',
 								`${actionType}.confirmation.exemptions`,
 								{
@@ -1512,7 +1516,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										reorder: false,
 									},
 								},
-						  )}`
+							)}`
 						: ''}`
 				: ''}
 		</div>`;
@@ -1571,6 +1575,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 					`;
 					break;
 				}
+			// falls through
 			case 1:
 				actionSelectors = html`
 					${this.buildAlertBox(
@@ -1627,7 +1632,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				${showKeyboardKey
 					? this.buildSelector('Keyboard Key', 'keypress', {
 							text: {},
-					  })
+						})
 					: ''}
 			`)}
 		`;
@@ -1796,7 +1801,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 								'Multi-touch double tap behavior (optional)',
 								'multi_double_tap_action',
 								defaultUiActions,
-						  )
+							)
 						: ''}
 					${this.buildActionOption(
 						'Multi-touch hold behavior (optional)',
@@ -1825,7 +1830,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 								'Double tap behavior (optional)',
 								'double_tap_action',
 								defaultUiActions,
-						  )
+							)
 						: ''}
 					${this.buildActionOption(
 						'Hold behavior (optional)',
@@ -2063,7 +2068,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		const defaultSourcesList = this.DEFAULT_SOURCES.length
 			? this.DEFAULT_SOURCES.sort((a, b) =>
 					a.name < b.name ? -1 : 1,
-			  ).map((entry) => {
+				).map((entry) => {
 					if (customActionNames.includes(entry.name)) {
 						return '';
 					}
@@ -2079,7 +2084,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 					>
 						${iconElement} ${entry.name}
 					</li>`;
-			  })
+				})
 			: '';
 
 		return html`<div class="content">
@@ -2132,7 +2137,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 											${defaultKeysList}
 										</ul>
 									</div>
-							  </div>`
+								</div>`
 							: ''}
 						${defaultSourcesList.length
 							? html`<div class="wrapper">
@@ -2144,7 +2149,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 											${defaultSourcesList}
 										</ul>
 									</div>
-							  </div>`
+								</div>`
 							: ''}
 					</div>
 				</div>
@@ -2180,7 +2185,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												domain: 'remote',
 											},
 										},
-								  })
+									})
 								: ''}
 							${this.MediaPlayerPlatforms.includes(platform)
 								? this.buildSelector(
@@ -2193,7 +2198,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												},
 											},
 										},
-								  )
+									)
 								: ''}
 							${this.ADBKeyboardPlatforms.includes(platform)
 								? this.buildSelector(
@@ -2209,7 +2214,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												},
 											},
 										},
-								  )
+									)
 								: ''}
 							${this.DevicePlatforms.includes(platform)
 								? this.buildSelector(
@@ -2218,7 +2223,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										{
 											text: {},
 										},
-								  )
+									)
 								: ''}
 						</div>
 					</div>
@@ -2322,7 +2327,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 								(error) => html`<li>${error}</li>`,
 							)}
 						</ul>
-				  </div>`
+					</div>`
 				: ''}
 		`;
 	}
