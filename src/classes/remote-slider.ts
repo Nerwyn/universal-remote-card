@@ -218,8 +218,6 @@ export class RemoteSlider extends BaseRemoteElement {
 	}
 
 	shouldUpdate(changedProperties: PropertyValues): boolean {
-		const should = super.shouldUpdate(changedProperties);
-
 		if (changedProperties.has('hass')) {
 			const min =
 				parseFloat(
@@ -251,13 +249,14 @@ export class RemoteSlider extends BaseRemoteElement {
 			const vertical =
 				this.renderTemplate(this.config.vertical ?? false) == true;
 
-			if (
+			const rangeChanged =
 				min != this.range[0] ||
 				max != this.range[1] ||
 				step != this.step ||
 				precision != this.precision ||
-				vertical != this.vertical
-			) {
+				vertical != this.vertical;
+
+			if (rangeChanged) {
 				this.range = [min, max];
 				this.step = step;
 				this.precision = precision;
@@ -267,9 +266,14 @@ export class RemoteSlider extends BaseRemoteElement {
 				} else {
 					this.removeAttribute('vertical');
 				}
-				return true;
 			}
+
+			const should = super.shouldUpdate(changedProperties);
+
+			return should || rangeChanged;
 		}
+
+		const should = super.shouldUpdate(changedProperties);
 
 		return (
 			should ||
