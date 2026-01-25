@@ -551,6 +551,12 @@ export class BaseRemoteElement extends LitElement {
 						case 'media_position':
 							try {
 								const setIntervalValue = () => {
+									if (!this.getValueFromHass) {
+										clearInterval(this.valueUpdateInterval);
+										this.valueUpdateInterval = undefined;
+										return;
+									}
+
 									if (
 										this.hass.states[
 											this.entityId as string
