@@ -969,7 +969,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 					options: [
 						...this.DEFAULT_KEYS.filter(
 							(action) =>
-								action.type ==
+								(action.type ?? 'button') ==
 								((this.activeEntry as IElementConfig).type ??
 									'button'),
 						).map((action) => action.name),
