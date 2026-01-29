@@ -433,7 +433,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	addEntry(e: Event) {
-		const i = e.detail.index as number;
+		// const i = e.detail.index as number;
+		const elementType = e.detail.item.value;
 		let entries: IElementConfig[] | IIconConfig[];
 		switch (this.baseTabIndex) {
 			case 3:
@@ -447,7 +448,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			default: {
 				entries = structuredClone(this.config.custom_actions) ?? [];
 				entries.push({
-					type: RemoteElementTypes[i],
+					type: elementType,
 					name: '',
 				});
 				break;
@@ -805,11 +806,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 			case 2:
 			default:
 				return html`
-					<ha-button-menu
-						fixed
-						class="add-list-item"
-						@action=${this.addEntry}
-						@closed=${(e: Event) => e.stopPropagation()}
+					<ha-dropdown
+						@wa-select=${this.addEntry}
+						placement="bottom-end"
 					>
 						<ha-button slot="trigger">
 							<ha-icon .icon=${'mdi:plus'} slot="start"></ha-icon
@@ -817,12 +816,12 @@ export class UniversalRemoteCardEditor extends LitElement {
 						>
 						${RemoteElementTypes.map(
 							(entryType) => html`
-								<ha-list-item .value=${entryType}>
+								<ha-dropdown-item value=${entryType}>
 									${entryType}
-								</ha-list-item>
+								</ha-dropdown-item>
 							`,
 						)}
-					</ha-button-menu>
+					</ha-dropdown>
 				`;
 		}
 	}
@@ -3369,7 +3368,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			ha-button::part(label) {
 				text-transform: capitalize;
 			}
-			ha-list-item {
+			ha-dropdown-item {
 				text-transform: capitalize;
 			}
 
