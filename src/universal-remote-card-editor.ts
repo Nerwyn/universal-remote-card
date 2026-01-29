@@ -433,7 +433,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	addEntry(e: Event) {
-		// const i = e.detail.index as number;
 		const elementType = e.detail.item.value;
 		let entries: IElementConfig[] | IIconConfig[];
 		switch (this.baseTabIndex) {
