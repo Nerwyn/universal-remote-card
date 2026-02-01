@@ -1,29 +1,25 @@
 {
 	"singleQuote": true,
-	"tabWidth": 4,
+	"tabWidth": 2,
 	"useTabs": true,
 	"semi": true,
-	"endOfLine": "crlf",
 	"plugins": ["prettier-plugin-organize-imports"],
 	"overrides": [
 		{
 			"files": "*.yaml",
 			"options": {
-				"tabWidth": 2,
 				"useTabs": false
 			}
 		},
 		{
 			"files": "*.yml",
 			"options": {
-				"tabWidth": 2,
 				"useTabs": false
 			}
 		},
 		{
 			"files": "*.md",
 			"options": {
-				"tabWidth": 2,
 				"useTabs": false
 			}
 		}

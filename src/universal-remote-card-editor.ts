@@ -149,8 +149,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 						if (this.directionTabIndex != 2) {
 							updatedEntry = {
 								...oldEntry,
-								[this.DIRECTION_TABS[this.directionTabIndex]]:
-									entry,
+								[this.DIRECTION_TABS[this.directionTabIndex]]: entry,
 							};
 							break;
 						}
@@ -195,9 +194,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 						if (this.directionTabIndex != 2) {
 							return (
 								(entry[
-									this.DIRECTION_TABS[
-										this.directionTabIndex
-									] as DirectionAction
+									this.DIRECTION_TABS[this.directionTabIndex] as DirectionAction
 								] as IElementConfig) ?? {}
 							);
 						}
@@ -235,17 +232,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 			const yamlObj = load(this.yaml);
 			switch (this.baseTabIndex) {
 				case 3: {
-					const entries = structuredClone(
-						this.config.custom_icons ?? [],
-					);
+					const entries = structuredClone(this.config.custom_icons ?? []);
 					entries[this.entryIndex] = yamlObj as IIconConfig;
 					this.entriesChanged(entries);
 					break;
 				}
 				case 2: {
-					const entries = structuredClone(
-						this.config.custom_actions ?? [],
-					);
+					const entries = structuredClone(this.config.custom_actions ?? []);
 					switch (
 						this.renderTemplate(
 							entries[this.entryIndex].type || 'button',
@@ -267,8 +260,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 						case 'slider':
 						case 'button':
 						default:
-							entries[this.entryIndex] =
-								yamlObj as IElementConfig;
+							entries[this.entryIndex] = yamlObj as IElementConfig;
 					}
 					this.entriesChanged(entries);
 					break;
@@ -456,17 +448,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 		this.entriesChanged(entries);
 		const entriesList = this.shadowRoot?.querySelector('.features');
 		if (entriesList) {
-			setTimeout(
-				() => (entriesList.scrollTop = entriesList.scrollHeight),
-				100,
-			);
+			setTimeout(() => (entriesList.scrollTop = entriesList.scrollHeight), 100);
 		}
 	}
 
 	removeEntry(e: Event) {
-		const i = (
-			e.currentTarget as unknown as Event & Record<'index', number>
-		).index;
+		const i = (e.currentTarget as unknown as Event & Record<'index', number>)
+			.index;
 		let entries: IElementConfig[] | IIconConfig[];
 		switch (this.baseTabIndex) {
 			case 3:
@@ -516,9 +504,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 				break;
 		}
 		entries = structuredClone(entries);
-		const i = (
-			e.currentTarget as unknown as Event & Record<'index', number>
-		).index;
+		const i = (e.currentTarget as unknown as Event & Record<'index', number>)
+			.index;
 		const entry = structuredClone(entries[i]);
 		entry.name = `${entry['name' as keyof object]}_copy`;
 		(entries as IElementConfig[]).splice(
@@ -533,9 +520,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 	editEntry(e: Event) {
 		this.yamlStringsCache = {};
 		this.yamlString = undefined;
-		const i = (
-			e.currentTarget as unknown as Event & Record<'index', number>
-		).index;
+		const i = (e.currentTarget as unknown as Event & Record<'index', number>)
+			.index;
 		switch (this.baseTabIndex) {
 			case 3:
 				break;
@@ -569,17 +555,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 				if (this.directionTabIndex != 2) {
 					entry =
 						(entry[
-							this.DIRECTION_TABS[
-								this.directionTabIndex
-							] as DirectionAction
+							this.DIRECTION_TABS[this.directionTabIndex] as DirectionAction
 						] as IElementConfig) ?? {};
 				}
 				context = this.getEntryContext(entry);
 				if (
-					this.renderTemplate(
-						entry?.drag_action?.action ?? 'none',
-						context,
-					) != 'none' ||
+					this.renderTemplate(entry?.drag_action?.action ?? 'none', context) !=
+						'none' ||
 					this.renderTemplate(
 						entry?.multi_drag_action?.action ?? 'none',
 						context,
@@ -705,19 +687,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 		return html`
 			<div class="content">
 				<div class="title-header">${header}</div>
-				<ha-sortable
-					handle-selector=".handle"
-					@item-moved=${this.moveEntry}
-				>
+				<ha-sortable handle-selector=".handle" @item-moved=${this.moveEntry}>
 					<div class="features">
 						${entries.map((entry, i) => {
-							const context = this.getEntryContext(
-								entry as IElementConfig,
-							);
-							const iconElement = this.buildIconElement(
-								entry,
-								context,
-							);
+							const context = this.getEntryContext(entry as IElementConfig);
+							const iconElement = this.buildIconElement(entry, context);
 							const label = this.renderTemplate(
 								(entry as IElementConfig).label as string,
 								context,
@@ -726,31 +700,22 @@ export class UniversalRemoteCardEditor extends LitElement {
 								(entry as IElementConfig).type as string,
 								context,
 							);
-							const name = this.renderTemplate(
-								entry.name as string,
-								context,
-							);
+							const name = this.renderTemplate(entry.name as string, context);
 							return html`
 								<div class="feature-list-item">
 									<div class="handle">
-										<ha-icon
-											.icon="${'mdi:drag'}"
-										></ha-icon>
+										<ha-icon .icon="${'mdi:drag'}"></ha-icon>
 									</div>
 									<div class="feature-list-item-content">
 										${iconElement}
 										<div class="feature-list-item-label">
 											<span class="primary"
 												>${entryType} ⸱ ${name}
-												${label
-													? ` ⸱ ${label}`
-													: ''}</span
+												${label ? ` ⸱ ${label}` : ''}</span
 											>
 											${context.config.entity
 												? html`<span class="secondary"
-														>${context.config
-															.entity}${context
-															.config.attribute
+														>${context.config.entity}${context.config.attribute
 															? ` ⸱ ${context.config.attribute}`
 															: ''}</span
 													>`
@@ -762,27 +727,21 @@ export class UniversalRemoteCardEditor extends LitElement {
 										.index=${i}
 										@click=${this.copyEntry}
 									>
-										<ha-icon
-											.icon="${'mdi:content-copy'}"
-										></ha-icon>
+										<ha-icon .icon="${'mdi:content-copy'}"></ha-icon>
 									</ha-icon-button>
 									<ha-icon-button
 										class="edit-icon"
 										.index=${i}
 										@click=${this.editEntry}
 									>
-										<ha-icon
-											.icon="${'mdi:pencil'}"
-										></ha-icon>
+										<ha-icon .icon="${'mdi:pencil'}"></ha-icon>
 									</ha-icon-button>
 									<ha-icon-button
 										class="remove-icon"
 										.index=${i}
 										@click=${this.removeEntry}
 									>
-										<ha-icon
-											.icon="${'mdi:delete'}"
-										></ha-icon>
+										<ha-icon .icon="${'mdi:delete'}"></ha-icon>
 									</ha-icon-button>
 								</div>
 							`;
@@ -798,20 +757,17 @@ export class UniversalRemoteCardEditor extends LitElement {
 			case 3:
 				return html`
 					<ha-button @click=${this.addEntry} class="add-list-item">
-						<ha-icon .icon=${'mdi:plus'} slot="start"></ha-icon>Add
-						svg icon</ha-button
+						<ha-icon .icon=${'mdi:plus'} slot="start"></ha-icon>Add svg
+						icon</ha-button
 					>
 				`;
 			case 2:
 			default:
 				return html`
-					<ha-dropdown
-						@wa-select=${this.addEntry}
-						placement="bottom-end"
-					>
+					<ha-dropdown @wa-select=${this.addEntry} placement="bottom-end">
 						<ha-button slot="trigger">
-							<ha-icon .icon=${'mdi:plus'} slot="start"></ha-icon
-							>Add remote element</ha-button
+							<ha-icon .icon=${'mdi:plus'} slot="start"></ha-icon>Add remote
+							element</ha-button
 						>
 						${RemoteElementTypes.map(
 							(entryType) => html`
@@ -834,8 +790,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			case 2:
 			default:
 				entryType = this.renderTemplate(
-					this.config.custom_actions?.[this.entryIndex]?.type ??
-						'button',
+					this.config.custom_actions?.[this.entryIndex]?.type ?? 'button',
 					this.getEntryContext(
 						(this.activeEntry as IElementConfig) ?? {
 							name: '',
@@ -865,9 +820,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				>
 					<ha-icon
 						class="text-icon"
-						.icon="${this.guiMode
-							? 'mdi:code-braces'
-							: 'mdi:list-box-outline'}"
+						.icon="${this.guiMode ? 'mdi:code-braces' : 'mdi:list-box-outline'}"
 					></ha-icon>
 				</ha-icon-button>
 			</div>
@@ -886,21 +839,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 			...this.hass,
 			localize: (key, values) => {
 				const value = {
-					'ui.panel.lovelace.editor.action-editor.actions.repeat':
-						'Repeat',
+					'ui.panel.lovelace.editor.action-editor.actions.repeat': 'Repeat',
 					'ui.panel.lovelace.editor.action-editor.actions.fire-dom-event':
 						'Fire DOM event',
-					'ui.panel.lovelace.editor.action-editor.actions.eval':
-						'Evaluate JS',
+					'ui.panel.lovelace.editor.action-editor.actions.eval': 'Evaluate JS',
 					'ui.panel.lovelace.editor.action-editor.actions.key': 'Key',
-					'ui.panel.lovelace.editor.action-editor.actions.source':
-						'Source',
-					'ui.panel.lovelace.editor.action-editor.actions.keyboard':
-						'Keyboard',
-					'ui.panel.lovelace.editor.action-editor.actions.textbox':
-						'Textbox',
-					'ui.panel.lovelace.editor.action-editor.actions.search':
-						'Search',
+					'ui.panel.lovelace.editor.action-editor.actions.source': 'Source',
+					'ui.panel.lovelace.editor.action-editor.actions.keyboard': 'Keyboard',
+					'ui.panel.lovelace.editor.action-editor.actions.textbox': 'Textbox',
+					'ui.panel.lovelace.editor.action-editor.actions.search': 'Search',
 				}[key];
 				return value ?? this.hass.localize(key, values);
 			},
@@ -948,8 +895,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 		const placeholderEntityId =
 			(Array.isArray(
-				(this.activeEntry as IElementConfig)?.tap_action?.target
-					?.entity_id,
+				(this.activeEntry as IElementConfig)?.tap_action?.target?.entity_id,
 			)
 				? (this.activeEntry as IElementConfig)?.tap_action?.target
 						?.entity_id?.[0]
@@ -968,11 +914,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 						...this.DEFAULT_KEYS.filter(
 							(action) =>
 								(action.type ?? 'button') ==
-								((this.activeEntry as IElementConfig).type ??
-									'button'),
+								((this.activeEntry as IElementConfig).type ?? 'button'),
 						).map((action) => action.name),
-						...(((this.activeEntry as IElementConfig).type ??
-							'button') == 'button'
+						...(((this.activeEntry as IElementConfig).type ?? 'button') ==
+						'button'
 							? this.DEFAULT_SOURCES.map((action) => action.name)
 							: []),
 					],
@@ -998,8 +943,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 							{
 								attribute: {
 									entity_id:
-										(this.activeEntry as IElementConfig)
-											?.entity_id ?? placeholderEntityId,
+										(this.activeEntry as IElementConfig)?.entity_id ??
+										placeholderEntityId,
 								},
 							},
 							autofill ? 'state' : undefined,
@@ -1031,12 +976,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 	buildAppearancePanel(appearanceOptions: TemplateResult<1> = html``) {
 		return html`
 			<ha-expansion-panel .header=${'Appearance'}>
-				<div
-					class="panel-header"
-					slot="header"
-					role="heading"
-					aria-level="3"
-				>
+				<div class="panel-header" slot="header" role="heading" aria-level="3">
 					<ha-icon .icon=${'mdi:palette'}></ha-icon>
 					Appearance
 				</div>
@@ -1094,12 +1034,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 	buildInteractionsPanel(actionSelectors: TemplateResult<1>) {
 		return html`
 			<ha-expansion-panel .header=${'Interactions'}>
-				<div
-					class="panel-header"
-					slot="header"
-					role="heading"
-					aria-level="3"
-				>
+				<div class="panel-header" slot="header" role="heading" aria-level="3">
 					<ha-icon .icon=${'mdi:gesture-tap'}></ha-icon>
 					Interactions
 				</div>
@@ -1125,8 +1060,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			context,
 		) as boolean;
 		const action = this.renderTemplate(
-			(this.activeEntry as IElementConfig)?.[actionType]?.action ??
-				'none',
+			(this.activeEntry as IElementConfig)?.[actionType]?.action ?? 'none',
 			context,
 		) as Action;
 		const platform = this.renderTemplate(
@@ -1150,9 +1084,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 								unit_of_measurement: 'ms',
 							},
 						},
-						(autofill
-							? this.config.double_tap_window
-							: undefined) ?? DOUBLE_TAP_WINDOW,
+						(autofill ? this.config.double_tap_window : undefined) ??
+							DOUBLE_TAP_WINDOW,
 					)
 				: actionType.includes('hold_action') &&
 					  (this.activeEntry as IElementConfig)[actionType]
@@ -1168,14 +1101,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 										unit_of_measurement: 'ms',
 									},
 								},
-								(autofill
-									? this.config.hold_time
-									: undefined) ?? HOLD_TIME,
+								(autofill ? this.config.hold_time : undefined) ?? HOLD_TIME,
 							)}
 							${this.renderTemplate(
-								(this.activeEntry as IElementConfig)?.[
-									actionType
-								]?.action as string,
+								(this.activeEntry as IElementConfig)?.[actionType]
+									?.action as string,
 								context,
 							) == 'repeat'
 								? this.buildSelector(
@@ -1189,9 +1119,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 												unit_of_measurement: 'ms',
 											},
 										},
-										(autofill
-											? this.config.repeat_delay
-											: undefined) ?? REPEAT_DELAY,
+										(autofill ? this.config.repeat_delay : undefined) ??
+											REPEAT_DELAY,
 									)
 								: ''}
 						</div>`
@@ -1222,13 +1151,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 										reorder: false,
 									},
 								},
-								autofill
-									? (this.PLATFORM ?? 'Android TV')
-									: 'Android TV',
+								autofill ? (this.PLATFORM ?? 'Android TV') : 'Android TV',
 							)}
-							${['Kodi', 'LG webOS', 'Denon AVR'].includes(
-								platform,
-							)
+							${['Kodi', 'LG webOS', 'Denon AVR'].includes(platform)
 								? this.buildSelector(
 										'Media Player ID',
 										`${actionType}.media_player_id`,
@@ -1239,9 +1164,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												},
 											},
 										},
-										autofill
-											? this.config.media_player_id
-											: undefined,
+										autofill ? this.config.media_player_id : undefined,
 									)
 								: this.buildSelector(
 										'Remote ID',
@@ -1253,9 +1176,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												},
 											},
 										},
-										autofill
-											? this.config.remote_id
-											: undefined,
+										autofill ? this.config.remote_id : undefined,
 									)}
 						</div>
 						${this.buildSelector('Key', `${actionType}.key`, {
@@ -1274,9 +1195,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										reorder: false,
 									},
 								},
-								autofill
-									? (this.PLATFORM ?? 'Android TV')
-									: 'Android TV',
+								autofill ? (this.PLATFORM ?? 'Android TV') : 'Android TV',
 							)}
 							${['Android TV'].includes(platform)
 								? this.buildSelector(
@@ -1289,9 +1208,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												},
 											},
 										},
-										autofill
-											? this.config.remote_id
-											: undefined,
+										autofill ? this.config.remote_id : undefined,
 									)
 								: this.buildSelector(
 										'Media Player ID',
@@ -1303,9 +1220,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 												},
 											},
 										},
-										autofill
-											? this.config.media_player_id
-											: undefined,
+										autofill ? this.config.media_player_id : undefined,
 									)}
 						</div>
 						${this.buildSelector('Source', `${actionType}.source`, {
@@ -1329,8 +1244,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 								},
 								autofill
 									? this.KeyboardPlatforms.includes(
-											this.config.platform ??
-												'Android TV',
+											this.config.platform ?? 'Android TV',
 										)
 										? this.PLATFORM
 										: 'Android TV'
@@ -1355,9 +1269,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 													},
 												},
 											},
-											autofill
-												? this.config.remote_id
-												: undefined,
+											autofill ? this.config.remote_id : undefined,
 										);
 										break;
 									case 'Sony BRAVIA':
@@ -1368,23 +1280,16 @@ export class UniversalRemoteCardEditor extends LitElement {
 											{
 												entity: {
 													filter: {
-														domain: [
-															'remote',
-															'media_player',
-														],
+														domain: ['remote', 'media_player'],
 													},
 												},
 											},
-											autofill
-												? this.config.keyboard_id
-												: undefined,
+											autofill ? this.config.keyboard_id : undefined,
 										);
 										break;
 									case 'Roku': {
 										const domain =
-											action == 'search'
-												? 'media_player'
-												: 'remote';
+											action == 'search' ? 'media_player' : 'remote';
 										options = this.buildSelector(
 											`${capitalizeWords(domain)} ID`,
 											`${actionType}.${domain}_id`,
@@ -1395,9 +1300,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 													},
 												},
 											},
-											autofill
-												? this.config[`${domain}_id`]
-												: undefined,
+											autofill ? this.config[`${domain}_id`] : undefined,
 										);
 										break;
 									}
@@ -1418,9 +1321,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 													},
 												},
 											},
-											autofill
-												? this.config.media_player_id
-												: undefined,
+											autofill ? this.config.media_player_id : undefined,
 										);
 										break;
 									case 'Unified Remote':
@@ -1433,9 +1334,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 											{
 												text: {},
 											},
-											autofill
-												? this.config.device
-												: undefined,
+											autofill ? this.config.device : undefined,
 										);
 										break;
 									default:
@@ -1444,13 +1343,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 								return options;
 							})()}
 						</div>
-						${this.buildSelector(
-							'Prompt',
-							`${actionType}.keyboard_prompt`,
-							{
-								text: {},
-							},
-						)}`
+						${this.buildSelector('Prompt', `${actionType}.keyboard_prompt`, {
+							text: {},
+						})}`
 				: ''}
 			${action == 'more-info'
 				? this.buildSelector(
@@ -1460,8 +1355,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							entity: {},
 						},
 						autofill
-							? ((this.activeEntry as IElementConfig)
-									?.entity_id ??
+							? ((this.activeEntry as IElementConfig)?.entity_id ??
 									this.config.remote_id ??
 									this.config.media_player_id ??
 									this.config.keyboard_id)
@@ -1494,8 +1388,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 						},
 						false,
 					)}
-					${(this.activeEntry as IElementConfig)?.[actionType]
-						?.confirmation
+					${(this.activeEntry as IElementConfig)?.[actionType]?.confirmation
 						? html`${this.buildSelector(
 								'Text',
 								`${actionType}.confirmation.text`,
@@ -1525,10 +1418,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			<ha-tab-group @wa-tab-show=${handler}>
 				${tabs.map(
 					(tab, i) =>
-						html`<ha-tab-group-tab
-							slot="nav"
-							panel=${tab}
-							.active=${i == index}
+						html`<ha-tab-group-tab slot="nav" panel=${tab} .active=${i == index}
 							>${tab}</ha-tab-group-tab
 						>`,
 				)}
@@ -1609,15 +1499,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 						'double_tap_action',
 						defaultUiActions,
 					)}
-					${this.buildActionOption(
-						'Hold behavior (optional)',
-						'hold_action',
-						{
-							ui_action: {
-								actions: Actions,
-							},
+					${this.buildActionOption('Hold behavior (optional)', 'hold_action', {
+						ui_action: {
+							actions: Actions,
 						},
-					)}
+					})}
 				`;
 				break;
 		}
@@ -1693,8 +1579,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							step ??
 							Math.min(
 								1,
-								((rangeMax ?? RANGE_MAX) -
-									(rangeMin ?? RANGE_MIN)) /
+								((rangeMax ?? RANGE_MAX) - (rangeMin ?? RANGE_MIN)) /
 									STEP_COUNT,
 							),
 						mode: 'box',
@@ -1830,15 +1715,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 								defaultUiActions,
 							)
 						: ''}
-					${this.buildActionOption(
-						'Hold behavior (optional)',
-						'hold_action',
-						{
-							ui_action: {
-								actions: Actions,
-							},
+					${this.buildActionOption('Hold behavior (optional)', 'hold_action', {
+						ui_action: {
+							actions: Actions,
 						},
-					)}
+					})}
 				`;
 				break;
 		}
@@ -1875,15 +1756,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 	buildIconGuiEditor() {
 		return html`<div class="content">
 			${this.buildAlertBox(
-				html`Icons must be resized to 24x24px to display correctly. Use
-					a tool like
-					<a
-						target="_blank"
-						href="https://yqnn.github.io/svg-path-editor/"
+				html`Icons must be resized to 24x24px to display correctly. Use a tool
+					like
+					<a target="_blank" href="https://yqnn.github.io/svg-path-editor/"
 						>this SVG path editor</a
 					>
-					to edit your icons. If correctly sized the icon will
-					perfectly fit in the preview ouline below.`,
+					to edit your icons. If correctly sized the icon will perfectly fit in
+					the preview outline below.`,
 				'info',
 			)}
 			${this.buildSelector('Name', 'name', {
@@ -1977,11 +1856,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 				codeEditorMode = 'jinja2';
 				value =
 					this.yamlStringsCache[`${id}.eval`] ??
-					(
-						(this.activeEntry as IElementConfig)?.[
-							id as ActionType
-						] as IAction
-					).eval ??
+					((this.activeEntry as IElementConfig)?.[id as ActionType] as IAction)
+						.eval ??
 					'';
 				handler = this.handleEvalCodeChanged;
 				autocompleteEntities = false;
@@ -2030,20 +1906,14 @@ export class UniversalRemoteCardEditor extends LitElement {
 	buildLayoutEditor() {
 		const customActionNames = Array.from(
 			new Set([
-				...(this.config.custom_actions?.map((entry) => entry.name) ??
-					[]),
-				...(this.customActionsFromFile?.map((entry) => entry.name) ??
-					[]),
+				...(this.config.custom_actions?.map((entry) => entry.name) ?? []),
+				...(this.customActionsFromFile?.map((entry) => entry.name) ?? []),
 			]),
 		);
 		const customActions = customActionNames.map(
 			(name) =>
-				this.config.custom_actions?.find(
-					(entry) => entry.name == name,
-				) ??
-				this.customActionsFromFile?.find(
-					(entry) => entry.name == name,
-				) ??
+				this.config.custom_actions?.find((entry) => entry.name == name) ??
+				this.customActionsFromFile?.find((entry) => entry.name == name) ??
 				({ name: '' } as IElementConfig),
 		);
 
@@ -2064,25 +1934,23 @@ export class UniversalRemoteCardEditor extends LitElement {
 		});
 
 		const defaultSourcesList = this.DEFAULT_SOURCES.length
-			? this.DEFAULT_SOURCES.sort((a, b) =>
-					a.name < b.name ? -1 : 1,
-				).map((entry) => {
-					if (customActionNames.includes(entry.name)) {
-						return '';
-					}
+			? this.DEFAULT_SOURCES.sort((a, b) => (a.name < b.name ? -1 : 1)).map(
+					(entry) => {
+						if (customActionNames.includes(entry.name)) {
+							return '';
+						}
 
-					const context = this.getEntryContext(
-						entry as IElementConfig,
-					);
-					const iconElement = this.buildIconElement(entry, context);
-					return html`<li
-						class="action-list-item"
-						draggable="true"
-						@dragstart=${this.handleLayoutActionListItemDragStart}
-					>
-						${iconElement} ${entry.name}
-					</li>`;
-				})
+						const context = this.getEntryContext(entry as IElementConfig);
+						const iconElement = this.buildIconElement(entry, context);
+						return html`<li
+							class="action-list-item"
+							draggable="true"
+							@dragstart=${this.handleLayoutActionListItemDragStart}
+						>
+							${iconElement} ${entry.name}
+						</li>`;
+					},
+				)
 			: '';
 
 		return html`<div class="content">
@@ -2093,27 +1961,17 @@ export class UniversalRemoteCardEditor extends LitElement {
 						? html`<div
 									class="action-list-container custom-action-list-container"
 								>
-									<div class="title-header">
-										Custom Elements
-									</div>
-									<ul
-										class="action-list two-column-action-list"
-									>
+									<div class="title-header">Custom Elements</div>
+									<ul class="action-list two-column-action-list">
 										${customActions.map((entry) => {
-											const context =
-												this.getEntryContext(
-													entry as IElementConfig,
-												);
-											const iconElement =
-												this.buildIconElement(
-													entry,
-													context,
-												);
+											const context = this.getEntryContext(
+												entry as IElementConfig,
+											);
+											const iconElement = this.buildIconElement(entry, context);
 											return html`<li
 												class="action-list-item"
 												draggable="true"
-												@dragstart=${this
-													.handleLayoutActionListItemDragStart}
+												@dragstart=${this.handleLayoutActionListItemDragStart}
 											>
 												${iconElement} ${entry.name}
 											</li>`;
@@ -2139,9 +1997,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							: ''}
 						${defaultSourcesList.length
 							? html`<div class="wrapper">
-									<div class="title-header">
-										Default Sources
-									</div>
+									<div class="title-header">Default Sources</div>
 									<div class="action-list-container">
 										<ul class="action-list">
 											${defaultSourcesList}
@@ -2160,9 +2016,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			<div class="content">
 				<div class="gui-editor">
 					<div class="wrapper">
-						<div class="title-header">
-							Media Platform and Entity IDs
-						</div>
+						<div class="title-header">Media Platform and Entity IDs</div>
 						${this.buildSelector(
 							'Platform',
 							'platform',
@@ -2186,42 +2040,27 @@ export class UniversalRemoteCardEditor extends LitElement {
 									})
 								: ''}
 							${this.MediaPlayerPlatforms.includes(platform)
-								? this.buildSelector(
-										'Media Player ID',
-										'media_player_id',
-										{
-											entity: {
-												filter: {
-													domain: 'media_player',
-												},
+								? this.buildSelector('Media Player ID', 'media_player_id', {
+										entity: {
+											filter: {
+												domain: 'media_player',
 											},
 										},
-									)
+									})
 								: ''}
 							${this.ADBKeyboardPlatforms.includes(platform)
-								? this.buildSelector(
-										'Keyboard ID',
-										'keyboard_id',
-										{
-											entity: {
-												filter: {
-													domain: [
-														'remote',
-														'media_player',
-													],
-												},
+								? this.buildSelector('Keyboard ID', 'keyboard_id', {
+										entity: {
+											filter: {
+												domain: ['remote', 'media_player'],
 											},
 										},
-									)
+									})
 								: ''}
 							${this.DevicePlatforms.includes(platform)
-								? this.buildSelector(
-										'Remote/Device Name',
-										'device',
-										{
-											text: {},
-										},
-									)
+								? this.buildSelector('Remote/Device Name', 'device', {
+										text: {},
+									})
 								: ''}
 						</div>
 					</div>
@@ -2304,8 +2143,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 						</div>
 					</div>
 					<ha-button @click=${this.handleUpdateDeprecatedConfig}>
-						<ha-icon .icon=${'mdi:cog'} slot="start"></ha-icon
-						>Update old config</ha-button
+						<ha-icon .icon=${'mdi:cog'} slot="start"></ha-icon>Update old
+						config</ha-button
 					>
 				</div>
 			</div>
@@ -2316,14 +2155,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 		return html`
 			${this.errors && this.errors.length > 0
 				? html`<div class="error">
-						${this.hass.localize(
-							'ui.errors.config.error_detected',
-						)}:
+						${this.hass.localize('ui.errors.config.error_detected')}:
 						<br />
 						<ul>
-							${this.errors!.map(
-								(error) => html`<li>${error}</li>`,
-							)}
+							${this.errors!.map((error) => html`<li>${error}</li>`)}
 						</ul>
 					</div>`
 				: ''}
@@ -2344,8 +2179,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 	buildPeopleList() {
 		if (!this.people.length) {
-			const peopleEntities = Object.keys(this.hass.states).filter(
-				(entity) => entity.startsWith('person.'),
+			const peopleEntities = Object.keys(this.hass.states).filter((entity) =>
+				entity.startsWith('person.'),
 			);
 			for (const person of peopleEntities) {
 				this.people.push({
@@ -2406,10 +2241,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 		this.buildPeopleList();
 		this.fetchCustomActionsFromFile(
-			this.renderTemplate(
-				this.config.custom_actions_file ?? '',
-				{},
-			) as string,
+			this.renderTemplate(this.config.custom_actions_file ?? '', {}) as string,
 		);
 
 		const platform = this.renderTemplate(
@@ -2418,8 +2250,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		) as Platform;
 		if (this.PLATFORM != platform) {
 			this.PLATFORM = platform;
-			[this.DEFAULT_KEYS, this.DEFAULT_SOURCES] =
-				getDefaultActions(platform);
+			[this.DEFAULT_KEYS, this.DEFAULT_SOURCES] = getDefaultActions(platform);
 		}
 
 		const baseTabBar = this.buildTabBar(
@@ -2531,46 +2362,32 @@ export class UniversalRemoteCardEditor extends LitElement {
 			if (value != undefined || valueAttribute == 'elapsed') {
 				switch (valueAttribute) {
 					case 'brightness':
-						return Math.round(
-							(100 * parseInt((value as string) ?? 0)) / 255,
-						);
+						return Math.round((100 * parseInt((value as string) ?? 0)) / 255);
 					case 'elapsed':
 						if (entityId.startsWith('timer.')) {
 							const durationHMS =
-								this.hass.states[
-									entityId
-								].attributes.duration.split(':');
+								this.hass.states[entityId].attributes.duration.split(':');
 							const durationSeconds =
 								parseInt(durationHMS[0]) * 3600 +
 								parseInt(durationHMS[1]) * 60 +
 								parseInt(durationHMS[2]);
 							if (this.hass.states[entityId].state == 'idle') {
 								return 0;
-							} else if (
-								this.hass.states[entityId].state == 'active'
-							) {
+							} else if (this.hass.states[entityId].state == 'active') {
 								const endSeconds = Date.parse(
-									this.hass.states[entityId].attributes
-										.finishes_at,
+									this.hass.states[entityId].attributes.finishes_at,
 								);
-								const remainingSeconds =
-									(endSeconds - Date.now()) / 1000;
-								const value = Math.floor(
-									durationSeconds - remainingSeconds,
-								);
+								const remainingSeconds = (endSeconds - Date.now()) / 1000;
+								const value = Math.floor(durationSeconds - remainingSeconds);
 								return Math.min(value, durationSeconds);
 							} else {
 								const remainingHMS =
-									this.hass.states[
-										entityId
-									].attributes.remaining.split(':');
+									this.hass.states[entityId].attributes.remaining.split(':');
 								const remainingSeconds =
 									parseInt(remainingHMS[0]) * 3600 +
 									parseInt(remainingHMS[1]) * 60 +
 									parseInt(remainingHMS[2]);
-								return Math.floor(
-									durationSeconds - remainingSeconds,
-								);
+								return Math.floor(durationSeconds - remainingSeconds);
 							}
 						}
 					// falls through
@@ -2618,13 +2435,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 							...(this.customActionsFromFile ?? []),
 							...this.DEFAULT_KEYS,
 							...this.DEFAULT_SOURCES,
-						].find(
-							(defaultActions) =>
-								defaultActions.name == parentName,
-						),
+						].find((defaultActions) => defaultActions.name == parentName),
 					) ?? ({} as IElementConfig);
-				const defaultActions =
-					parentActions[childName as DirectionAction];
+				const defaultActions = parentActions[childName as DirectionAction];
 				entry = {
 					...defaultActions,
 					...entry,
@@ -2638,15 +2451,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 							...this.DEFAULT_SOURCES,
 						].find(
 							(defaultActions) =>
-								defaultActions.name ==
-								this.renderTemplate(entry.name, context),
+								defaultActions.name == this.renderTemplate(entry.name, context),
 						),
 					) ?? ({} as IElementConfig);
 				entry = {
 					...actions,
 					...entry,
-					value_attribute:
-						entry.value_attribute ?? actions.value_attribute,
+					value_attribute: entry.value_attribute ?? actions.value_attribute,
 				};
 			}
 
@@ -2676,11 +2487,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 								]) {
 									if (action.data?.[targetId]) {
 										action.target = action.target ?? {};
-										action.target[
-											targetId as keyof ITarget
-										] = action.data?.[targetId] as
-											| string
-											| string[];
+										action.target[targetId as keyof ITarget] = action.data?.[
+											targetId
+										] as string | string[];
 										delete action.data?.[targetId];
 									}
 								}
@@ -2843,15 +2652,17 @@ export class UniversalRemoteCardEditor extends LitElement {
 		for (const customKeys of ['custom_keys', 'custom_sources']) {
 			if (customKeys in updatedConfig) {
 				for (const name of Object.keys(
-					updatedConfig[
-						customKeys as keyof IConfig
-					] as unknown as Record<string, IElementConfig>,
+					updatedConfig[customKeys as keyof IConfig] as unknown as Record<
+						string,
+						IElementConfig
+					>,
 				)) {
 					customActions.push({
 						...((
-							updatedConfig[
-								customKeys as keyof IConfig
-							] as unknown as Record<string, IElementConfig>
+							updatedConfig[customKeys as keyof IConfig] as unknown as Record<
+								string,
+								IElementConfig
+							>
 						)?.[name] as unknown as IElementConfig),
 						name: name,
 					});
@@ -2916,8 +2727,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		}
 		if ('slider_id' in updatedConfig) {
 			if (!updatedConfig.media_player_id) {
-				updatedConfig.media_player_id =
-					updatedConfig.slider_id as string;
+				updatedConfig.media_player_id = updatedConfig.slider_id as string;
 			}
 			slider.entity_id =
 				slider.entity_id ??
@@ -2927,17 +2737,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 			const tapAction =
 				slider.tap_action ??
 				structuredClone(
-					this.DEFAULT_KEYS.find(
-						(defaultKey) => defaultKey.name == 'slider',
-					)?.tap_action,
+					this.DEFAULT_KEYS.find((defaultKey) => defaultKey.name == 'slider')
+						?.tap_action,
 				);
 			if (tapAction) {
 				const data = tapAction.data ?? {};
 				const target = tapAction.target ?? {};
 				if (!('entity_id' in target)) {
 					target.entity_id =
-						(data.entity_id as string) ??
-						(updatedConfig.slider_id as string);
+						(data.entity_id as string) ?? (updatedConfig.slider_id as string);
 					delete data.entity_id;
 				}
 				tapAction.data = data;
@@ -2949,9 +2757,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		}
 		if (updateSlider) {
 			const defaultSlider = structuredClone(
-				this.DEFAULT_KEYS.find(
-					(defaultKey) => defaultKey.name == 'slider',
-				),
+				this.DEFAULT_KEYS.find((defaultKey) => defaultKey.name == 'slider'),
 			);
 			if (sliderIndex > -1) {
 				customActions[sliderIndex] = {
@@ -3025,15 +2831,12 @@ export class UniversalRemoteCardEditor extends LitElement {
 		if ('long_click_keycode' in updatedConfig) {
 			touchpad.hold_action = {
 				action: 'key',
-				key: (updatedConfig.long_click_keycode ??
-					'DPAD_CENTER') as string,
+				key: (updatedConfig.long_click_keycode ?? 'DPAD_CENTER') as string,
 			};
 			updateTouchpad = true;
 		}
 		const defaultTouchpad = structuredClone(
-			this.DEFAULT_KEYS.find(
-				(defaultKey) => defaultKey.name == 'touchpad',
-			),
+			this.DEFAULT_KEYS.find((defaultKey) => defaultKey.name == 'touchpad'),
 		) as IElementConfig;
 		if (updatedConfig.rows.toString().includes('touchpad')) {
 			const centerCustomAction = customActions.find(
@@ -3043,10 +2846,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				for (const actionType of ActionTypes) {
 					if (centerCustomAction[actionType]) {
 						touchpad[actionType] = centerCustomAction[actionType];
-					} else if (
-						defaultTouchpad[actionType] &&
-						!touchpad[actionType]
-					) {
+					} else if (defaultTouchpad[actionType] && !touchpad[actionType]) {
 						touchpad[actionType] = defaultTouchpad[actionType];
 					}
 				}
@@ -3196,9 +2996,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				updateTapAction = true;
 				(tapAction as unknown as Record<string, string>)[actionKey] =
 					customAction[actionKey as keyof IElementConfig] as string;
-				delete (customAction as unknown as Record<string, string>)[
-					actionKey
-				];
+				delete (customAction as unknown as Record<string, string>)[actionKey];
 			}
 		}
 		if (updateTapAction) {
@@ -3208,9 +3006,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		// For each type of action
 		for (const actionType of ActionTypes) {
 			if (actionType in customAction) {
-				const action = customAction[
-					actionType as ActionType
-				] as IAction;
+				const action = customAction[actionType as ActionType] as IAction;
 				if (action) {
 					// Populate action field
 					if (!action.action) {
@@ -3223,8 +3019,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 						} else if (action['service' as 'perform_action']) {
 							// Deprecated in 2024.8
 							action.action = 'perform-action';
-							action.perform_action =
-								action['service' as 'perform_action'];
+							action.perform_action = action['service' as 'perform_action'];
 							delete action['service' as 'perform_action'];
 						} else if (action.navigation_path) {
 							action.action = 'navigate';
@@ -3232,20 +3027,14 @@ export class UniversalRemoteCardEditor extends LitElement {
 							action.action = 'url';
 						} else if (action.browser_mod) {
 							action.action = 'fire-dom-event';
-						} else if (
-							action.pipeline_id ||
-							action.start_listening
-						) {
+						} else if (action.pipeline_id || action.start_listening) {
 							action.action = 'assist';
 						} else {
 							action.action = 'none';
 						}
-					} else if (
-						action.action == ('call-service' as 'perform-action')
-					) {
+					} else if (action.action == ('call-service' as 'perform-action')) {
 						action.action = 'perform-action';
-						action.perform_action =
-							action['service' as 'perform_action'] ?? '';
+						action.perform_action = action['service' as 'perform_action'] ?? '';
 						delete action['service' as 'perform_action'];
 					}
 
@@ -3272,9 +3061,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 		if (customAction['style' as keyof IElementConfig]) {
 			let styles = customAction.styles ?? '';
 			styles += '\n:host {';
-			const style = customAction[
-				'style' as keyof IElementConfig
-			] as Record<string, string>;
+			const style = customAction['style' as keyof IElementConfig] as Record<
+				string,
+				string
+			>;
 			for (const field in style) {
 				styles += `\n  ${field}: ${style[field]};`;
 			}
@@ -3288,18 +3078,15 @@ export class UniversalRemoteCardEditor extends LitElement {
 			const templateActions =
 				customActions?.find(
 					(customActions) =>
-						entry['template' as keyof IElementConfig] ==
-						customActions.name,
+						entry['template' as keyof IElementConfig] == customActions.name,
 				) ??
 				this.DEFAULT_KEYS.find(
 					(defaultKeys) =>
-						entry['template' as keyof IElementConfig] ==
-						defaultKeys.name,
+						entry['template' as keyof IElementConfig] == defaultKeys.name,
 				) ??
 				this.DEFAULT_SOURCES.find(
 					(defaultSources) =>
-						entry['template' as keyof IElementConfig] ==
-						defaultSources.name,
+						entry['template' as keyof IElementConfig] == defaultSources.name,
 				) ??
 				{};
 			customAction = mergeDeep(

@@ -136,14 +136,11 @@ class UniversalRemoteCard extends LitElement {
 					// falls through
 					case 'key':
 					case 'source':
-						action.remote_id =
-							action.remote_id ?? this.config.remote_id;
+						action.remote_id = action.remote_id ?? this.config.remote_id;
 						action.media_player_id =
-							action.media_player_id ??
-							this.config.media_player_id;
+							action.media_player_id ?? this.config.media_player_id;
 						action.device = action.device ?? this.config.device;
-						action.platform =
-							action.platform ?? this.config.platform;
+						action.platform = action.platform ?? this.config.platform;
 						break;
 					case 'perform-action': {
 						const [domain, _service] = (
@@ -165,9 +162,7 @@ class UniversalRemoteCard extends LitElement {
 							) as string;
 							switch (domain) {
 								case 'remote':
-									target.entity_id = entity.startsWith(
-										'remote',
-									)
+									target.entity_id = entity.startsWith('remote')
 										? updatedElement.entity_id
 										: this.config.remote_id;
 									break;
@@ -176,9 +171,7 @@ class UniversalRemoteCard extends LitElement {
 								case 'kodi':
 								case 'denonavr':
 								case 'webostv':
-									target.entity_id = entity.startsWith(
-										'media_player',
-									)
+									target.entity_id = entity.startsWith('media_player')
 										? updatedElement.entity_id
 										: this.config.media_player_id;
 									break;
@@ -279,8 +272,7 @@ class UniversalRemoteCard extends LitElement {
 				updatedElement.entity_id ??
 				(Array.isArray(updatedElement.tap_action?.target?.entity_id)
 					? updatedElement.tap_action?.target?.entity_id?.[0]
-					: (updatedElement.tap_action?.target
-							?.entity_id as string)) ??
+					: (updatedElement.tap_action?.target?.entity_id as string)) ??
 				this.config.remote_id ??
 				this.config.media_player_id ??
 				this.config.keyboard_id;
@@ -292,10 +284,8 @@ class UniversalRemoteCard extends LitElement {
 				const directionElement = (updatedElement[direction] ??
 					{}) as IElementConfig;
 				directionElement.entity_id = updatedElement.entity_id;
-				directionElement.value_attribute =
-					updatedElement.value_attribute;
-				updatedElement[direction] =
-					this.updateElementConfig(directionElement);
+				directionElement.value_attribute = updatedElement.value_attribute;
+				updatedElement[direction] = this.updateElementConfig(directionElement);
 			}
 		}
 
@@ -364,11 +354,7 @@ class UniversalRemoteCard extends LitElement {
 		this.nRows++;
 		const id = `row-${this.nRows}`;
 		return html`
-			<div
-				class="row"
-				id="${id}"
-				title="${this.editMode ? `#${id}` : ''}"
-			>
+			<div class="row" id="${id}" title="${this.editMode ? `#${id}` : ''}">
 				${content}
 			</div>
 		`;
@@ -378,11 +364,7 @@ class UniversalRemoteCard extends LitElement {
 		this.nColumns++;
 		const id = `column-${this.nColumns}`;
 		return html`
-			<div
-				class="column"
-				id="${id}"
-				title="${this.editMode ? `#${id}` : ''}"
-			>
+			<div class="column" id="${id}" title="${this.editMode ? `#${id}` : ''}">
 				${content}
 			</div>
 		`;
@@ -426,10 +408,7 @@ class UniversalRemoteCard extends LitElement {
 		></remote-slider>`;
 	}
 
-	buildTouchpad(
-		elementName: string,
-		actions: ITouchpadConfig,
-	): TemplateResult {
+	buildTouchpad(elementName: string, actions: ITouchpadConfig): TemplateResult {
 		return html`<remote-touchpad
 			id="${elementName}"
 			title="${capitalizeWords(elementName)}"
@@ -454,14 +433,8 @@ class UniversalRemoteCard extends LitElement {
 
 	buildVolumeButtons(): TemplateResult[] {
 		return [
-			this.buildButton(
-				'volume_down',
-				this.getElementConfig('volume_down'),
-			),
-			this.buildButton(
-				'volume_mute',
-				this.getElementConfig('volume_mute'),
-			),
+			this.buildButton('volume_down', this.getElementConfig('volume_down')),
+			this.buildButton('volume_mute', this.getElementConfig('volume_mute')),
 			this.buildButton('volume_up', this.getElementConfig('volume_up')),
 		];
 	}
@@ -476,13 +449,9 @@ class UniversalRemoteCard extends LitElement {
 			centerRow.reverse();
 		}
 		return this.buildColumn([
-			this.buildRow([
-				this.buildButton('up', this.getElementConfig('up')),
-			]),
+			this.buildRow([this.buildButton('up', this.getElementConfig('up'))]),
 			this.buildRow(centerRow),
-			this.buildRow([
-				this.buildButton('down', this.getElementConfig('down')),
-			]),
+			this.buildRow([this.buildButton('down', this.getElementConfig('down'))]),
 		]);
 	}
 
@@ -516,9 +485,7 @@ class UniversalRemoteCard extends LitElement {
 		const rowContent: TemplateResult[] = [];
 		for (const elementName of row) {
 			if (typeof elementName == 'object' && elementName != null) {
-				rowContent.push(
-					this.buildElements(elementName, !isColumn, context),
-				);
+				rowContent.push(this.buildElements(elementName, !isColumn, context));
 			} else {
 				// Special shortcuts
 				switch (elementName) {
@@ -565,57 +532,29 @@ class UniversalRemoteCard extends LitElement {
 						break;
 					case 'xpad':
 						rowContent.push(
-							this.buildPad([
-								'',
-								'y',
-								'',
-								'x',
-								'',
-								'b',
-								'',
-								'a',
-								'',
-							]),
+							this.buildPad(['', 'y', '', 'x', '', 'b', '', 'a', '']),
 						);
 						break;
 					case 'npad':
 						rowContent.push(
-							this.buildPad([
-								'',
-								'x',
-								'',
-								'y',
-								'',
-								'a',
-								'',
-								'b',
-								'',
-							]),
+							this.buildPad(['', 'x', '', 'y', '', 'a', '', 'b', '']),
 						);
 						break;
 					default: {
 						const actions = this.getElementConfig(elementName);
 						switch (actions.type) {
 							case 'slider':
-								rowContent.push(
-									this.buildSlider(elementName, actions),
-								);
+								rowContent.push(this.buildSlider(elementName, actions));
 								break;
 							case 'touchpad':
-								rowContent.push(
-									this.buildTouchpad(elementName, actions),
-								);
+								rowContent.push(this.buildTouchpad(elementName, actions));
 								break;
 							case 'circlepad':
-								rowContent.push(
-									this.buildCirclepad(elementName, actions),
-								);
+								rowContent.push(this.buildCirclepad(elementName, actions));
 								break;
 							case 'button':
 							default:
-								rowContent.push(
-									this.buildButton(elementName, actions),
-								);
+								rowContent.push(this.buildButton(elementName, actions));
 								break;
 						}
 						break;
@@ -623,9 +562,7 @@ class UniversalRemoteCard extends LitElement {
 				}
 			}
 		}
-		return isColumn
-			? this.buildColumn(rowContent)
-			: this.buildRow(rowContent);
+		return isColumn ? this.buildColumn(rowContent) : this.buildRow(rowContent);
 	}
 
 	buildDialog() {
@@ -683,11 +620,7 @@ class UniversalRemoteCard extends LitElement {
 		const context = this.getContext();
 		const content: TemplateResult[] = [];
 		for (const row of this.layout ?? []) {
-			const rowContent = this.buildElements(
-				row as string[],
-				false,
-				context,
-			);
+			const rowContent = this.buildElements(row as string[], false, context);
 			content.push(rowContent);
 		}
 
@@ -696,10 +629,7 @@ class UniversalRemoteCard extends LitElement {
 			tabindex="0"
 			@keydown=${this.onKey}
 			@keyup=${this.onKey}
-			.header="${this.renderTemplate(
-				this.config.title as string,
-				context,
-			)}"
+			.header="${this.renderTemplate(this.config.title as string, context)}"
 		>
 			${content}${this.buildDialog()}${buildStyles(this.styles)}
 		</ha-card>`;
@@ -739,15 +669,9 @@ class UniversalRemoteCard extends LitElement {
 				context,
 			) as Platform;
 
-			const layout = this.buildLayout(
-				(this.config.rows as Row) ?? [],
-				context,
-			);
+			const layout = this.buildLayout((this.config.rows as Row) ?? [], context);
 
-			const styles = this.renderTemplate(
-				this.config.styles as string,
-				context,
-			);
+			const styles = this.renderTemplate(this.config.styles as string, context);
 
 			const customActionsFile = this.renderTemplate(
 				this.config.custom_actions_file ?? '',
@@ -820,15 +744,12 @@ class UniversalRemoteCard extends LitElement {
 			if (!e.repeat) {
 				e.preventDefault();
 				await button[`onPointer${direction}`](
-					new window.PointerEvent(
-						`pointer${direction.toLowerCase()}`,
-						{
-							...e,
-							isPrimary: true,
-							clientX: 1,
-							clientY: 1,
-						},
-					),
+					new window.PointerEvent(`pointer${direction.toLowerCase()}`, {
+						...e,
+						isPrimary: true,
+						clientX: 1,
+						clientY: 1,
+					}),
 				);
 			}
 			return;
@@ -929,6 +850,8 @@ window.customCards.push({
 	type: 'universal-remote-card',
 	name: 'Universal Remote Card',
 	description: 'Super customizable universal remote card',
+	preview: true,
+	documentationURL: packageInfo.homepage,
 });
 
 if (!window.structuredClone) {

@@ -12,6 +12,8 @@ declare global {
 		type: string;
 		name: string;
 		description: string;
+		preview?: boolean;
+		documentationURL?: string;
 	}
 
 	interface Event {
