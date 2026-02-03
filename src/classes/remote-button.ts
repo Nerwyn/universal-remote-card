@@ -26,9 +26,8 @@ export class RemoteButton extends BaseRemoteElement {
 		this.clickCount++;
 
 		if (
-			this.renderTemplate(
-				this.config.double_tap_action?.action ?? 'none',
-			) != 'none'
+			this.renderTemplate(this.config.double_tap_action?.action ?? 'none') !=
+			'none'
 		) {
 			// Double tap action is defined
 			if (this.clickCount > 1) {
@@ -41,8 +40,7 @@ export class RemoteButton extends BaseRemoteElement {
 				if (!this.clickTimer) {
 					const doubleTapWindow: number =
 						(this.renderTemplate(
-							this.config.double_tap_action
-								?.double_tap_window as number,
+							this.config.double_tap_action?.double_tap_window as number,
 						) as number) ?? DOUBLE_TAP_WINDOW;
 					this.clickTimer = setTimeout(async () => {
 						this.fireHapticEvent('light');
@@ -67,11 +65,35 @@ export class RemoteButton extends BaseRemoteElement {
 			if (
 				this.renderTemplate(
 					this.config.momentary_start_action?.action ?? 'none',
+				) != 'none' ||
+				this.renderTemplate(
+					this.config.momentary_repeat_action?.action ?? 'none',
 				) != 'none'
 			) {
 				this.fireHapticEvent('light');
 				this.momentaryStart = performance.now();
 				await this.sendAction('momentary_start_action');
+
+				const holdTime = this.renderTemplate(
+					this.config.momentary_repeat_action?.hold_time ?? HOLD_TIME,
+				) as number;
+				const repeat_delay = this.renderTemplate(
+					this.config.momentary_repeat_action?.repeat_delay ?? REPEAT_DELAY,
+				) as number;
+
+				clearTimeout(this.holdTimer);
+				clearInterval(this.holdInterval);
+				this.holdTimer = setTimeout(async () => {
+					if (!this.swiping) {
+						this.hold = true;
+
+						this.holdInterval = setInterval(async () => {
+							this.fireHapticEvent('selection');
+							this.momentaryEnd = performance.now();
+							await this.sendAction('momentary_repeat_action');
+						}, repeat_delay);
+					}
+				}, holdTime);
 			} else if (
 				this.renderTemplate(
 					this.config.momentary_end_action?.action ?? 'none',
@@ -84,18 +106,18 @@ export class RemoteButton extends BaseRemoteElement {
 					this.config.hold_action?.hold_time ?? HOLD_TIME,
 				) as number;
 
+				clearTimeout(this.holdTimer);
+				clearInterval(this.holdInterval);
 				this.holdTimer = setTimeout(async () => {
 					if (!this.swiping) {
 						this.hold = true;
 
 						if (
-							this.renderTemplate(
-								this.config.hold_action?.action as string,
-							) == 'repeat'
+							this.renderTemplate(this.config.hold_action?.action as string) ==
+							'repeat'
 						) {
 							const repeat_delay = this.renderTemplate(
-								this.config.hold_action?.repeat_delay ??
-									REPEAT_DELAY,
+								this.config.hold_action?.repeat_delay ?? REPEAT_DELAY,
 							) as number;
 							if (!this.holdInterval) {
 								this.holdInterval = setInterval(async () => {
@@ -121,13 +143,18 @@ export class RemoteButton extends BaseRemoteElement {
 					this.config.momentary_end_action?.action ?? 'none',
 				) != 'none'
 			) {
-				this.fireHapticEvent('selection');
+				clearTimeout(this.holdTimer);
+				clearInterval(this.holdInterval);
+				this.fireHapticEvent('light');
 				this.momentaryEnd = performance.now();
 				await this.sendAction('momentary_end_action');
 				this.endAction();
 			} else if (
 				this.renderTemplate(
 					this.config.momentary_start_action?.action ?? 'none',
+				) != 'none' ||
+				this.renderTemplate(
+					this.config.momentary_repeat_action?.action ?? 'none',
 				) != 'none'
 			) {
 				this.endAction();
@@ -150,10 +177,7 @@ export class RemoteButton extends BaseRemoteElement {
 		const sensitivity = 24;
 		const totalDeltaX = (this.currentX ?? 0) - (this.initialX ?? 0);
 		const totalDeltaY = (this.currentY ?? 0) - (this.initialY ?? 0);
-		if (
-			Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) >
-			sensitivity
-		) {
+		if (Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) > sensitivity) {
 			this.endAction();
 			this.swiping = true;
 		}
@@ -164,9 +188,8 @@ export class RemoteButton extends BaseRemoteElement {
 			this.renderTemplate(
 				this.config.momentary_start_action?.action ?? 'none',
 			) != 'none' &&
-			this.renderTemplate(
-				this.config.momentary_end_action?.action ?? 'none',
-			) != 'none'
+			this.renderTemplate(this.config.momentary_end_action?.action ?? 'none') !=
+				'none'
 		) {
 			this.momentaryEnd = performance.now();
 			await this.sendAction('momentary_end_action');

@@ -59,10 +59,7 @@ export class BaseRemoteElement extends LitElement {
 	rtl: boolean = false;
 
 	fireHapticEvent(haptic: HapticType) {
-		if (
-			this.renderTemplate(this.config.haptics as unknown as string) ??
-			true
-		) {
+		if (this.renderTemplate(this.config.haptics as unknown as string) ?? true) {
 			const event = new Event('haptic', {
 				bubbles: true,
 				composed: true,
@@ -88,50 +85,46 @@ export class BaseRemoteElement extends LitElement {
 		this.deltaY = undefined;
 	}
 
-	async sendAction(actionType: ActionType, config: IActions = this.config) {
-		let action;
+	getAction(actionType: ActionType, config: IActions = this.config) {
 		switch (actionType) {
 			case 'drag_action':
-				action = config.drag_action;
-				break;
+				return config.drag_action;
 			case 'multi_drag_action':
-				action = config.multi_drag_action ?? config.drag_action;
-				break;
+				return config.multi_drag_action ?? config.drag_action;
 			case 'momentary_start_action':
-				action = config.momentary_start_action;
-				break;
+				return config.momentary_start_action;
+			case 'momentary_repeat_action':
+				return config.momentary_repeat_action;
 			case 'momentary_end_action':
-				action = config.momentary_end_action;
-				break;
+				return config.momentary_end_action;
 			case 'multi_hold_action':
-				action =
+				return (
 					config.multi_hold_action ??
 					config.hold_action ??
 					config.multi_tap_action ??
-					config.tap_action;
-				break;
+					config.tap_action
+				);
 			case 'multi_double_tap_action':
-				action =
+				return (
 					config.multi_double_tap_action ??
 					config.double_tap_action ??
 					config.multi_tap_action ??
-					config.tap_action;
-				break;
+					config.tap_action
+				);
 			case 'multi_tap_action':
-				action = config.multi_tap_action ?? config.tap_action;
-				break;
+				return config.multi_tap_action ?? config.tap_action;
 			case 'hold_action':
-				action = config.hold_action ?? config.tap_action;
-				break;
+				return config.hold_action ?? config.tap_action;
 			case 'double_tap_action':
-				action = config.double_tap_action ?? config.tap_action;
-				break;
+				return config.double_tap_action ?? config.tap_action;
 			case 'tap_action':
 			default:
-				action = config.tap_action;
-				break;
+				return config.tap_action;
 		}
+	}
 
+	async sendAction(actionType: ActionType, config: IActions = this.config) {
+		let action = this.getAction(actionType, config);
 		action &&= this.deepRenderTemplate(action);
 		if (!action || !(await handleConfirmation(this, action))) {
 			return;
@@ -253,8 +246,7 @@ export class BaseRemoteElement extends LitElement {
 				};
 				if (
 					actionType.includes('hold_action') &&
-					(!this.config.hold_action ||
-						this.config.hold_action.action == 'none')
+					(!this.config.hold_action || this.config.hold_action.action == 'none')
 				) {
 					data.hold_secs = 1;
 				}
@@ -503,9 +495,7 @@ export class BaseRemoteElement extends LitElement {
 			composed: true,
 		});
 		event.detail = {
-			message: this.hass.localize(
-				`ui.panel.lovelace.cards.actions.${suffix}`,
-			),
+			message: this.hass.localize(`ui.panel.lovelace.cards.actions.${suffix}`),
 		};
 		this.dispatchEvent(event);
 		this.fireHapticEvent('failure');
@@ -533,13 +523,7 @@ export class BaseRemoteElement extends LitElement {
 				const value = deepGet(
 					this.hass.states[this.entityId].attributes,
 					this.valueAttribute,
-				) as
-					| string
-					| number
-					| boolean
-					| string[]
-					| number[]
-					| undefined;
+				) as string | number | boolean | string[] | number[] | undefined;
 
 				if (value != undefined || this.valueAttribute == 'elapsed') {
 					switch (this.valueAttribute) {
@@ -558,27 +542,21 @@ export class BaseRemoteElement extends LitElement {
 									}
 
 									if (
-										this.hass.states[
-											this.entityId as string
-										].state == 'playing'
+										this.hass.states[this.entityId as string].state == 'playing'
 									) {
 										this.value = Math.min(
 											Math.floor(
 												Math.floor(value as number) +
 													(Date.now() -
 														Date.parse(
-															this.hass.states[
-																this
-																	.entityId as string
-															].attributes
-																?.media_position_updated_at,
+															this.hass.states[this.entityId as string]
+																.attributes?.media_position_updated_at,
 														)) /
 														1000,
 											),
 											Math.floor(
-												this.hass.states[
-													this.entityId as string
-												].attributes?.media_duration,
+												this.hass.states[this.entityId as string].attributes
+													?.media_duration,
 											),
 										);
 									} else {
@@ -587,10 +565,7 @@ export class BaseRemoteElement extends LitElement {
 								};
 
 								setIntervalValue();
-								this.valueUpdateInterval = setInterval(
-									setIntervalValue,
-									500,
-								);
+								this.valueUpdateInterval = setInterval(setIntervalValue, 500);
 							} catch (e) {
 								console.error(e);
 								this.value = value as string | number | boolean;
@@ -598,10 +573,7 @@ export class BaseRemoteElement extends LitElement {
 							break;
 						case 'elapsed':
 							if (this.entityId.startsWith('timer.')) {
-								if (
-									this.hass.states[this.entityId as string]
-										.state == 'idle'
-								) {
+								if (this.hass.states[this.entityId as string].state == 'idle') {
 									this.value = 0;
 								} else {
 									const durationHMS =
@@ -613,44 +585,32 @@ export class BaseRemoteElement extends LitElement {
 										parseInt(durationHMS[1]) * 60 +
 										parseInt(durationHMS[2]);
 									const endSeconds = Date.parse(
-										this.hass.states[
-											this.entityId as string
-										].attributes?.finishes_at,
+										this.hass.states[this.entityId as string].attributes
+											?.finishes_at,
 									);
 									try {
 										const setIntervalValue = () => {
 											if (
-												this.hass.states[
-													this.entityId as string
-												].state == 'active'
+												this.hass.states[this.entityId as string].state ==
+												'active'
 											) {
 												const remainingSeconds =
-													(endSeconds - Date.now()) /
-													1000;
+													(endSeconds - Date.now()) / 1000;
 												const value = Math.floor(
-													durationSeconds -
-														remainingSeconds,
+													durationSeconds - remainingSeconds,
 												);
-												this.value = Math.min(
-													value,
-													durationSeconds,
-												);
+												this.value = Math.min(value, durationSeconds);
 											} else {
 												const remainingHMS =
 													this.hass.states[
 														this.entityId as string
-													].attributes?.remaining.split(
-														':',
-													);
+													].attributes?.remaining.split(':');
 												const remainingSeconds =
-													parseInt(remainingHMS[0]) *
-														3600 +
-													parseInt(remainingHMS[1]) *
-														60 +
+													parseInt(remainingHMS[0]) * 3600 +
+													parseInt(remainingHMS[1]) * 60 +
 													parseInt(remainingHMS[2]);
 												this.value = Math.floor(
-													durationSeconds -
-														remainingSeconds,
+													durationSeconds - remainingSeconds,
 												);
 											}
 										};
@@ -780,9 +740,7 @@ export class BaseRemoteElement extends LitElement {
 						(defaultIcon: IIconConfig) => defaultIcon.name == icon,
 					);
 				iconElement = html`
-					<ha-svg-icon
-						.path=${iconConfig?.path ?? icon}
-					></ha-svg-icon>
+					<ha-svg-icon .path=${iconConfig?.path ?? icon}></ha-svg-icon>
 				`;
 			}
 		}
@@ -790,9 +748,7 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	buildLabel(label?: string) {
-		return label
-			? html`<pre class="label" part="label">${label}</pre>`
-			: '';
+		return label ? html`<pre class="label" part="label">${label}</pre>` : '';
 	}
 
 	buildRipple() {
@@ -865,10 +821,7 @@ export class BaseRemoteElement extends LitElement {
 	endRipple() {
 		clearTimeout(this.rippleEndTimer);
 		const ripple = this.shadowRoot?.querySelector('md-ripple') as MdRipple;
-		this.rippleEndTimer = setTimeout(
-			() => ripple?.endPressAnimation?.(),
-			15,
-		);
+		this.rippleEndTimer = setTimeout(() => ripple?.endPressAnimation?.(), 15);
 	}
 
 	async onKey(e: KeyboardEvent) {
@@ -878,15 +831,12 @@ export class BaseRemoteElement extends LitElement {
 			if (!e.repeat) {
 				const direction = e.type == 'keydown' ? 'Down' : 'Up';
 				await this[`onPointer${direction}`](
-					new window.PointerEvent(
-						`pointer${direction.toLowerCase()}`,
-						{
-							...e,
-							isPrimary: true,
-							clientX: 1,
-							clientY: 1,
-						},
-					),
+					new window.PointerEvent(`pointer${direction.toLowerCase()}`, {
+						...e,
+						isPrimary: true,
+						clientX: 1,
+						clientY: 1,
+					}),
 				);
 			}
 		}
@@ -902,13 +852,9 @@ export class BaseRemoteElement extends LitElement {
 					this.config.unit_of_measurement as string,
 				) as string) ?? '';
 
-			const icon = this.renderTemplate(
-				this.config.icon as string,
-			) as string;
+			const icon = this.renderTemplate(this.config.icon as string) as string;
 
-			const label = this.renderTemplate(
-				this.config.label as string,
-			) as string;
+			const label = this.renderTemplate(this.config.label as string) as string;
 
 			const styles = this.renderTemplate(
 				this.config.styles as string,
@@ -965,6 +911,16 @@ export class BaseRemoteElement extends LitElement {
 		}
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		this.endAction();
+	}
+
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.endAction();
+	}
+
 	static get styles(): CSSResult | CSSResult[] {
 		return css`
 			:host {
@@ -996,10 +952,7 @@ export class BaseRemoteElement extends LitElement {
 				left: var(--ha-ripple-left, 0);
 
 				--md-ripple-hover-opacity: var(--ha-ripple-hover-opacity, 0.08);
-				--md-ripple-pressed-opacity: var(
-					--ha-ripple-pressed-opacity,
-					0.12
-				);
+				--md-ripple-pressed-opacity: var(--ha-ripple-pressed-opacity, 0.12);
 				--md-ripple-hover-color: var(
 					--ha-ripple-hover-color,
 					var(--ha-ripple-color, var(--secondary-text-color))
