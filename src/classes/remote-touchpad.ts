@@ -39,9 +39,8 @@ export class RemoteTouchpad extends BaseRemoteElement {
 		const multiPrefix = this.getMultiPrefix();
 
 		if (
-			this.renderTemplate(
-				this.config.double_tap_action?.action ?? 'none',
-			) != 'none' ||
+			this.renderTemplate(this.config.double_tap_action?.action ?? 'none') !=
+				'none' ||
 			this.renderTemplate(
 				this.config.multi_double_tap_action?.action ?? 'none',
 			) != 'none'
@@ -62,8 +61,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 					const doubleTapWindow =
 						(this.renderTemplate(
 							this.config[doubleTapAction]?.double_tap_window ??
-								(this.config.double_tap_action
-									?.double_tap_window as number),
+								(this.config.double_tap_action?.double_tap_window as number),
 						) as number) ?? DOUBLE_TAP_WINDOW;
 					this.clickTimer = setTimeout(async () => {
 						this.fireHapticEvent('light');
@@ -129,8 +127,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 			const sensitivity = 0.5;
 			if (
 				this.holdMove ||
-				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) >
-					sensitivity
+				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) > sensitivity
 			) {
 				if (this.fireDragAction) {
 					clearTimeout(this.holdTimer);
@@ -138,8 +135,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 					this.holdMove = true;
 
 					const repeatDelay = this.renderTemplate(
-						this.config[`${multiPrefix}drag_action`]
-							?.repeat_delay ?? 0, // default to 0 instead of normal repeat delay
+						this.config[`${multiPrefix}drag_action`]?.repeat_delay ?? 0, // default to 0 instead of normal repeat delay
 					) as number;
 					if (repeatDelay) {
 						this.fireDragAction = false;
@@ -154,8 +150,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 		} else {
 			const sensitivity = 16;
 			if (
-				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) >
-				sensitivity
+				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) > sensitivity
 			) {
 				// Directional actions
 				if (Math.abs(totalDeltaX) > Math.abs(totalDeltaY)) {
@@ -167,13 +162,11 @@ export class RemoteTouchpad extends BaseRemoteElement {
 					this.fireHapticEvent('light');
 					await this.sendAction(
 						`${multiPrefix}tap_action`,
-						this.getActions(),
+						this.getDirectionActions(),
 					);
 					this.holdMove = true;
 
 					if (this.holdTimer) {
-						clearTimeout(this.holdTimer);
-						this.holdTimer = undefined;
 						this.setHoldTimer();
 					}
 				}
@@ -199,7 +192,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 		super.endAction();
 	}
 
-	getActions(): IActions {
+	getDirectionActions(): IActions {
 		return (
 			this.direction ? this.config[this.direction] : this.config
 		) as IActions;
@@ -211,28 +204,27 @@ export class RemoteTouchpad extends BaseRemoteElement {
 
 	setHoldTimer() {
 		const holdAction = `${this.getMultiPrefix()}hold_action`;
-		const actions = this.getActions();
+		const actions = this.getDirectionActions();
 
 		const holdTime = this.renderTemplate(
 			actions[holdAction as ActionType]?.hold_time ?? HOLD_TIME,
 		) as number;
 
+		clearTimeout(this.holdTimer);
 		this.holdTimer = setTimeout(async () => {
 			this.hold = true;
-			const actions = this.getActions();
+			const actions = this.getDirectionActions();
 			const multiPrefix = this.getMultiPrefix();
 
 			let repeat =
-				this.renderTemplate(actions.hold_action?.action as string) ==
-				'repeat';
+				this.renderTemplate(actions.hold_action?.action as string) == 'repeat';
 			let repeatDelay = this.renderTemplate(
 				actions.hold_action?.repeat_delay ?? REPEAT_DELAY,
 			) as number;
 			if (multiPrefix == 'multi_' && actions.multi_hold_action) {
 				repeat =
-					this.renderTemplate(
-						actions.multi_hold_action?.action as string,
-					) == 'repeat';
+					this.renderTemplate(actions.multi_hold_action?.action as string) ==
+					'repeat';
 				repeatDelay = this.renderTemplate(
 					actions.multi_hold_action?.repeat_delay ?? REPEAT_DELAY,
 				) as number;
@@ -243,7 +235,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 						this.fireHapticEvent('selection');
 						await this.sendAction(
 							`${this.getMultiPrefix()}tap_action`,
-							this.getActions(),
+							this.getDirectionActions(),
 						);
 					}, repeatDelay);
 				}
@@ -320,9 +312,8 @@ export class RemoteTouchpad extends BaseRemoteElement {
 		}
 
 		// Update child hass objects if not updating
-		const children = (this.shadowRoot?.querySelectorAll(
-			'remote-icon-label',
-		) ?? []) as BaseRemoteElement[];
+		const children = (this.shadowRoot?.querySelectorAll('remote-icon-label') ??
+			[]) as BaseRemoteElement[];
 		for (const child of children) {
 			child.hass = this.hass;
 		}
@@ -351,15 +342,12 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				const direction = e.type == 'keydown' ? 'Down' : 'Up';
 
 				await this[`onPointer${direction}`](
-					new window.PointerEvent(
-						`pointer${direction.toLowerCase()}`,
-						{
-							...e,
-							isPrimary: true,
-							clientX: 64,
-							clientY: 64,
-						},
-					),
+					new window.PointerEvent(`pointer${direction.toLowerCase()}`, {
+						...e,
+						isPrimary: true,
+						clientX: 64,
+						clientY: 64,
+					}),
 				);
 				if (direction == 'Up') {
 					this.holdMove = false;
@@ -375,18 +363,10 @@ export class RemoteTouchpad extends BaseRemoteElement {
 								isPrimary: true,
 								clientX:
 									64 +
-									(e.key == 'ArrowRight'
-										? 32
-										: e.key == 'ArrowLeft'
-										? -32
-										: 0),
+									(e.key == 'ArrowRight' ? 32 : e.key == 'ArrowLeft' ? -32 : 0),
 								clientY:
 									64 +
-									(e.key == 'ArrowUp'
-										? -32
-										: e.key == 'ArrowDown'
-										? 32
-										: 0),
+									(e.key == 'ArrowUp' ? -32 : e.key == 'ArrowDown' ? 32 : 0),
 							}),
 						);
 					}
@@ -428,8 +408,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 					transition: box-shadow 180ms ease-in-out;
 				}
 				toucharea:focus-visible {
-					box-shadow: 0 0 0 2px
-						var(--icon-color, var(--primary-text-color));
+					box-shadow: 0 0 0 2px var(--icon-color, var(--primary-text-color));
 				}
 
 				.toucharea-row {

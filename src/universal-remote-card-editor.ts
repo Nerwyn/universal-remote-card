@@ -605,6 +605,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 						context,
 					) != 'none' ||
 					this.renderTemplate(
+						entry?.momentary_repeat_action?.action ?? 'none',
+						context,
+					) != 'none' ||
+					this.renderTemplate(
 						entry?.momentary_end_action?.action ?? 'none',
 						context,
 					) != 'none'
@@ -1087,7 +1091,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 						(autofill ? this.config.double_tap_window : undefined) ??
 							DOUBLE_TAP_WINDOW,
 					)
-				: actionType.includes('hold_action') &&
+				: (actionType.includes('hold_action') ||
+							actionType == 'momentary_repeat_action') &&
 					  (this.activeEntry as IElementConfig)[actionType]
 					? html`<div class="actions-form">
 							${this.buildSelector(
@@ -1107,7 +1112,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 								(this.activeEntry as IElementConfig)?.[actionType]
 									?.action as string,
 								context,
-							) == 'repeat'
+							) == 'repeat' || actionType == 'momentary_repeat_action'
 								? this.buildSelector(
 										'Repeat delay',
 										`${actionType}.repeat_delay`,
@@ -1476,7 +1481,12 @@ export class UniversalRemoteCardEditor extends LitElement {
 						defaultUiActions,
 					)}
 					${this.buildAlertBox(
-						"Set the action below, and then use the code editor to set a data field to the seconds the feature was held down using a template like '{{ hold_secs | float }}'.",
+						"Set the actions below, and then use the code editor to set a data field to the seconds the feature was held down using a template like '{{ hold_secs | float }}'.",
+					)}
+					${this.buildActionOption(
+						'Repeat behavior (optional)',
+						'momentary_repeat_action',
+						defaultUiActions,
 					)}
 					${this.buildActionOption(
 						'End behavior (optional)',
