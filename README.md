@@ -553,7 +553,7 @@ As an alternative to normal tap, hold, and double tap actions, buttons can also 
 
 The momentary start action is fired when you first press down on a button. The momentary end action is fired when you release it. Similarly to repeat hold action, the momentary repeat action is held when you hold down on the button for a set number of milliseconds. Unlike the repeat hold action, it can be different from the momentary start action. These actions can be used together or separately.
 
-For momentary end actions you can include the number of seconds a button has been held down using `hold_secs` in a template. For convenience, the momentary end action YAML is included in a code box below the action, like shown above.
+For momentary repeat and end actions you can include the number of seconds a button has been held down using `hold_secs` in a template. For convenience, the momentary end action YAML is included in a code box below the action, like shown above.
 
 ### Touchpad Interactions
 
