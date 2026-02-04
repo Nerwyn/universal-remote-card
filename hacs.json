@@ -1,7 +1,7 @@
 {
 	"name": "Universal Remote Card",
 	"content_in_root": false,
-	"homeassistant": "2026.2.0b0",
+	"homeassistant": "2026.2.0",
 	"filename": "universal-remote-card.min.js",
 	"render_readme": true,
 	"hide_default_branch": true
