@@ -74,26 +74,32 @@ export class RemoteButton extends BaseRemoteElement {
 				this.momentaryStart = performance.now();
 				await this.sendAction('momentary_start_action');
 
-				const holdTime = this.renderTemplate(
-					this.config.momentary_repeat_action?.hold_time ?? HOLD_TIME,
-				) as number;
-				const repeat_delay = this.renderTemplate(
-					this.config.momentary_repeat_action?.repeat_delay ?? REPEAT_DELAY,
-				) as number;
-
 				clearTimeout(this.holdTimer);
 				clearInterval(this.holdInterval);
-				this.holdTimer = setTimeout(async () => {
-					if (!this.swiping) {
-						this.hold = true;
+				if (
+					this.renderTemplate(
+						this.config.momentary_repeat_action?.action ?? 'none',
+					) != 'none'
+				) {
+					const holdTime = this.renderTemplate(
+						this.config.momentary_repeat_action?.hold_time ?? HOLD_TIME,
+					) as number;
+					const repeat_delay = this.renderTemplate(
+						this.config.momentary_repeat_action?.repeat_delay ?? REPEAT_DELAY,
+					) as number;
 
-						this.holdInterval = setInterval(async () => {
-							this.fireHapticEvent('selection');
-							this.momentaryEnd = performance.now();
-							await this.sendAction('momentary_repeat_action');
-						}, repeat_delay);
-					}
-				}, holdTime);
+					this.holdTimer = setTimeout(async () => {
+						if (!this.swiping) {
+							this.hold = true;
+
+							this.holdInterval = setInterval(async () => {
+								this.fireHapticEvent('selection');
+								this.momentaryEnd = performance.now();
+								await this.sendAction('momentary_repeat_action');
+							}, repeat_delay);
+						}
+					}, holdTime);
+				}
 			} else if (
 				this.renderTemplate(
 					this.config.momentary_end_action?.action ?? 'none',
