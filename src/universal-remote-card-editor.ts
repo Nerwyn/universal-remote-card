@@ -1487,6 +1487,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 						'Repeat behavior (optional)',
 						'momentary_repeat_action',
 						defaultUiActions,
+						true,
 					)}
 					${this.buildActionOption(
 						'End behavior (optional)',
