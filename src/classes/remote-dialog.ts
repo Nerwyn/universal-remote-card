@@ -53,9 +53,7 @@ export class RemoteDialog extends LitElement {
 					dialog.showModal();
 					dialog.close();
 				}
-				window.removeEventListener('popstate', () =>
-					this.closeDialog(),
-				);
+				window.removeEventListener('popstate', () => this.closeDialog());
 			}, 140);
 		}
 	}
@@ -121,6 +119,7 @@ export class RemoteDialog extends LitElement {
 
 		return html`<dialog
 			class="${this.fadedIn ? 'faded-in' : 'faded-out'}"
+			part="dialog"
 			@dialog-close=${this.closeDialog}
 			@cancel=${this.closeDialog}
 		>
@@ -164,42 +163,12 @@ export class RemoteDialog extends LitElement {
 				outline: none;
 				color: var(--primary-text-color);
 				background: var(
-					--md-sys-color-surface-container-high,
-					var(
-						--md-dialog-container-color,
-						var(
-							--ha-card-background,
-							var(--card-background-color, #fff)
-						)
-					)
+					--ha-dialog-surface-background,
+					var(--ha-card-background, var(--card-background-color, #fff))
 				);
-				border-start-start-radius: var(
-					--md-dialog-container-shape-start-start,
-					var(
-						--md-dialog-container-shape,
-						var(--md-sys-shape-corner-extra-large, 28px)
-					)
-				);
-				border-start-end-radius: var(
-					--md-dialog-container-shape-start-end,
-					var(
-						--md-dialog-container-shape,
-						var(--md-sys-shape-corner-extra-large, 28px)
-					)
-				);
-				border-end-end-radius: var(
-					--md-dialog-container-shape-end-end,
-					var(
-						--md-dialog-container-shape,
-						var(--md-sys-shape-corner-extra-large, 28px)
-					)
-				);
-				border-end-start-radius: var(
-					--md-dialog-container-shape-end-start,
-					var(
-						--md-dialog-container-shape,
-						var(--md-sys-shape-corner-extra-large, 28px)
-					)
+				border-radius: var(
+					--ha-dialog-border-radius,
+					var(--md-sys-shape-corner-extra-large, 28px)
 				);
 			}
 			dialog[open] {
@@ -225,10 +194,7 @@ export class RemoteDialog extends LitElement {
 			dialog::backdrop {
 				background-color: var(
 					--md-sys-color-scrim-mode,
-					var(
-						--md-sys-color-scrim,
-						var(--mdc-dialog-scrim-color, #000)
-					)
+					var(--md-sys-color-scrim, var(--mdc-dialog-scrim-color, #000))
 				);
 				--md-sys-color-scrim-mode: light-dark(
 					var(--md-sys-color-scrim-light),

@@ -104,10 +104,7 @@ export class BaseDialog extends LitElement {
 					--mdc-typography-button-letter-spacing,
 					0.0892857143em
 				);
-				text-transform: var(
-					--mdc-typography-button-text-transform,
-					uppercase
-				);
+				text-transform: var(--mdc-typography-button-text-transform, uppercase);
 				color: var(--mdc-theme-primary, #6200ee);
 				user-select: none;
 				-webkit-user-select: none;
