@@ -412,7 +412,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				}
 
 				.toucharea-row {
-					min-height: var(--size, 48px);
+					min-height: var(--icon-size, 48px);
 					display: flex;
 					flex-direction: row;
 					flex-wrap: nowrap;

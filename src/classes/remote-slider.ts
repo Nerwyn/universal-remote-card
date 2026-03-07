@@ -18,9 +18,7 @@ export class RemoteSlider extends BaseRemoteElement {
 	@state() height: number = this.vertical
 		? this.clientWidth
 		: this.clientHeight;
-	@state() width: number = this.vertical
-		? this.clientHeight
-		: this.clientWidth;
+	@state() width: number = this.vertical ? this.clientHeight : this.clientWidth;
 	resizeObserver: ResizeObserver = new ResizeObserver(() => {
 		this.height = this.vertical ? this.clientWidth : this.clientHeight;
 		this.style.setProperty('--feature-height', `${this.height}px`);
@@ -105,8 +103,7 @@ export class RemoteSlider extends BaseRemoteElement {
 			const sensitivity = 50;
 			if (
 				Math.abs((this.currentX ?? 0) - (this.initialX ?? 0)) <
-				Math.abs((this.currentY ?? 0) - (this.initialY ?? 0)) -
-					sensitivity
+				Math.abs((this.currentY ?? 0) - (this.initialY ?? 0)) - sensitivity
 			) {
 				this.swiping = true;
 				this.getValueFromHass = true;
@@ -135,10 +132,8 @@ export class RemoteSlider extends BaseRemoteElement {
 		this.thumbOffset = Math.min(
 			Math.max(
 				Math.round(
-					((this.width - thumbWidth) /
-						(this.range[1] - this.range[0])) *
-						((this.value as number) -
-							(this.range[0] + this.range[1]) / 2),
+					((this.width - thumbWidth) / (this.range[1] - this.range[0])) *
+						((this.value as number) - (this.range[0] + this.range[1]) / 2),
 				),
 				-1 * maxOffset,
 			),
@@ -293,8 +288,7 @@ export class RemoteSlider extends BaseRemoteElement {
 
 		// Set readonly if action is none
 		if (
-			this.renderTemplate(this.config.tap_action?.action as string) ==
-			'none'
+			this.renderTemplate(this.config.tap_action?.action as string) == 'none'
 		) {
 			this.setAttribute('readonly', '');
 		} else {
@@ -323,8 +317,7 @@ export class RemoteSlider extends BaseRemoteElement {
 				this._value = Math.min(
 					Math.max(
 						parseFloat((this.value ?? this.range[0]) as string) +
-							((e.key == 'ArrowLeft') != this.rtl ||
-							e.key == 'ArrowDown'
+							((e.key == 'ArrowLeft') != this.rtl || e.key == 'ArrowDown'
 								? -1
 								: 1) *
 								this.step,
@@ -369,16 +362,14 @@ export class RemoteSlider extends BaseRemoteElement {
 					--height: 48px;
 					--thumb-translate: var(--thumb-offset) 0;
 					--thumb-transition:
-						translate 180ms ease-in-out,
-						background 180ms ease-in-out;
+						translate 180ms ease-in-out, background 180ms ease-in-out;
 					--tooltip-transform: translate(
 						var(--thumb-offset),
 						calc(-0.5 * var(--feature-height) - 0.4em - 10px)
 					);
 				}
 				:host(:focus-visible) {
-					box-shadow: 0 0 0 2px
-						var(--icon-color, var(--primary-text-color));
+					box-shadow: 0 0 0 2px var(--icon-color, var(--primary-text-color));
 				}
 
 				.container {
@@ -388,10 +379,7 @@ export class RemoteSlider extends BaseRemoteElement {
 					align-self: center;
 					color: var(
 						--background,
-						var(
-							--lovelace-background,
-							var(--primary-background-color)
-						)
+						var(--lovelace-background, var(--primary-background-color))
 					);
 				}
 
@@ -401,10 +389,7 @@ export class RemoteSlider extends BaseRemoteElement {
 					height: var(--background-height, 100%);
 					background: var(
 						--background,
-						var(
-							--lovelace-background,
-							var(--primary-background-color)
-						)
+						var(--lovelace-background, var(--primary-background-color))
 					);
 				}
 
@@ -443,10 +428,7 @@ export class RemoteSlider extends BaseRemoteElement {
 				.thumb {
 					height: var(--height, 48px);
 					width: var(--thumb-width, 48px);
-					border-radius: var(
-						--thumb-border-radius,
-						var(--height, 48px)
-					);
+					border-radius: var(--thumb-border-radius, var(--height, 48px));
 					background: var(--color);
 					opacity: var(--opacity, 1);
 					position: absolute;
@@ -485,16 +467,13 @@ export class RemoteSlider extends BaseRemoteElement {
 						--icon-color,
 						var(
 							--background,
-							var(
-								--lovelace-background,
-								var(--primary-background-color)
-							)
+							var(--lovelace-background, var(--primary-background-color))
 						)
 					);
 					translate: var(--thumb-translate);
 					transition: var(--thumb-transition);
 
-					--mdc-icon-size: var(--size, 32px);
+					--mdc-icon-size: var(--icon-size, 32px);
 				}
 
 				.off .thumb {
@@ -537,10 +516,7 @@ export class RemoteSlider extends BaseRemoteElement {
 				:host([vertical]) .background {
 					transform: rotate(270deg);
 					width: var(--feature-width);
-					height: var(
-						--background-height,
-						var(--feature-height)
-					) !important;
+					height: var(--background-height, var(--feature-height)) !important;
 				}
 				:host([vertical]) input {
 					transform: rotate(270deg);

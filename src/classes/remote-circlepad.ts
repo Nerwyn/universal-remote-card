@@ -155,8 +155,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 						.hass=${this.hass}
 						.config=${{
 							entity_id: this.config.entity_id,
-							autofill_default_fields:
-								this.config.autofill_entity_id,
+							autofill_default_fields: this.config.autofill_entity_id,
 							haptics: this.config.haptics,
 							...this.config.left,
 						}}
@@ -180,8 +179,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 						.hass=${this.hass}
 						.config=${{
 							entity_id: this.config.entity_id,
-							autofill_default_fields:
-								this.config.autofill_entity_id,
+							autofill_default_fields: this.config.autofill_entity_id,
 							haptics: this.config.haptics,
 							...this.config.right,
 						}}
@@ -227,15 +225,12 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			if (button) {
 				const direction = e.type == 'keydown' ? 'Down' : 'Up';
 				await button[`onPointer${direction}`](
-					new window.PointerEvent(
-						`pointer${direction.toLowerCase()}`,
-						{
-							...e,
-							isPrimary: true,
-							clientX: 1,
-							clientY: 1,
-						},
-					),
+					new window.PointerEvent(`pointer${direction.toLowerCase()}`, {
+						...e,
+						isPrimary: true,
+						clientX: 1,
+						clientY: 1,
+					}),
 				);
 			}
 		}
@@ -271,8 +266,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		super.updated();
 
 		if (
-			this.renderTemplate(this.config.drag_action?.action ?? 'none') !=
-			'none'
+			this.renderTemplate(this.config.drag_action?.action ?? 'none') != 'none'
 		) {
 			this.setAttribute('clickwheel', '');
 		} else {
@@ -292,7 +286,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					max-width: 100%;
 					overflow: visible;
 
-					--size: min(64px, 16vw);
+					--icon-size: min(64px, 16vw);
 					--center-button-relative-size: 40%;
 					--icon-color: var(--grey-color);
 				}
@@ -312,8 +306,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					pointer-events: all;
 				}
 				:host(:focus-visible) .circlepad {
-					box-shadow: 0 0 0 6px
-						var(--icon-color, var(--primary-text-color));
+					box-shadow: 0 0 0 6px var(--icon-color, var(--primary-text-color));
 				}
 
 				.center-row {

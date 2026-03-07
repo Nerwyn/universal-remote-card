@@ -976,7 +976,7 @@ export class BaseRemoteElement extends LitElement {
 				color: var(--icon-color, var(--primary-text-color));
 				filter: var(--icon-filter, none);
 
-				--mdc-icon-size: var(--size, 48px);
+				--mdc-icon-size: var(--icon-size, 48px);
 			}
 			ha-icon,
 			svg {

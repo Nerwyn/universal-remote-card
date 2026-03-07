@@ -261,7 +261,7 @@ export class RemoteButton extends BaseRemoteElement {
 					display: flex;
 					height: 100%;
 					width: 100%;
-					border-radius: var(--size, 48px);
+					border-radius: var(--icon-size, 48px);
 					overflow: visible;
 					cursor: pointer;
 					pointer-events: all;
@@ -288,7 +288,7 @@ export class RemoteButton extends BaseRemoteElement {
 					width: var(--ha-ripple-width, 100%);
 					top: var(--ha-ripple-top, 0);
 					left: var(--ha-ripple-left, 0);
-					border-radius: var(--size, 48px);
+					border-radius: var(--icon-size, 48px);
 					background: var(
 						--ha-ripple-pressed-color,
 						var(--ha-ripple-color, var(--secondary-text-color))

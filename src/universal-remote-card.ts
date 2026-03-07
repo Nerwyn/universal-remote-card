@@ -780,9 +780,6 @@ class UniversalRemoteCard extends LitElement {
 
 	static get styles() {
 		return css`
-			:host {
-				--size: 48px;
-			}
 			ha-card {
 				display: flex;
 				flex-direction: column;
@@ -814,15 +811,15 @@ class UniversalRemoteCard extends LitElement {
 			}
 
 			.empty-button {
-				width: var(--size, 48px);
-				height: var(--size, 48px);
+				width: var(--icon-size, 48px);
+				height: var(--icon-size, 48px);
 				position: relative;
 			}
 			.button-pad {
 				display: grid;
 				direction: ltr;
-				grid-template-rows: repeat(3, var(--size, 48px));
-				grid-template-columns: repeat(3, var(--size, 48px));
+				grid-template-rows: repeat(3, var(--icon-size, 48px));
+				grid-template-columns: repeat(3, var(--icon-size, 48px));
 				grid-gap: 8px 16px;
 			}
 

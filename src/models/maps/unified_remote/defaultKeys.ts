@@ -211,7 +211,8 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 				extras: {
 					Values: [
 						{
-							Value: '{{ -1 * (deltaX if (deltaX | abs) > (deltaY | abs) else deltaY) }}',
+							Value:
+								'{{ -1 * (deltaX if (deltaX | abs) > (deltaY | abs) else deltaY) }}',
 						},
 					],
 				},
@@ -452,9 +453,11 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 	{
 		type: 'circlepad',
 		name: 'clickwheel',
-		styles: '.circlepad {\n  outline: none;\n\n  --label-color: var(--icon-color);\n  --size: min(32px, 12vw);\n  --icon-offset: min(20px, 4vw);\n}\n#center::part(button) {\n  outline: none;\n}',
+		styles:
+			'.circlepad {\n  outline: none;\n\n  --label-color: var(--icon-color);\n  --icon-size: min(32px, 12vw);\n  --icon-offset: min(20px, 4vw);\n}\n#center::part(button) {\n  outline: none;\n}',
 		up: {
-			styles: '.label {\n  font-size: min(18px, 6vw);\n  translate: var(--icon-offset) calc(-1 * var(--icon-offset));\n}',
+			styles:
+				'.label {\n  font-size: min(18px, 6vw);\n  translate: var(--icon-offset) calc(-1 * var(--icon-offset));\n}',
 			label: 'MENU',
 			tap_action: {
 				action: 'perform-action',
@@ -473,7 +476,8 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 			},
 		},
 		down: {
-			styles: '.icon {\n  translate: calc(-1 * var(--icon-offset)) var(--icon-offset);\n\n}',
+			styles:
+				'.icon {\n  translate: calc(-1 * var(--icon-offset)) var(--icon-offset);\n\n}',
 			icon: 'mdi:play-pause',
 			tap_action: {
 				action: 'perform-action',
@@ -486,7 +490,8 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 		},
 		left: {
 			icon: 'mdi:skip-backward',
-			styles: '.icon {\n  translate: calc(-1 * var(--icon-offset)) calc(-1 * var(--icon-offset));\n}',
+			styles:
+				'.icon {\n  translate: calc(-1 * var(--icon-offset)) calc(-1 * var(--icon-offset));\n}',
 			tap_action: {
 				action: 'perform-action',
 				perform_action: 'unified_remote.call',
@@ -650,7 +655,8 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 				extras: {
 					Values: [
 						{
-							Value: '{{ ("right" if deltaX > 0 else "left") if (deltaX | abs) > (deltaY | abs) else ("down" if deltaY > 0 else "up") }}',
+							Value:
+								'{{ ("right" if deltaX > 0 else "left") if (deltaX | abs) > (deltaY | abs) else ("down" if deltaY > 0 else "up") }}',
 						},
 					],
 				},
@@ -666,7 +672,8 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 				extras: {
 					Values: [
 						{
-							Value: '{{ ("right" if deltaX > 0 else "left") if (deltaX | abs) > (deltaY | abs) else ("down" if deltaY > 0 else "up") }}',
+							Value:
+								'{{ ("right" if deltaX > 0 else "left") if (deltaX | abs) > (deltaY | abs) else ("down" if deltaY > 0 else "up") }}',
 						},
 					],
 				},

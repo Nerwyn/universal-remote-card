@@ -182,7 +182,7 @@ remote-button {
   padding: 8px;
   margin: 4px;
   border-radius: 24px;
-  --size: 24px;
+  --icon-size: 24px;
 }
 
 /* The icon of the power button
@@ -351,7 +351,7 @@ While you can now set most CSS fields directly using their sub-element selectors
 
 | Name                        | Description                                                                                                                                                                                                                                                                 |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| --size                      | Height and width of the icon.                                                                                                                                                                                                                                               |
+| --icon-size                 | Height and width of the icon.                                                                                                                                                                                                                                               |
 | --thumb-width               | Slider thumb interactable area width, defaults to `48px`. Does not represent the visually seen active area.                                                                                                                                                                 |
 | --height                    | Slider height when horizontal and width when vertical.                                                                                                                                                                                                                      |
 | --thumb-translate           | Slider thumb translation function, defaults to `var(--thumb-offset) 0`.                                                                                                                                                                                                     |
@@ -909,7 +909,7 @@ custom_actions:
         action: repeat
     styles: |-
       .icon {
-        --size: 250px;
+        --icon-size: 250px;
       }
     double_tap_action:
       action: key
@@ -1184,7 +1184,7 @@ custom_actions:
       :host {
         padding: 0;
         margin: 0;
-        --size: 48px;
+        --icon-size: 48px;
         --icon-color: #C1121C;
       }
   - type: button
@@ -1197,7 +1197,7 @@ custom_actions:
       :host {
         padding: 0;
         margin: 0;
-        --size: 48px;
+        --icon-size: 48px;
         --icon-color: #F7BA0B;
       }
   - type: button
@@ -1210,7 +1210,7 @@ custom_actions:
       :host {
         padding: 0;
         margin: 0;
-        --size: 48px;
+        --icon-size: 48px;
         --icon-color: #00387b;
       }
   - type: button
@@ -1223,7 +1223,7 @@ custom_actions:
       :host {
         padding: 0;
         margin: 0;
-        --size: 48px;
+        --icon-size: 48px;
         --icon-color: #007243;
       }
 styles: |-
@@ -1238,7 +1238,7 @@ styles: |-
     padding: 8px;
     margin: 4px;
     border-radius: 24px;
-    --size: 24px;
+    --icon-size: 24px;
   }
 ```
 
@@ -1328,7 +1328,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: red;
       }
   - icon: mdi:circle
@@ -1339,7 +1339,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: green;
       }
   - icon: mdi:circle
@@ -1350,7 +1350,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: darkblue;
       }
   - icon: mdi:circle
@@ -1361,7 +1361,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: yellow;
       }
   - icon: mdi:circle
@@ -1372,7 +1372,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: goldenrod;
       }
   - icon: mdi:circle
@@ -1383,7 +1383,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: orange;
       }
   - icon: mdi:circle
@@ -1394,7 +1394,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: lightsalmon;
       }
   - icon: mdi:circle
@@ -1405,7 +1405,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: cyan;
       }
   - icon: mdi:circle
@@ -1416,7 +1416,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: blue;
       }
   - icon: mdi:circle
@@ -1427,7 +1427,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: magenta;
       }
   - icon: mdi:circle
@@ -1438,7 +1438,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: mediumseagreen;
       }
   - icon: mdi:circle
@@ -1449,7 +1449,7 @@ custom_actions:
     type: button
     styles: |-
       :host {
-        --size: 42px;
+        --icon-size: 42px;
         --icon-color: white;
       }
   - type: button
@@ -1557,7 +1557,7 @@ custom_actions:
       }
       #center::part(icon) {
         color: rgba(128,128,128, 0.8);
-        --size: 36px;
+        --icon-size: 36px;
       }
 
       #left,
@@ -1609,7 +1609,7 @@ custom_actions:
         display: flex;
         pointer-events: all;
         border-radius: 0;
-        --size: 0;
+        --icon-size: 0;
       }
       toucharea {
         content: url("{{ state_attr(config.entity, 'entity_picture') }}");
@@ -1636,7 +1636,7 @@ custom_actions:
         justify-content: center;
         gap: 4px;
         --ha-ripple-color: none;
-        --size: 0px;
+        --icon-size: 0px;
       }
       .toucharea-row {
         justify-content: flex-start;
@@ -1740,7 +1740,7 @@ custom_actions:
         shuffle: '{{ not value }}'
     styles: |-
       :host {
-        --size: 24px;
+        --icon-size: 24px;
       }
       {% if value %}
       :host {
@@ -1807,7 +1807,7 @@ custom_actions:
           {% endif %}
     styles: |-
       :host {
-        --size: 24px;
+        --icon-size: 24px;
       }
       {% if value in ['all', 'one'] %}
       :host {
@@ -1905,7 +1905,7 @@ grid_options:
 styles: |-
   ha-card {
     overflow: hidden;
-    --size: 32px;
+    --icon-size: 32px;
     --icon-color: #b3b3b3;
     --active-color: #1cb955;
   }
