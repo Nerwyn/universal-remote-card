@@ -780,6 +780,9 @@ class UniversalRemoteCard extends LitElement {
 
 	static get styles() {
 		return css`
+			:host {
+				--size: 48px;
+			}
 			ha-card {
 				display: flex;
 				flex-direction: column;
