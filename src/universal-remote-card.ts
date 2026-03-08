@@ -727,8 +727,6 @@ class UniversalRemoteCard extends LitElement {
 
 	firstUpdated() {
 		this.addEventListener('dialog-show', this.showDialog);
-		this.addEventListener('pointermove', (e) => e.stopPropagation());
-		this.addEventListener('touchmove', (e) => e.stopPropagation());
 	}
 
 	async onKey(e: KeyboardEvent) {

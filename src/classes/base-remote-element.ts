@@ -774,6 +774,9 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	onPointerMove(e: PointerEvent) {
+		// Premature bottom sheet close fix
+		e.stopPropagation();
+
 		if (this.pressed && e.isPrimary) {
 			this.deltaX = e.clientX - (this.currentX ?? 0);
 			this.deltaY = e.clientY - (this.currentY ?? 0);
@@ -808,6 +811,11 @@ export class BaseRemoteElement extends LitElement {
 		const ripple = this.shadowRoot?.querySelector('md-ripple') as MdRipple;
 		ripple?.endPressAnimation?.();
 		ripple?.startPressAnimation?.(e);
+	}
+
+	onTouchMove(e: TouchEvent) {
+		// Premature bottom sheet close fix
+		e.stopPropagation();
 	}
 
 	onTouchEnd(e: TouchEvent) {
@@ -896,6 +904,7 @@ export class BaseRemoteElement extends LitElement {
 		this.addEventListener('touchstart', this.onTouchStart, {
 			passive: true,
 		});
+		this.addEventListener('touchmove', this.onTouchMove);
 		this.addEventListener('touchend', this.onTouchEnd);
 		this.addEventListener('keydown', this.onKey);
 		this.addEventListener('keyup', this.onKey);

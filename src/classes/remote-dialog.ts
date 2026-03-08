@@ -145,6 +145,11 @@ export class RemoteDialog extends LitElement {
 		}
 	}
 
+	firstUpdated(): void {
+		this.addEventListener('pointermove', (e) => e.stopPropagation());
+		this.addEventListener('touchmove', (e) => e.stopPropagation());
+	}
+
 	static get styles() {
 		return css`
 			:host {
@@ -167,7 +172,7 @@ export class RemoteDialog extends LitElement {
 					var(--ha-card-background, var(--card-background-color, #fff))
 				);
 				border-radius: var(
-					--ha-dialog-border-radius,
+					--remote-dialog-border-radius,
 					var(--md-sys-shape-corner-extra-large, 28px)
 				);
 			}
