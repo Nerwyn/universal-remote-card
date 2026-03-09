@@ -425,7 +425,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	addEntry(e: Event) {
-		const elementType = e.detail.item.value;
+		const elementType = e.detail?.item?.value;
 		let entries: IElementConfig[] | IIconConfig[];
 		switch (this.baseTabIndex) {
 			case 3:
@@ -3333,6 +3333,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 			}
 			.panel-header {
 				display: inline-flex;
+				align-items: center;
 				gap: 4px;
 			}
 			.style-header {
