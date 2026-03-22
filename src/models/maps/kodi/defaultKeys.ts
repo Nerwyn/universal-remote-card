@@ -480,6 +480,6 @@ export const kodiDefaultKeys: IElementConfig[] = [
 				window: 'tvguide',
 			},
 		},
-		icon: 'mdi:television-guide',
+		icon: 'mdi:television-box',
 	},
 ];
