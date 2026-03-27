@@ -95,7 +95,7 @@ The Home Assistant Samsung TV integration does not allow you to change sources o
 
 ### Unified Remote - Custom Integration
 
-Unified Remote relies entirely on [a custom integration](https://github.com/akshansh1998/hass-unified-remote), which is used to control a [Unified Remote server](https://www.unifiedremote.com/) on your PC. This custom integration creates a media player entity, but most default keys are called using the action `unified_remote.call` which can be used to call any Unified Remote API. You must enter the Unified Remote server friendly name you used when configuring the integration in the card Remote/Device Name field.
+Unified Remote relies entirely on [a custom integration](https://github.com/akshansh1998/hass-unified-remote), which is used to control a [Unified Remote server](https://www.unifiedremote.com/) on your PC. This custom integration creates a media player entity, but all default keys are called using the action `unified_remote.call` which can be used to call any Unified Remote API. You must enter the Unified Remote server friendly name you used when configuring the integration in the card Remote/Device Name field.
 
 ### Yamaha YNCA - Custom integration
 
