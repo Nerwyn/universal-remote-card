@@ -1,7 +1,7 @@
 import packageInfo from '../package.json';
 
 import { LitElement, PropertyValues, TemplateResult, css, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
 import { hasTemplate, renderTemplate } from 'ha-nunjucks';
 import { load } from 'js-yaml';
@@ -66,6 +66,7 @@ class UniversalRemoteCard extends LitElement {
 	editMode: boolean = false;
 	rtl: boolean = false;
 
+	@state() loading: boolean = false;
 	customActionsFile: string = '';
 	customActionsFromFile?: IElementConfig[];
 
@@ -569,30 +570,42 @@ class UniversalRemoteCard extends LitElement {
 		return html`<remote-dialog .hass=${this.hass}></remote-dialog>`;
 	}
 
-	fetchCustomActionsFromFile(filename?: string) {
+	buildSpinner() {
+		return html`<ha-spinner size="large"></ha-spinner>`;
+	}
+
+	async fetchCustomActionsFromFile(filename?: string) {
 		if (filename) {
+			this.loading = true;
+			setTimeout(() => {
+				if (this.loading) {
+					console.warn(
+						'Fetching custom actions file took more than five seconds.',
+					);
+					this.loading = false;
+				}
+			}, 5000);
 			filename = `${filename.startsWith('/') ? '' : '/'}${filename}`;
 			try {
 				const extension = filename.split('.').pop()?.toLowerCase();
-				this.hass
-					.fetchWithAuth(filename)
-					.then((r1) => (extension == 'json' ? r1.json() : r1.text()))
-					.then((r2) => {
-						const json = extension == 'json' ? r2 : load(r2);
-						if (Array.isArray(json)) {
-							this.customActionsFromFile = json;
-							this.requestUpdate();
-						} else {
-							throw TypeError(json);
-						}
-					});
+				const r = await this.hass.fetchWithAuth(filename);
+				const json =
+					extension == 'json' ? await r.json() : load(await r.text());
+				if (Array.isArray(json)) {
+					this.customActionsFromFile = json;
+					this.loading = false;
+				} else {
+					throw TypeError(json);
+				}
 			} catch (e) {
 				console.error(
 					`File ${filename} is not a valid JSON or YAML array\n${e}`,
 				);
+				this.loading = false;
 				this.customActionsFromFile = [];
 			}
 		} else {
+			this.loading = false;
 			this.customActionsFromFile = [];
 		}
 	}
@@ -631,8 +644,10 @@ class UniversalRemoteCard extends LitElement {
 			@keyup=${this.onKey}
 			.header="${this.renderTemplate(this.config.title as string, context)}"
 		>
-			${content}${this.buildDialog()}${buildStyles(this.styles)}
-		</ha-card>`;
+			${this.loading
+				? this.buildSpinner()
+				: html`${content}${this.buildDialog()}${buildStyles(this.styles)}`}</ha-card
+		>`;
 	}
 
 	showDialog(e: Event) {
@@ -702,15 +717,12 @@ class UniversalRemoteCard extends LitElement {
 		}
 
 		if (
-			changedProperties.has('config') &&
-			JSON.stringify(this.config) !=
-				JSON.stringify(changedProperties.get('config'))
+			(changedProperties.has('config') &&
+				JSON.stringify(this.config) !=
+					JSON.stringify(changedProperties.get('config'))) ||
+			changedProperties.has('loading') ||
+			changedProperties.size == 0
 		) {
-			return true;
-		}
-
-		// Explicitly requested update
-		if (changedProperties.size == 0) {
 			return true;
 		}
 
