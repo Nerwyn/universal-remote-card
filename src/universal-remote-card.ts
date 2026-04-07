@@ -519,6 +519,21 @@ class UniversalRemoteCard extends LitElement {
 					case 'numpad':
 						rowContent.push(
 							this.buildPad([
+								'n1',
+								'n2',
+								'n3',
+								'n4',
+								'n5',
+								'n6',
+								'n7',
+								'n8',
+								'n9',
+							]),
+						);
+						break;
+					case 'dialpad':
+						rowContent.push(
+							this.buildPad([
 								'n7',
 								'n8',
 								'n9',

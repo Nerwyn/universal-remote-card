@@ -502,6 +502,10 @@ export const androidTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:dialpad',
 	},
 	{
+		name: 'dialpad',
+		icon: 'mdi:dialpad',
+	},
+	{
 		name: 'f1',
 		tap_action: { action: 'key', key: 'F1' },
 		icon: 'mdi:keyboard-f1',

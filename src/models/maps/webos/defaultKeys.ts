@@ -523,6 +523,10 @@ export const webosDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:dialpad',
 	},
 	{
+		name: 'dialpad',
+		icon: 'mdi:dialpad',
+	},
+	{
 		name: 'asterisk',
 		tap_action: {
 			action: 'key',

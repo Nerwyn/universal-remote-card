@@ -998,6 +998,10 @@ export const unifiedRemoteDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:dialpad',
 	},
 	{
+		name: 'dialpad',
+		icon: 'mdi:dialpad',
+	},
+	{
 		name: 'f1',
 		tap_action: {
 			action: 'perform-action',

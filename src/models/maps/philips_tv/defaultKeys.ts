@@ -382,6 +382,10 @@ export const philipsTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:dialpad',
 	},
 	{
+		name: 'dialpad',
+		icon: 'mdi:dialpad',
+	},
+	{
 		name: 'info',
 		tap_action: { action: 'key', key: 'Info' },
 		icon: 'mdi:information',

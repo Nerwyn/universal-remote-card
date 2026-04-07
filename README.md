@@ -251,6 +251,7 @@ The default keys and sources lists for your selected platform are displayed belo
 | navigation_buttons | button rows | Shorthand to generate a set of up, down, left, right, and center buttons across three rows within a column.                                                                                     |
 | dpad               | button grid | Shorthand to generate a set of up, down, left, right, and center buttons arranged in a square grid.                                                                                             |
 | numpad             | button grid | Shorthand to generate a set of 1-9 buttons arranged in a square grid. Does not include `n0`.                                                                                                    |
+| dialpad            | button grid | Shorthand to generate a set of 1-9 buttons arranged in a square grid, reversed. Does not include `n0`.                                                                                          |
 | xpad               | button grid | Shorthand to generate a set of A, B, X, and Y buttons arranged in a square grid.                                                                                                                |
 | npad               | button grid | Shorthand to generate a set of A, B, X, and Y buttons arranged in an alternate square grid.                                                                                                     |
 

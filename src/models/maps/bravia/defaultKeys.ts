@@ -393,6 +393,10 @@ export const braviaTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:dialpad',
 	},
 	{
+		name: 'dialpad',
+		icon: 'mdi:dialpad',
+	},
+	{
 		name: 'captions',
 		tap_action: { action: 'key', key: 'SubTitle' },
 		icon: 'mdi:closed-caption',

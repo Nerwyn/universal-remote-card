@@ -383,6 +383,10 @@ export const samsungTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:dialpad',
 	},
 	{
+		name: 'dialpad',
+		icon: 'mdi:dialpad',
+	},
+	{
 		name: 'info',
 		tap_action: { action: 'key', key: 'KEY_INFO' },
 		icon: 'mdi:information',
