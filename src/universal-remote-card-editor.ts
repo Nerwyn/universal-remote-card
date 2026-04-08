@@ -3117,6 +3117,8 @@ export class UniversalRemoteCardEditor extends LitElement {
 				flex-direction: column;
 				-webkit-tap-highlight-color: transparent;
 				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+				--ha-input-padding-bottom: 0px;
 			}
 			.content {
 				padding: 12px;
