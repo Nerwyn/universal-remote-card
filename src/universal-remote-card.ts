@@ -129,19 +129,17 @@ class UniversalRemoteCard extends LitElement {
 					case 'keyboard':
 					case 'textbox':
 					case 'search':
-						action.keyboard_id =
-							action.keyboard_id ??
+						action.keyboard_id ??=
 							this.config.keyboard_id ??
 							this.config.remote_id ??
 							this.config.media_player_id;
 					// falls through
 					case 'key':
 					case 'source':
-						action.remote_id = action.remote_id ?? this.config.remote_id;
-						action.media_player_id =
-							action.media_player_id ?? this.config.media_player_id;
-						action.device = action.device ?? this.config.device;
-						action.platform = action.platform ?? this.config.platform;
+						action.remote_id ??= this.config.remote_id;
+						action.media_player_id ??= this.config.media_player_id;
+						action.device ??= this.config.device;
+						action.platform ??= this.config.platform;
 						break;
 					case 'perform-action': {
 						const [domain, _service] = (
@@ -177,13 +175,17 @@ class UniversalRemoteCard extends LitElement {
 										: this.config.media_player_id;
 									break;
 								case 'unified_remote':
-									action.data = action.data ?? {};
+									action.data ??= {};
 									action.data.target =
 										action.data.target ??
 										this.config.device ??
 										this.config.remote_id ??
 										this.config.media_player_id ??
 										this.config.keyboard_id;
+									break;
+								case 'wake_on_lan':
+									action.data ??= {};
+									action.data.mac ??= this.config.mac;
 									break;
 								default:
 									target.entity_id = updatedElement.entity_id;

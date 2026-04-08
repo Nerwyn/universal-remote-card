@@ -29,16 +29,19 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 	},
 	'LG webOS': {
 		media_player_id: true,
+		mac: true,
 		keyboard: true,
 	},
 	'Samsung TV': {
 		remote_id: true,
 		media_player_id: true,
+		mac: true,
 		keyboard: true,
 	},
 	Kodi: {
 		media_player_id: true,
 		keyboard: true,
+		mac: true,
 		search: true,
 	},
 	'Unified Remote': {

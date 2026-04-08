@@ -13,6 +13,14 @@ export const webosDefaultKeys: IElementConfig[] = [
 		},
 	},
 	{
+		name: 'wake_on_lan',
+		tap_action: {
+			action: 'perform-action',
+			perform_action: 'wake_on_lan.send_magic_packet',
+		},
+		icon: 'mdi:power-on',
+	},
+	{
 		name: 'home',
 		tap_action: {
 			action: 'key',

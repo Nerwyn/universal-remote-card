@@ -65,23 +65,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 	DEFAULT_KEYS: IElementConfig[] = [];
 	DEFAULT_SOURCES: IElementConfig[] = [];
 
-	RemotePlatforms = Platforms.filter(
-		(platform) => PlatformConfig[platform].remote_id,
-	);
-	MediaPlayerPlatforms = Platforms.filter(
-		(platform) => PlatformConfig[platform].media_player_id,
-	);
-	DevicePlatforms = Platforms.filter(
-		(platform) => PlatformConfig[platform].device,
-	);
 	KeyboardPlatforms = Platforms.filter(
 		(platform) => PlatformConfig[platform].keyboard,
 	);
 	SearchPlatforms = Platforms.filter(
 		(platform) => PlatformConfig[platform].search,
-	);
-	ADBKeyboardPlatforms = Platforms.filter(
-		(platform) => PlatformConfig[platform].adb,
 	);
 
 	customActionsFromFile?: IElementConfig[];
@@ -2041,7 +2029,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							'Android TV',
 						)}
 						<div class="form">
-							${this.RemotePlatforms.includes(platform)
+							${PlatformConfig[platform].remote_id
 								? this.buildSelector('Remote ID', 'remote_id', {
 										entity: {
 											filter: {
@@ -2050,7 +2038,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										},
 									})
 								: ''}
-							${this.MediaPlayerPlatforms.includes(platform)
+							${PlatformConfig[platform].media_player_id
 								? this.buildSelector('Media Player ID', 'media_player_id', {
 										entity: {
 											filter: {
@@ -2059,7 +2047,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 										},
 									})
 								: ''}
-							${this.ADBKeyboardPlatforms.includes(platform)
+							${PlatformConfig[platform].adb
 								? this.buildSelector('Keyboard ID', 'keyboard_id', {
 										entity: {
 											filter: {
@@ -2068,8 +2056,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 										},
 									})
 								: ''}
-							${this.DevicePlatforms.includes(platform)
+							${PlatformConfig[platform].device
 								? this.buildSelector('Remote/Device Name', 'device', {
+										text: {},
+									})
+								: ''}
+							${PlatformConfig[platform].mac
+								? this.buildSelector('MAC Address', 'mac', {
 										text: {},
 									})
 								: ''}

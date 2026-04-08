@@ -21,6 +21,7 @@ export interface IPlatformFeatures {
 	remote_id?: boolean;
 	media_player_id?: boolean;
 	device?: boolean;
+	mac?: boolean;
 	keyboard?: boolean;
 	search?: boolean;
 	adb?: boolean;

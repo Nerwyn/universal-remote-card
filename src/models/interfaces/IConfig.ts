@@ -16,6 +16,7 @@ export interface IConfig {
 	remote_id?: string;
 	media_player_id?: string;
 	device?: string;
+	mac?: string;
 	autofill_entity_id?: boolean;
 
 	custom_actions?: IElementConfig[];
