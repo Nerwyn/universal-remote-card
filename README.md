@@ -22,12 +22,12 @@ A super customizable universal remote card iterating on the work of several othe
   - Android TV (with keyboard)
   - Sony BRAVIA (with keyboard)
   - Fire TV (with keyboard)
+  - Apple TV (with keyboard)
   - Roku (with keyboard)
   - LG webOS (with keyboard)
   - Samsung TV (with keyboard)
   - Kodi (with keyboard)
   - Unified Remote for Windows, macOS, and Linux (with keyboard)
-  - Apple TV
   - Philips TV
   - Denon AVR
   - Yamaha YNCA
@@ -66,12 +66,12 @@ This card supports several media platforms with default key and source lists. Di
 | [Android TV](https://www.home-assistant.io/integrations/androidtv_remote/) | Default keys, sources, keyboard, and search | Default slider                                                                                                                                    |                                                                                                             |                                     |             |
 | [Sony BRAVIA](https://www.home-assistant.io/integrations/braviatv/)        | Default keys                                | Default sources and slider                                                                                                                        | [ADB](https://www.home-assistant.io/integrations/androidtv/) remote or media player for keyboard and search |                                     |             |
 | [Fire TV](https://www.home-assistant.io/integrations/androidtv/)           | Default keys, keyboard, and search          | Default sources, slider, keyboard, and search                                                                                                     | Keyboard and search                                                                                         |                                     |             |
+| [Apple TV](https://www.home-assistant.io/integrations/apple_tv)            | Default keys and keyboard                   | Default sources and slider                                                                                                                        |                                                                                                             |                                     |             |
 | [Roku](https://www.home-assistant.io/integrations/roku/)                   | Default keys and keyboard                   | Default sources, slider, and search                                                                                                               |                                                                                                             |                                     |             |
 | [LG webOS](https://www.home-assistant.io/integrations/webostv/)            |                                             | Default keys, sources, slider, and keyboard                                                                                                       |                                                                                                             |                                     | Wake on LAN |
 | [Samsung TV](https://www.home-assistant.io/integrations/samsungtv/)        | Default keys                                | Default sources, keyboard (requires the [SamsungTV Smart Component custom integration](https://github.com/ollo69/ha-samsungtv-smart)), and slider |                                                                                                             |                                     | Wake on LAN |
 | [Kodi](https://www.home-assistant.io/integrations/kodi/)                   |                                             | Default keys, sources, slider, keyboard, and search                                                                                               |                                                                                                             |                                     | Wake on LAN |
 | [Unified Remote](https://github.com/akshansh1998/hass-unified-remote)      |                                             |                                                                                                                                                   |                                                                                                             | Default keys and keyboard           |             |
-| [Apple TV](https://www.home-assistant.io/integrations/apple_tv)            | Default keys                                | Default sources and slider                                                                                                                        |                                                                                                             |                                     |             |
 | [Philips TV](https://www.home-assistant.io/integrations/philips_js/)       | Default keys                                | Play/pause and slider                                                                                                                             |                                                                                                             |                                     |             |
 | [Denon AVR](https://www.home-assistant.io/integrations/denonavr/)          |                                             | Default keys, sources, and slider                                                                                                                 |                                                                                                             |                                     |             |
 | [Yamaha YNCA](https://github.com/mvdwetering/yamaha_ynca)                  | Default keys                                | Default sources, play/pause, volume, and slider                                                                                                   |                                                                                                             |                                     |             |
@@ -581,6 +581,7 @@ This card supports sending text to the following platforms:
 | Android TV                      | Inserts  | Yes    |
 | Sony BRAVIA                     | Inserts  | Yes    |
 | Fire TV                         | Inserts  | Yes    |
+| Apple TV                        | Replaces | No     |
 | Roku                            | Inserts  | Yes    |
 | LG webOS                        | Replaces | No     |
 | Samsung TV                      | Replaces | No     |

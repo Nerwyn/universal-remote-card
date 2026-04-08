@@ -62,11 +62,7 @@ export class AndroidTVKeyboard extends BaseKeyboard {
 							this.hass
 								.callService('remote', 'send_command', {
 									entity_id: this.action.remote_id,
-									command: [
-										'DPAD_LEFT',
-										'DPAD_LEFT',
-										'DPAD_CENTER',
-									],
+									command: ['DPAD_LEFT', 'DPAD_LEFT', 'DPAD_CENTER'],
 									delay_secs: 0.4,
 								})
 								.then(() => (this.searchReady = true)),

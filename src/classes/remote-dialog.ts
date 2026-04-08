@@ -4,6 +4,7 @@ import { HomeAssistant, IAction } from '../models/interfaces';
 
 import './dialogs/keyboards/adb-keyboard';
 import './dialogs/keyboards/android-tv-keyboard';
+import './dialogs/keyboards/apple-tv-keyboard';
 import './dialogs/keyboards/kodi-keyboard';
 import './dialogs/keyboards/roku-keyboard';
 import './dialogs/keyboards/samsung-tv-keyboard';
@@ -97,6 +98,13 @@ export class RemoteDialog extends LitElement {
 						.action=${this.config ?? {}}
 						.open=${open}
 					></roku-keyboard>`;
+					break;
+				case 'Apple TV':
+					content = html`<apple-tv-keyboard
+						.hass=${this.hass}
+						.action=${this.config ?? {}}
+						.open=${open}
+					></apple-tv-keyboard>`;
 					break;
 				case 'Fire TV':
 				case 'Sony BRAVIA':

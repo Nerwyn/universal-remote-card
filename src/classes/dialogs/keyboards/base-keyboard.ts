@@ -236,16 +236,11 @@ export class BaseKeyboard extends BaseDialog {
 			!changedProperties.get('open') &&
 			this.open
 		) {
-			querySelectorAsync(this.shadowRoot!, 'textarea').then(
-				(textarea) => {
-					this.textarea = textarea as HTMLTextAreaElement;
-					this.textarea.value = '';
-					this.enabledTimer = setTimeout(
-						() => (this.enabled = true),
-						100,
-					);
-				},
-			);
+			querySelectorAsync(this.shadowRoot!, 'textarea').then((textarea) => {
+				this.textarea = textarea as HTMLTextAreaElement;
+				this.textarea.value = '';
+				this.enabledTimer = setTimeout(() => (this.enabled = true), 100);
+			});
 		}
 		if (
 			changedProperties.has('enabled') &&

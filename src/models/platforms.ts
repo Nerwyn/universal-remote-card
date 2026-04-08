@@ -21,6 +21,11 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 		search: true,
 		// adb: true, // Fire TV uses ADB for everything and does not need to configured here
 	},
+	'Apple TV': {
+		remote_id: true,
+		media_player_id: true,
+		keyboard: true,
+	},
 	Roku: {
 		remote_id: true,
 		media_player_id: true,
@@ -47,10 +52,6 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 	'Unified Remote': {
 		device: true,
 		keyboard: true,
-	},
-	'Apple TV': {
-		remote_id: true,
-		media_player_id: true,
 	},
 	'Philips TV': {
 		remote_id: true,

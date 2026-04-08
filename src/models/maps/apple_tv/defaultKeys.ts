@@ -314,4 +314,22 @@ export const appleTVDefaultKeys: IElementConfig[] = [
 		},
 		icon: 'mdi:skip-next',
 	},
+	{
+		name: 'keyboard',
+		tap_action: { action: 'keyboard' },
+		icon: 'mdi:keyboard',
+	},
+	{
+		name: 'textbox',
+		tap_action: { action: 'textbox' },
+		icon: 'mdi:text-box',
+	},
+	{
+		name: 'delete',
+		tap_action: {
+			action: 'perform-action',
+			perform_action: 'apple_tv.clear_keyboard_text',
+		},
+		icon: 'mdi:backspace',
+	},
 ];
