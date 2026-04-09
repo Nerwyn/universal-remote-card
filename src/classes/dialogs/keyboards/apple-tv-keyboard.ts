@@ -7,7 +7,7 @@ export class AppleTVKeyboard extends BaseKeyboard {
 
 	sendText() {
 		this.hass.callService('apple_tv', 'set_keyboard_text', {
-			entity_id: this.action.remote_id,
+			config_entry_id: this.action.config_entry_id,
 			text: this.textarea?.value ?? '',
 		});
 	}

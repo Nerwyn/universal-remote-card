@@ -90,6 +90,7 @@ export interface IAction {
 	platform?: Platform;
 	key?: string;
 	source?: string;
+	config_entry_id?: string;
 	remote_id?: string;
 	media_player_id?: string;
 	keyboard_id?: string;

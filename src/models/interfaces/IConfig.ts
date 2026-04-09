@@ -12,6 +12,7 @@ export interface IConfig {
 	title?: string;
 
 	platform?: Platform;
+	config_entry_id?: string;
 	keyboard_id?: string;
 	remote_id?: string;
 	media_player_id?: string;

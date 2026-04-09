@@ -6,6 +6,11 @@ declare global {
 	interface Window {
 		customCards: CustomCard[];
 		loadCardHelpers: () => Promise<CardHelpers>;
+		haNunjucks: {
+			entityRegistry: {
+				configEntryId2EntityIds: Record<string, string[]>;
+			};
+		};
 	}
 
 	interface CustomCard {

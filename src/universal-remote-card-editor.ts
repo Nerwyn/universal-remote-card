@@ -369,13 +369,28 @@ export class UniversalRemoteCardEditor extends LitElement {
 		this.yamlStringsCache = {};
 		const key = (e.target as HTMLElement).id;
 		let value = e.detail.value;
-		if (key.endsWith('.confirmation.exemptions')) {
+		if (key == 'config_entry_id') {
+			const entities =
+				window.haNunjucks.entityRegistry.configEntryId2EntityIds[value];
+			this.configChanged({
+				...this.config,
+				[key]: value,
+				remote_id:
+					this.config.remote_id ??
+					entities.find((entity) => entity.startsWith('remote.')),
+				media_player_id:
+					this.config.media_player_id ??
+					entities.find((entity) => entity.startsWith('media_player.')),
+			});
+			return;
+		} else if (key.endsWith('.confirmation.exemptions')) {
 			value = ((value as string[]) ?? []).map((v) => {
 				return {
 					user: v,
 				};
 			});
 		}
+
 		switch (this.baseTabIndex) {
 			case 3:
 			case 2:
@@ -2016,19 +2031,22 @@ export class UniversalRemoteCardEditor extends LitElement {
 				<div class="gui-editor">
 					<div class="wrapper">
 						<div class="title-header">Media Platform and Entity IDs</div>
-						${this.buildSelector(
-							'Platform',
-							'platform',
-							{
-								select: {
-									mode: 'dropdown',
-									options: Platforms,
-									reorder: false,
-								},
-							},
-							'Android TV',
-						)}
 						<div class="form">
+							${this.buildSelector(
+								'Platform',
+								'platform',
+								{
+									select: {
+										mode: 'dropdown',
+										options: Platforms,
+										reorder: false,
+									},
+								},
+								'Android TV',
+							)}
+							${this.buildSelector('Config Entry', 'config_entry_id', {
+								config_entry: {},
+							})}
 							${PlatformConfig[platform].remote_id
 								? this.buildSelector('Remote ID', 'remote_id', {
 										entity: {

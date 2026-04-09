@@ -138,6 +138,7 @@ class UniversalRemoteCard extends LitElement {
 					case 'source':
 						action.remote_id ??= this.config.remote_id;
 						action.media_player_id ??= this.config.media_player_id;
+						action.config_entry_id ??= this.config.config_entry_id;
 						action.device ??= this.config.device;
 						action.platform ??= this.config.platform;
 						break;
@@ -182,6 +183,10 @@ class UniversalRemoteCard extends LitElement {
 										this.config.remote_id ??
 										this.config.media_player_id ??
 										this.config.keyboard_id;
+									break;
+								case 'apple_tv':
+									action.data ??= {};
+									action.data.config_entry_id ??= this.config.config_entry_id;
 									break;
 								case 'wake_on_lan':
 									action.data ??= {};
@@ -314,7 +319,10 @@ class UniversalRemoteCard extends LitElement {
 			) {
 				return this.updateElementConfig(customActions);
 			}
-			return customActions;
+			return {
+				...customActions,
+				card: this.config,
+			};
 		}
 
 		const defaultActions = this.updateElementConfig(
