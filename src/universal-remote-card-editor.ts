@@ -369,7 +369,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		this.yamlStringsCache = {};
 		const key = (e.target as HTMLElement).id;
 		let value = e.detail.value;
-		if (key == 'config_entry_id') {
+		if (key == 'config_entry_id' && this.baseTabIndex == 0) {
 			const entities =
 				window.haNunjucks.entityRegistry.configEntryId2EntityIds[value];
 			this.configChanged({
@@ -1344,6 +1344,27 @@ export class UniversalRemoteCardEditor extends LitElement {
 											},
 											autofill ? this.config.device : undefined,
 										);
+										break;
+									case 'Apple TV':
+										options = html`${this.buildSelector(
+											'Remote ID',
+											'remote_id',
+											{
+												entity: {
+													filter: {
+														domain: 'remote',
+													},
+												},
+											},
+											autofill ? this.config.remote_id : undefined,
+										)}${this.buildSelector(
+											'Config Entry ID',
+											'config_entry_id',
+											{
+												config_entry: {},
+											},
+											autofill ? this.config.config_entry_id : undefined,
+										)}`;
 										break;
 									default:
 										break;
