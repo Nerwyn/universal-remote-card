@@ -461,14 +461,17 @@ class UniversalRemoteCard extends LitElement {
 			row = [row];
 		}
 		for (let elementName of row) {
-			elementName = this.renderTemplate(
-				elementName as string,
-				context,
-			) as string;
+			if (typeof elementName == 'string') {
+				elementName = this.renderTemplate(
+					elementName as string,
+					context,
+				) as string;
 
-			if (typeof elementName == 'string' && elementName.includes('- ')) {
-				elementName = [load(elementName) as string];
+				if (elementName.includes('- ')) {
+					elementName = [load(elementName) as string];
+				}
 			}
+
 			if (typeof elementName == 'object' && elementName != null) {
 				layout.push(this.buildLayout(elementName, context));
 			} else {
