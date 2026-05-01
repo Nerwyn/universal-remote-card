@@ -774,9 +774,6 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	onPointerMove(e: PointerEvent) {
-		// Premature bottom sheet close fix
-		e.stopPropagation();
-
 		if (this.pressed && e.isPrimary) {
 			this.deltaX = e.clientX - (this.currentX ?? 0);
 			this.deltaY = e.clientY - (this.currentY ?? 0);
