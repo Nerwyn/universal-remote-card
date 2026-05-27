@@ -5,12 +5,22 @@ import { IElementConfig } from '../../interfaces';
  */
 export const rokuDefaultSources: IElementConfig[] = [
 	{
+		name: 'acorntv',
+		tap_action: { action: 'source', source: 'Acorn TV' },
+		icon: 'acorntv',
+	},
+	{
 		name: 'appletv',
 		tap_action: {
 			action: 'source',
 			source: 'Apple TV',
 		},
 		icon: 'appletv',
+	},
+	{
+		name: 'britbox',
+		tap_action: { action: 'source', source: 'BritBox' },
+		icon: 'britbox',
 	},
 	{
 		name: 'crunchyroll',
@@ -147,6 +157,11 @@ export const rokuDefaultSources: IElementConfig[] = [
 			source: 'Paramount Plus',
 		},
 		icon: 'paramount',
+	},
+	{
+		name: 'pbs',
+		tap_action: { action: 'source', source: 'PBS' },
+		icon: 'pbs',
 	},
 	{
 		name: 'peacock',

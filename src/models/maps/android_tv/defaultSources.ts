@@ -12,9 +12,19 @@ export const androidTVDefaultSources: IElementConfig[] = [
 		icon: 'abciview',
 	},
 	{
+		name: 'acorntv',
+		tap_action: { action: 'source', source: 'com.acorn.tv' },
+		icon: 'acorntv',
+	},
+	{
 		name: 'appletv',
 		tap_action: { action: 'source', source: 'https://tv.apple.com' }, // UNTESTED
 		icon: 'appletv',
+	},
+	{
+		name: 'britbox',
+		tap_action: { action: 'source', source: 'com.britbox.tv' },
+		icon: 'britbox',
 	},
 	{
 		name: 'crunchyroll',
@@ -171,6 +181,11 @@ export const androidTVDefaultSources: IElementConfig[] = [
 		name: 'paramount',
 		tap_action: { action: 'source', source: 'com.cbs.ca' },
 		icon: 'paramount',
+	},
+	{
+		name: 'pbs',
+		tap_action: { action: 'source', source: 'com.pbs.video' },
+		icon: 'pbs',
 	},
 	{
 		name: 'peacock',
