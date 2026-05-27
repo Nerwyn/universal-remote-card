@@ -5,12 +5,22 @@ import { IElementConfig } from '../../interfaces';
  */
 export const fireTVDefaultSources: IElementConfig[] = [
 	{
+		name: 'acorntv',
+		tap_action: { action: 'source', source: 'com.acorn.tv' },
+		icon: 'acorntv',
+	},
+	{
 		name: 'appletv',
 		tap_action: {
 			action: 'source',
 			source: 'com.apple.atve.amazon.appletv',
 		},
 		icon: 'appletv',
+	},
+	{
+		name: 'britbox',
+		tap_action: { action: 'source', source: 'com.britbox.us.firetv' },
+		icon: 'britbox',
 	},
 	{
 		name: 'crunchyroll',
@@ -150,6 +160,11 @@ export const fireTVDefaultSources: IElementConfig[] = [
 			source: 'com.cbs.ott',
 		},
 		icon: 'paramount',
+	},
+	{
+		name: 'pbs',
+		tap_action: { action: 'source', source: 'com.pbs.video' },
+		icon: 'pbs',
 	},
 	{
 		name: 'peacock',

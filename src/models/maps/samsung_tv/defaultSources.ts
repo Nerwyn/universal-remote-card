@@ -5,12 +5,22 @@ import { IElementConfig } from '../../interfaces';
  */
 export const samsungTVDefaultSources: IElementConfig[] = [
 	{
+		name: 'acorntv',
+		tap_action: { action: 'source', source: 'Acorn TV' },
+		icon: 'acorntv',
+	},
+	{
 		name: 'appletv',
 		tap_action: {
 			action: 'source',
 			source: 'Apple TV',
 		},
 		icon: 'appletv',
+	},
+	{
+		name: 'britbox',
+		tap_action: { action: 'source', source: 'BritBox' },
+		icon: 'britbox',
 	},
 	{
 		name: 'dazn',
@@ -75,6 +85,11 @@ export const samsungTVDefaultSources: IElementConfig[] = [
 			source: 'Paramount+',
 		},
 		icon: 'paramount',
+	},
+	{
+		name: 'pbs',
+		tap_action: { action: 'source', source: 'PBS Video' },
+		icon: 'pbs',
 	},
 	{
 		name: 'peacock',

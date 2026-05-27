@@ -5,6 +5,11 @@ import { IElementConfig } from '../../interfaces';
  */
 export const appleTVDefaultSources: IElementConfig[] = [
 	{
+		name: 'acorntv',
+		tap_action: { action: 'source', source: 'Acorn TV' },
+		icon: 'acorntv',
+	},
+	{
 		name: 'allente',
 		tap_action: {
 			action: 'source',
@@ -19,6 +24,11 @@ export const appleTVDefaultSources: IElementConfig[] = [
 			source: 'TV',
 		},
 		icon: 'appletv',
+	},
+	{
+		name: 'britbox',
+		tap_action: { action: 'source', source: 'BritBox' },
+		icon: 'britbox',
 	},
 	{
 		name: 'crunchyroll',
@@ -163,6 +173,11 @@ export const appleTVDefaultSources: IElementConfig[] = [
 			source: 'Paramount+',
 		},
 		icon: 'paramount',
+	},
+	{
+		name: 'pbs',
+		tap_action: { action: 'source', source: 'PBS' },
+		icon: 'pbs',
 	},
 	{
 		name: 'peacock',
