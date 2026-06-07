@@ -1,4 +1,4 @@
-import { CardHelpers } from '../interfaces';
+import { CardHelpers, IConfig } from '../interfaces';
 
 export {};
 
@@ -19,8 +19,11 @@ declare global {
 		description: string;
 		preview?: boolean;
 		documentationURL?: string;
+		getEntitySuggestion?: (
+			hass: HomeAssistant,
+			entityId: string,
+		) => { config: IConfig } | null;
 	}
-
 	interface Event {
 		// eslint-disable-next-line
 		detail?: any;
