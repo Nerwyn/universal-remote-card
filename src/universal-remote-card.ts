@@ -42,6 +42,7 @@ import {
 	NAVIGATION_KEYS,
 	REPEAT_DELAY,
 } from './models/constants';
+import { platforms } from './models/maps/platforms';
 import { buildStyles, capitalizeWords } from './utils/styles';
 
 console.info(
@@ -892,6 +893,28 @@ window.customCards.push({
 	description: 'Super customizable universal remote card',
 	preview: true,
 	documentationURL: packageInfo.homepage,
+	getEntitySuggestion: (hass: HomeAssistant, entityId: string) => {
+		const suggestion: { config: IConfig } = {
+			config: UniversalRemoteCard.getStubConfig(),
+		};
+		const [domain, _entity] = entityId.split('.');
+
+		switch (domain) {
+			case 'remote':
+				suggestion.config.remote_id = entityId;
+				break;
+			case 'media_player':
+				suggestion.config.media_player_id = entityId;
+				break;
+			default:
+				return null;
+		}
+
+		suggestion.config.platform =
+			platforms[hass.entities[entityId]?.platform || ''] || 'Generic Remote';
+
+		return suggestion;
+	},
 });
 
 if (!window.structuredClone) {
