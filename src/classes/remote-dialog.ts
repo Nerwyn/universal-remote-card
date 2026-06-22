@@ -20,8 +20,9 @@ export class RemoteDialog extends LitElement {
 	fadedInTimer?: ReturnType<typeof setTimeout> = undefined;
 	tabIndex = -1;
 
-
-	onPopState = () => this.closeDialog();
+	onPopState() {
+		this.closeDialog();
+	}
 
 	showDialog(config: IAction) {
 		this.config = config;
