@@ -644,9 +644,9 @@ Once setup, you can reference these icons in custom elements in the icon field b
 
 This repository requires npm and Node.js to develop. The JavaScript module is a minified file compiled using rspack. The source files are all written using TypeScript. After forking the repository and cloning to your machine, run the command `npm run setup` to setup the pre-commit hooks and install dependencies.
 
-All remote elements inherit from the `BaseRemoteElement` class found in `src/classes/base-remote-element.ts`, which contains shared logic for calling actions, managing element value, rendering shared child elements, and generic event handlers. Logic that affects all remote elements should go in that file, while logic that is more specific to certain components should go in their element classes found.
+All remote elements inherit from the `BaseRemoteElement` class found in `src/classes/base-remote-element.ts`, which contains shared logic for calling actions, managing element value, rendering shared child elements, and generic event handlers. Logic that affects all remote elements should go in this file, while logic that is more specific to certain components should go in their element classes.
 
-Platforms default keys and sources are found in the `src/models/maps` folder, with a different folder for each platform. In order for any new platforms added here to be detected, they must also be added to the `getDefaultActions` function found in `src/utils/defaultActions.ts`. They should also be added to the platforms array and types in `src/models/interfaces/IActions.ts` and object found in `src/models/platforms.ts`.
+Platforms default keys and sources are found in the `src/models/maps` folder, with a different folder for each platform. In order for any new platforms added here to be detected, they must also be added to the `getDefaultActions` function found in `src/utils/defaulAtActions.ts`. They should also be added to the platforms array and types in `src/models/interfaces/IActions.ts` and object found in `src/models/platforms.ts`.
 
 If the Home Assistant default MDI icon set does not have an icon for a default source, its SVG path can be added to the `src/models/maps/defaultIcons.ts` file. Icons added to this file can then be referenced by name in default sources files. Default keys should always use Home Assistant default MDI icons.
 
