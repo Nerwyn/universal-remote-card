@@ -20,6 +20,9 @@ export class RemoteDialog extends LitElement {
 	fadedInTimer?: ReturnType<typeof setTimeout> = undefined;
 	tabIndex = -1;
 
+
+	onPopState = () => this.closeDialog();
+
 	showDialog(config: IAction) {
 		this.config = config;
 		this.open = true;
@@ -35,7 +38,7 @@ export class RemoteDialog extends LitElement {
 				dialog.close();
 				dialog.showModal();
 			}
-			window.addEventListener('popstate', () => this.closeDialog());
+			window.addEventListener('popstate', this.onPopState);
 		}
 	}
 
@@ -54,7 +57,7 @@ export class RemoteDialog extends LitElement {
 					dialog.showModal();
 					dialog.close();
 				}
-				window.removeEventListener('popstate', () => this.closeDialog());
+				window.removeEventListener('popstate', this.onPopState);
 			}, 140);
 		}
 	}
