@@ -1572,7 +1572,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		);
 		const rangeMax = Number(
 			this.renderTemplate(
-				(this.activeEntry as IElementConfig)?.range?.[0] as number,
+				(this.activeEntry as IElementConfig)?.range?.[1] as number,
 				context,
 			),
 		);
@@ -1589,39 +1589,51 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 		return html`
 			${this.buildMainFeatureOptions(html`
-				${this.buildSelector('Min', 'range.0', {
-					number: {
-						max: rangeMax ?? undefined,
-						step: step,
-						mode: 'box',
-						unit_of_measurement: unit,
+				${this.buildSelector(
+					'Min',
+					'range.0',
+					{
+						number: {
+							max: rangeMax ?? undefined,
+							step: step,
+							mode: 'box',
+							unit_of_measurement: unit,
+						},
 					},
 					RANGE_MIN,
-				})}
-				${this.buildSelector('Max', 'range.1', {
-					number: {
-						min: rangeMin ?? undefined,
-						step: step,
-						mode: 'box',
-						unit_of_measurement: unit,
+				)}
+				${this.buildSelector(
+					'Max',
+					'range.1',
+					{
+						number: {
+							min: rangeMin ?? undefined,
+							step: step,
+							mode: 'box',
+							unit_of_measurement: unit,
+						},
 					},
 					RANGE_MAX,
-				})}
-				${this.buildSelector('Step', 'step', {
-					number: {
-						min: 0,
-						step:
-							step ??
-							Math.min(
-								1,
-								((rangeMax ?? RANGE_MAX) - (rangeMin ?? RANGE_MIN)) /
-									STEP_COUNT,
-							),
-						mode: 'box',
-						unit_of_measurement: unit,
+				)}
+				${this.buildSelector(
+					'Step',
+					'step',
+					{
+						number: {
+							min: 0,
+							step:
+								step ??
+								Math.min(
+									1,
+									((rangeMax ?? RANGE_MAX) - (rangeMin ?? RANGE_MIN)) /
+										STEP_COUNT,
+								),
+							mode: 'box',
+							unit_of_measurement: unit,
+						},
 					},
 					STEP,
-				})}
+				)}
 				${this.buildSelector(
 					'Update after action delay',
 					'value_from_hass_delay',
