@@ -638,6 +638,30 @@ Each custom icon has to have a name and a SVG path. The SVG path must generate a
 
 Once setup, you can reference these icons in custom elements in the icon field by name. Many default sources similarly use SVG paths instead of the Home Assistant built in icons. If you have an SVG icon you wish to add to this project, you can create a feature or pull request to do so.
 
+# Developing, Building, and Contributing
+
+## Developing
+
+This repository requires npm and Node.js to develop. The JavaScript module is a minified file compiled using rspack. The source files are all written using TypeScript. After forking the repository and cloning to your machine, run the command `npm run setup` to setup the pre-commit hooks and install dependencies.
+
+All remote elements inherit from the `BaseRemoteElement` class found in `src/classes/base-remote-element.ts`, which contains shared logic for calling actions, managing element value, rendering shared child elements, and generic event handlers. Logic that affects all remote elements should go in that file, while logic that is more specific to certain components should go in their element classes found.
+
+Platforms default keys and sources are found in the `src/models/maps` folder, with a different folder for each platform. In order for any new platforms added here to be detected, they must also be added to the `getDefaultActions` function found in `src/utils/defaultActions.ts`. They should also be added to the platforms array and types in `src/models/interfaces/IActions.ts` and object found in `src/models/platforms.ts`.
+
+If the Home Assistant default MDI icon set does not have an icon for a default source, its SVG path can be added to the `src/models/maps/defaultIcons.ts` file. Icons added to this file can then be referenced by name in default sources files. Default keys should always use Home Assistant default MDI icons.
+
+All configuration options must be configurable through the configuration UI. The configuration editor already has helper methods for easily creating fields using the [`ha-selector`](https://github.com/home-assistant/frontend/blob/dev/src/data/selector.ts) component.
+
+## Building
+
+To build this module, either make a commit (to your own fork) or run the command `npm run build`. The compiled JavaScript module and a gzipped copy of it (which is ignored by git and is for local testing) can be found in the `dist` folder. This command assumes you have `gzip` installed. Rspack can take a little bit of time to run, especially the first time you run it after opening the terminal. You can upload the gzipped file to your Home Assistant instance to overwrite the copy download from and created by HACS to test your changes. This file is located in your configuration folder at `www/community/universal-remote-card`. Be wary of [sticky cache](https://github.com/Nerwyn/material-you-utilities/discussions/12#:~:text=the%20old%20folder.-,Sticky%20cache,-The%20biggest%20issue), which can prevent your changes from loading.
+
+## Contributing
+
+Contributions are welcome, but understand that this is a personal project largely maintained by one person. Low quality issues and pull requests can end up wasting a lot of my time as they cause me to chase non-existent issues or try to validate hard to read code. This is especially true for AI generated issues and pull requests, which I have seen an uptick of on my own repositories. While you are welcome to use AI tooling to aid your coding, fully AI generated "vibe coded" contributions are not welcome.
+
+This project is largely feature complete, but that doesn't mean that there is room for improvement or new features. If there are new features you want to see added, you may want to create a feature request issue or discussion thread to discuss it first.
+
 # YAML Examples
 
 While all configuration can now be done through the user interface, these YAML examples can provide some insight on layout basics.
