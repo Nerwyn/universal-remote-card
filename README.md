@@ -660,7 +660,7 @@ To build this module, either make a commit (to your own fork) or run the command
 
 Contributions are welcome, but understand that this is a personal project largely maintained by one person. Low quality issues and pull requests can end up wasting a lot of my time as they cause me to chase non-existent issues or try to validate hard to read code. This is especially true for AI generated issues and pull requests, which I have seen an uptick of on my own repositories. While you are welcome to use AI tooling to aid your coding, fully AI generated "vibe coded" contributions are not welcome.
 
-This project is largely feature complete, but that doesn't mean that there is room for improvement or new features. If there are new features you want to see added, you may want to create a feature request issue or discussion thread to discuss it first.
+This project is largely feature complete, but that doesn't mean that there isn't room for improvement or new features. If there are new features you want to see added, you may want to create a feature request issue or discussion thread to discuss it first.
 
 # YAML Examples
 
