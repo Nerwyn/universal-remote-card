@@ -7,6 +7,7 @@ export async function querySelectorAsync(
 		const element = parent.querySelector(selector);
 		if (element) {
 			resolve(element);
+			return;
 		}
 
 		const rejectTimeout = setTimeout(
