@@ -17,7 +17,7 @@ Because of an uptick in low quality AI generated submissions, I am no longer acc
 
 ## Checklist:
 
-- [ ] I've followed [the README contributing guidelines](https://github.com/Nerwyn/universal-remote-card/blob/main/CONTRIBUTING.md) and ensured that pre-commit and build ran correctly.
+- [ ] I've followed [the contributing guidelines](https://github.com/Nerwyn/universal-remote-card/blob/main/CONTRIBUTING.md) and ensured that pre-commit and build ran correctly.
 - [ ] I've done by best to ensure that my new code is stylistically similar to the rest of the project.
   - If it isn't too egregious the main developer will fix it in post.
 - [ ] I've tested that my changes work on my Home Assistant instance, on different browsers and webviews in needed.
