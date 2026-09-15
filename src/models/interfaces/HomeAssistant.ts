@@ -4,7 +4,7 @@ import {
 	DeviceRegistryEntry,
 	EntityRegistryDisplayEntry,
 	FloorRegistryEntry,
-} from 'ha-nunjucks/dist/models/registries';
+} from 'ha-nunjucks/dist/models/interfaces/registries';
 import {
 	Auth,
 	Connection,

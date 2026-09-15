@@ -1,4 +1,4 @@
-import { CSSResult, PropertyValues, css, html } from 'lit';
+import { CSSResult, PropertyValues, TemplateResult, css, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 import { IAction } from '../../../models/interfaces';
@@ -159,7 +159,7 @@ export class BaseKeyboard extends BaseDialog {
 	}
 
 	render() {
-		let buttons = html``;
+		let buttons: TemplateResult;
 		let placeholder: string;
 		let inputHandler: ((e: InputEvent) => void) | undefined;
 		let keyDownHandler: ((e: KeyboardEvent) => void) | undefined;

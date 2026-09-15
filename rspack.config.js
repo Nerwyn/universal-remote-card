@@ -1,5 +1,4 @@
 import { defineConfig } from '@rspack/cli';
-import rspack from '@rspack/core';
 
 export default defineConfig([
 	{
@@ -31,11 +30,6 @@ export default defineConfig([
 				},
 			],
 		},
-		plugins: [
-			new rspack.ProvidePlugin({
-				process: 'process/browser',
-			}),
-		],
 		performance: {
 			hints: false,
 			maxEntrypointSize: 512000,

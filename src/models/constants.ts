@@ -2,7 +2,6 @@ export const DOUBLE_TAP_WINDOW = 200;
 export const HOLD_TIME = 500;
 export const REPEAT_DELAY = 100;
 
-export const AUTOFILL = true;
 export const HAPTICS = true;
 
 export const UPDATE_AFTER_ACTION_DELAY = 1000;

@@ -36,29 +36,28 @@
 	},
 	"homepage": "https://github.com/Nerwyn/universal-remote-card#readme",
 	"dependencies": {
-		"ha-nunjucks": "latest",
-		"js-yaml": "latest",
-		"lit": "latest",
-		"process": "latest"
+		"ha-nunjucks": "^1.7.8",
+		"js-yaml": "^5.4.2",
+		"lit": "^3.3.3"
 	},
 	"devDependencies": {
-		"@eslint/js": "latest",
-		"@rspack/cli": "latest",
-		"@rspack/core": "latest",
-		"@types/js-yaml": "latest",
+		"@eslint/js": "^10.0.1",
+		"@rspack/cli": "^2.2.4",
+		"@rspack/core": "^2.2.4",
+		"@types/js-yaml": "^4.0.9",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
-		"eslint": "latest",
-		"eslint-config-prettier": "latest",
-		"eslint-plugin-prettier": "latest",
-		"home-assistant-js-websocket": "latest",
-		"lint-staged": "latest",
-		"lit-css-loader": "latest",
-		"minify-html-literals-loader": "latest",
-		"prettier": "latest",
-		"prettier-plugin-organize-imports": "latest",
-		"ts-loader": "latest",
-		"typescript": "latest",
-		"typescript-eslint": "latest"
+		"eslint": "^10.10.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.6",
+		"home-assistant-js-websocket": "^9.6.0",
+		"lint-staged": "^17.5.1",
+		"lit-css-loader": "^4.0.1",
+		"minify-html-literals-loader": "^1.1.1",
+		"prettier": "^3.9.6",
+		"prettier-plugin-organize-imports": "^4.3.0",
+		"ts-loader": "^9.6.2",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.70.0"
 	}
 }

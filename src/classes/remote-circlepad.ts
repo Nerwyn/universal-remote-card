@@ -139,7 +139,6 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					.hass=${this.hass}
 					.config=${{
 						entity_id: this.config.entity_id,
-						autofill_default_fields: this.config.autofill_entity_id,
 						haptics: this.config.haptics,
 						...this.config.up,
 					}}
@@ -155,7 +154,6 @@ export class RemoteCirclepad extends BaseRemoteElement {
 						.hass=${this.hass}
 						.config=${{
 							entity_id: this.config.entity_id,
-							autofill_default_fields: this.config.autofill_entity_id,
 							haptics: this.config.haptics,
 							...this.config.left,
 						}}
@@ -179,7 +177,6 @@ export class RemoteCirclepad extends BaseRemoteElement {
 						.hass=${this.hass}
 						.config=${{
 							entity_id: this.config.entity_id,
-							autofill_default_fields: this.config.autofill_entity_id,
 							haptics: this.config.haptics,
 							...this.config.right,
 						}}
@@ -195,7 +192,6 @@ export class RemoteCirclepad extends BaseRemoteElement {
 					.hass=${this.hass}
 					.config=${{
 						entity_id: this.config.entity_id,
-						autofill_default_fields: this.config.autofill_entity_id,
 						haptics: this.config.haptics,
 						...this.config.down,
 					}}

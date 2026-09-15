@@ -36,7 +36,6 @@ import { RemoteDialog } from './classes/remote-dialog';
 import './classes/remote-slider';
 import './classes/remote-touchpad';
 import {
-	AUTOFILL,
 	DOUBLE_TAP_WINDOW,
 	HOLD_TIME,
 	NAVIGATION_KEYS,
@@ -102,6 +101,7 @@ class UniversalRemoteCard extends LitElement {
 	}
 
 	updateElementConfig(element: IElementConfig) {
+		// TODO - fix autofill
 		if (!Object.keys(element).length) {
 			return element;
 		}
@@ -313,17 +313,7 @@ class UniversalRemoteCard extends LitElement {
 			(customActions) => customActions.name == name,
 		);
 		if (customActions) {
-			if (
-				customActions.autofill_entity_id ??
-				this.config.autofill_entity_id ??
-				AUTOFILL
-			) {
-				return this.updateElementConfig(customActions);
-			}
-			return {
-				...customActions,
-				card: this.config,
-			};
+			return this.updateElementConfig(customActions);
 		}
 
 		const defaultActions = this.updateElementConfig(
@@ -673,9 +663,11 @@ class UniversalRemoteCard extends LitElement {
 			@keyup=${this.onKey}
 			.header="${this.renderTemplate(this.config.title as string, context)}"
 		>
-			${this.loading
-				? this.buildSpinner()
-				: html`${content}${this.buildDialog()}${buildStyles(this.styles)}`}</ha-card
+			${
+				this.loading
+					? this.buildSpinner()
+					: html`${content}${this.buildDialog()}${buildStyles(this.styles)}`
+			}</ha-card
 		>`;
 	}
 

@@ -18,7 +18,6 @@ export interface IConfig {
 	media_player_id?: string;
 	device?: string;
 	mac?: string;
-	autofill_entity_id?: boolean;
 
 	custom_actions?: IElementConfig[];
 	custom_actions_file?: string;

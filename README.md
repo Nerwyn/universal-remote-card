@@ -848,7 +848,6 @@ Combining Apple TVs `wakeup` and `suspend` keys into one custom power action and
 type: custom:universal-remote-card
 remote_id: remote.apple_tv
 platform: Apple TV
-autofill_entity_id: true
 rows:
   - - power
     - menu
@@ -1005,7 +1004,6 @@ A touchpad remapped to work with a [Denon/Marantz Receiver](https://www.home-ass
 ```yaml
 type: custom:universal-remote-card
 media_player_id: media_player.marantz_sr7013
-autofill_entity_id: true
 rows:
   - - touchpad
 custom_actions:
@@ -1659,7 +1657,6 @@ custom_actions:
       styles: ''
     left:
       styles: ''
-    autofill_entity_id: true
   - type: touchpad
     name: song_info
     styles: |-
@@ -1763,7 +1760,6 @@ custom_actions:
       :host([enabled]) input {
         pointer-events: all;
       }
-    autofill_entity_id: true
   - type: button
     name: shuffle
     tap_action:

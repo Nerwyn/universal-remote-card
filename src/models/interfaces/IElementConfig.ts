@@ -30,7 +30,6 @@ interface IBaseElementConfig extends IDisplayConfig {
 	card?: IConfig;
 
 	entity_id?: string;
-	autofill_entity_id?: boolean;
 	value_attribute?: string;
 	value_from_hass_delay?: boolean;
 	value_template?: string;
