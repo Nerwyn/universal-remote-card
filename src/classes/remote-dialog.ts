@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues, css, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { HomeAssistant, IAction } from '../models/interfaces';
 
 import './dialogs/keyboards/adb-keyboard';
@@ -20,6 +20,8 @@ export class RemoteDialog extends LitElement {
 	fadedInTimer?: ReturnType<typeof setTimeout> = undefined;
 	tabIndex = -1;
 
+	@query('dialog') dialog!: HTMLDialogElement;
+
 	onPopState() {
 		this.closeDialog();
 	}
@@ -31,16 +33,14 @@ export class RemoteDialog extends LitElement {
 			this.fadedIn = true;
 		}, 250);
 
-		const dialog = this.shadowRoot?.querySelector('dialog');
-		if (dialog) {
-			try {
-				dialog.showModal();
-			} catch {
-				dialog.close();
-				dialog.showModal();
-			}
-			window.addEventListener('popstate', this.onPopState);
+		try {
+			this.dialog.showModal();
+		} catch {
+			this.dialog.close();
+			this.dialog.showModal();
 		}
+		window.addEventListener('popstate', this.onPopState);
+		document.body.style.setProperty('overflow', 'hidden');
 	}
 
 	closeDialog(e?: Event) {
@@ -49,18 +49,16 @@ export class RemoteDialog extends LitElement {
 		this.fadedIn = false;
 		this.open = false;
 
-		const dialog = this.shadowRoot?.querySelector('dialog');
-		if (dialog) {
-			setTimeout(() => {
-				try {
-					dialog.close();
-				} catch {
-					dialog.showModal();
-					dialog.close();
-				}
-				window.removeEventListener('popstate', this.onPopState);
-			}, 140);
-		}
+		setTimeout(() => {
+			try {
+				this.dialog.close();
+			} catch {
+				this.dialog.showModal();
+				this.dialog.close();
+			}
+			window.removeEventListener('popstate', this.onPopState);
+		}, 140);
+		document.body.style.removeProperty('overflow');
 	}
 
 	render() {
@@ -176,6 +174,7 @@ export class RemoteDialog extends LitElement {
 				display: inline-flex;
 				flex-direction: column;
 				position: fixed;
+				margin-top: var(--ha-space-10, 40px);
 				border: none;
 				outline: none;
 				color: var(--primary-text-color);
