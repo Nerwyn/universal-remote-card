@@ -138,6 +138,10 @@ export class BaseKeyboard extends BaseDialog {
 		this.closeDialog();
 	}
 
+	backspaceDialog() {
+		this.sendKey(this.keyMap['Backspace']);
+	}
+
 	closeDialog(e?: MouseEvent) {
 		e?.preventDefault();
 
@@ -178,10 +182,9 @@ export class BaseKeyboard extends BaseDialog {
 				break;
 			case 'textbox':
 				placeholder = 'Send something...';
-				buttons = html`${this.buildDialogButton(
-					'Close',
-					this.closeDialog,
-				)}${this.buildDialogButton('Send', this.textBox)}`;
+				buttons = html`${this.buildDialogButton('Close', this.closeDialog)}
+				${this.buildDialogButton('Send', this.textBox)}
+				${this.replaceOnSend ? '' : this.buildDialogButton(html`<ha-icon .icon="${'mdi:backspace'}"></ha-icon>`, this.backspaceDialog)}`;
 				break;
 			case 'keyboard':
 			default:

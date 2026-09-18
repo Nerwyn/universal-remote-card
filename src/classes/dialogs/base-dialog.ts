@@ -1,4 +1,11 @@
-import { css, CSSResult, html, LitElement, PropertyValues } from 'lit';
+import {
+	css,
+	CSSResult,
+	html,
+	LitElement,
+	PropertyValues,
+	TemplateResult,
+} from 'lit';
 import { property } from 'lit/decorators.js';
 import { HomeAssistant } from '../../models/interfaces';
 
@@ -6,10 +13,13 @@ export class BaseDialog extends LitElement {
 	@property() hass!: HomeAssistant;
 	@property() open: boolean = false;
 
-	buildDialogButton(text: string, handler: (e: MouseEvent) => void) {
+	buildDialogButton(
+		content: string | TemplateResult,
+		handler: (e: MouseEvent) => void,
+	) {
 		return html`<div class="button">
 			<button @click=${this.open ? handler : undefined}></button>
-			<span>${text}</span>
+			<span>${content}</span>
 		</div>`;
 	}
 

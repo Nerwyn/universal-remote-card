@@ -618,7 +618,7 @@ Platforms which replace replaced the entire on screen text with the text area te
 
 #### Textbox - Bulk Text Entry
 
-Send text to your supported media platform in bulk using the action or default button `textbox`. The dialog will not send any information until you tap the send button. It is highly recommended that you also create buttons for delete and enter so you can easily delete the text you send and quickly search using it.
+Send text to your supported media platform in bulk using the action or default button `textbox`. The dialog will not send any information until you tap the send button.
 
 #### Search - Global Search
 
