@@ -19,24 +19,24 @@ import {
 } from './models/constants';
 import {
 	ActionType,
-	ActionTypes,
 	Actions,
 	DirectionAction,
 	DirectionActions,
-	IAction,
-	IBasicActions,
 	IConfig,
 	IElementConfig,
 	IIconConfig,
 	Platform,
 	Platforms,
-	RemoteElementType,
 	RemoteElementTypes,
-	Row,
 } from './models/interfaces';
 import { defaultIcons } from './models/maps';
 import { PlatformConfig } from './models/platforms';
-import { deepGet, deepSet, getDefaultActions, mergeDeep } from './utils';
+import {
+	autofillActionTargets,
+	deepGet,
+	deepSet,
+	getDefaultActions,
+} from './utils';
 import { capitalizeWords } from './utils/styles';
 
 export class UniversalRemoteCardEditor extends LitElement {
@@ -290,7 +290,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	handleAutofill(_e: Event) {
-		this.yamlCache = {};
 		if (this.baseTabIndex != 2) {
 			return;
 		}
@@ -603,10 +602,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 												context.config.entity
 													? html`<span class="secondary"
 															>${context.config.entity}${
-															context.config.attribute
-																? ` ⸱ ${context.config.attribute}`
-																: ''
-														}</span
+																context.config.attribute
+																	? ` ⸱ ${context.config.attribute}`
+																	: ''
+															}</span
 														>`
 													: ''
 											}
@@ -993,39 +992,39 @@ export class UniversalRemoteCardEditor extends LitElement {
 						  (this.activeEntry as IElementConfig)[actionType]
 						? html`<div class="actions-form">
 								${this.buildSelector(
-								'Hold time',
-								`${actionType}.hold_time`,
-								{
-									number: {
-										min: 0,
-										step: 0,
-										mode: 'box',
-										unit_of_measurement: 'ms',
+									'Hold time',
+									`${actionType}.hold_time`,
+									{
+										number: {
+											min: 0,
+											step: 0,
+											mode: 'box',
+											unit_of_measurement: 'ms',
+										},
 									},
-								},
-								HOLD_TIME,
-							)}
+									HOLD_TIME,
+								)}
 								${
-								this.renderTemplate(
-									(this.activeEntry as IElementConfig)?.[actionType]
-										?.action as string,
-									context,
-								) == 'repeat' || actionType == 'momentary_repeat_action'
-									? this.buildSelector(
-											'Repeat delay',
-											`${actionType}.repeat_delay`,
-											{
-												number: {
-													min: 0,
-													step: 0,
-													mode: 'box',
-													unit_of_measurement: 'ms',
+									this.renderTemplate(
+										(this.activeEntry as IElementConfig)?.[actionType]
+											?.action as string,
+										context,
+									) == 'repeat' || actionType == 'momentary_repeat_action'
+										? this.buildSelector(
+												'Repeat delay',
+												`${actionType}.repeat_delay`,
+												{
+													number: {
+														min: 0,
+														step: 0,
+														mode: 'box',
+														unit_of_measurement: 'ms',
+													},
 												},
-											},
-											REPEAT_DELAY,
-										)
-									: ''
-							}
+												REPEAT_DELAY,
+											)
+										: ''
+								}
 							</div>`
 						: action != 'none' && showSamplingDelay
 							? this.buildSelector(
@@ -1047,237 +1046,237 @@ export class UniversalRemoteCardEditor extends LitElement {
 				action == 'key'
 					? html`<div class="actions-form">
 								${this.buildSelector(
-								'Platform',
-								`${actionType}.platform`,
-								{
-									select: {
-										mode: 'dropdown',
-										options: Platforms,
-										reorder: false,
+									'Platform',
+									`${actionType}.platform`,
+									{
+										select: {
+											mode: 'dropdown',
+											options: Platforms,
+											reorder: false,
+										},
 									},
-								},
-								this.PLATFORM ?? 'Android TV',
-							)}
+									this.PLATFORM ?? 'Android TV',
+								)}
 								${
-								['Kodi', 'LG webOS', 'Denon AVR'].includes(platform)
-									? this.buildSelector(
-											'Media Player ID',
-											`${actionType}.media_player_id`,
-											{
-												entity: {
-													filter: {
-														domain: 'media_player',
+									['Kodi', 'LG webOS', 'Denon AVR'].includes(platform)
+										? this.buildSelector(
+												'Media Player ID',
+												`${actionType}.media_player_id`,
+												{
+													entity: {
+														filter: {
+															domain: 'media_player',
+														},
 													},
 												},
-											},
-											this.config.media_player_id,
-										)
-									: this.buildSelector(
-											'Remote ID',
-											`${actionType}.remote_id`,
-											{
-												entity: {
-													filter: {
-														domain: 'remote',
+												this.config.media_player_id,
+											)
+										: this.buildSelector(
+												'Remote ID',
+												`${actionType}.remote_id`,
+												{
+													entity: {
+														filter: {
+															domain: 'remote',
+														},
 													},
 												},
-											},
-											this.config.remote_id,
-										)
-							}
+												this.config.remote_id,
+											)
+								}
 							</div>
 							${this.buildSelector('Key', `${actionType}.key`, {
-							text: {},
-						})}`
+								text: {},
+							})}`
 					: ''
 			}
 			${
 				action == 'source'
 					? html`<div class="actions-form">
 								${this.buildSelector(
-								'Platform',
-								`${actionType}.platform`,
-								{
-									select: {
-										mode: 'dropdown',
-										options: Platforms,
-										reorder: false,
+									'Platform',
+									`${actionType}.platform`,
+									{
+										select: {
+											mode: 'dropdown',
+											options: Platforms,
+											reorder: false,
+										},
 									},
-								},
-								this.PLATFORM ?? 'Android TV',
-							)}
+									this.PLATFORM ?? 'Android TV',
+								)}
 								${
-								['Android TV'].includes(platform)
-									? this.buildSelector(
-											'Remote ID',
-											`${actionType}.remote_id`,
-											{
-												entity: {
-													filter: {
-														domain: 'remote',
+									['Android TV'].includes(platform)
+										? this.buildSelector(
+												'Remote ID',
+												`${actionType}.remote_id`,
+												{
+													entity: {
+														filter: {
+															domain: 'remote',
+														},
 													},
 												},
-											},
-											this.config.remote_id,
-										)
-									: this.buildSelector(
-											'Media Player ID',
-											`${actionType}.media_player_id`,
-											{
-												entity: {
-													filter: {
-														domain: 'media_player',
+												this.config.remote_id,
+											)
+										: this.buildSelector(
+												'Media Player ID',
+												`${actionType}.media_player_id`,
+												{
+													entity: {
+														filter: {
+															domain: 'media_player',
+														},
 													},
 												},
-											},
-											this.config.media_player_id,
-										)
-							}
+												this.config.media_player_id,
+											)
+								}
 							</div>
 							${this.buildSelector('Source', `${actionType}.source`, {
-							text: {},
-						})}`
+								text: {},
+							})}`
 					: ''
 			}
 			${
 				['keyboard', 'textbox', 'search'].includes(action)
 					? html`<div class="actions-form">
 								${this.buildSelector(
-								'Platform',
-								`${actionType}.platform`,
-								{
-									select: {
-										mode: 'dropdown',
-										options:
-											action == 'search'
-												? this.SearchPlatforms
-												: this.KeyboardPlatforms,
-										reorder: false,
+									'Platform',
+									`${actionType}.platform`,
+									{
+										select: {
+											mode: 'dropdown',
+											options:
+												action == 'search'
+													? this.SearchPlatforms
+													: this.KeyboardPlatforms,
+											reorder: false,
+										},
 									},
-								},
-								this.KeyboardPlatforms.includes(
-									this.config.platform ?? 'Android TV',
-								)
-									? this.PLATFORM
-									: 'Android TV',
-							)}
+									this.KeyboardPlatforms.includes(
+										this.config.platform ?? 'Android TV',
+									)
+										? this.PLATFORM
+										: 'Android TV',
+								)}
 								${(() => {
-								let options = html``;
-								const keyboardPlatform =
-									PlatformConfig[platform].keyboard ||
-									PlatformConfig[platform].search
-										? platform
-										: 'Android TV';
-								switch (keyboardPlatform) {
-									case 'Android TV':
-										options = this.buildSelector(
-											'Remote ID',
-											`${actionType}.remote_id`,
-											{
-												entity: {
-													filter: {
-														domain: 'remote',
+									let options = html``;
+									const keyboardPlatform =
+										PlatformConfig[platform].keyboard ||
+										PlatformConfig[platform].search
+											? platform
+											: 'Android TV';
+									switch (keyboardPlatform) {
+										case 'Android TV':
+											options = this.buildSelector(
+												'Remote ID',
+												`${actionType}.remote_id`,
+												{
+													entity: {
+														filter: {
+															domain: 'remote',
+														},
 													},
 												},
-											},
-											this.config.remote_id,
-										);
-										break;
-									case 'Sony BRAVIA':
-									case 'Fire TV':
-										options = this.buildSelector(
-											'Keyboard ID',
-											`${actionType}.keyboard_id`,
-											{
-												entity: {
-													filter: {
-														domain: ['remote', 'media_player'],
+												this.config.remote_id,
+											);
+											break;
+										case 'Sony BRAVIA':
+										case 'Fire TV':
+											options = this.buildSelector(
+												'Keyboard ID',
+												`${actionType}.keyboard_id`,
+												{
+													entity: {
+														filter: {
+															domain: ['remote', 'media_player'],
+														},
 													},
 												},
-											},
-											this.config.keyboard_id,
-										);
-										break;
-									case 'Roku': {
-										const domain =
-											action == 'search' ? 'media_player' : 'remote';
-										options = this.buildSelector(
-											`${capitalizeWords(domain)} ID`,
-											`${actionType}.${domain}_id`,
-											{
-												entity: {
-													filter: {
-														domain,
+												this.config.keyboard_id,
+											);
+											break;
+										case 'Roku': {
+											const domain =
+												action == 'search' ? 'media_player' : 'remote';
+											options = this.buildSelector(
+												`${capitalizeWords(domain)} ID`,
+												`${actionType}.${domain}_id`,
+												{
+													entity: {
+														filter: {
+															domain,
+														},
 													},
 												},
-											},
-											this.config[`${domain}_id`],
-										);
-										break;
+												this.config[`${domain}_id`],
+											);
+											break;
+										}
+										case 'Samsung TV':
+										case 'LG webOS':
+											if (action == 'search') {
+												break;
+											}
+										// falls through
+										case 'Kodi':
+											options = this.buildSelector(
+												'Media Player ID',
+												`${actionType}.media_player_id`,
+												{
+													entity: {
+														filter: {
+															domain: 'media_player',
+														},
+													},
+												},
+												this.config.media_player_id,
+											);
+											break;
+										case 'Unified Remote':
+											if (action == 'search') {
+												break;
+											}
+											options = this.buildSelector(
+												'Remote/Device Name',
+												'device',
+												{
+													text: {},
+												},
+												this.config.device,
+											);
+											break;
+										case 'Apple TV':
+											options = html`${this.buildSelector(
+												'Remote ID',
+												'remote_id',
+												{
+													entity: {
+														filter: {
+															domain: 'remote',
+														},
+													},
+												},
+												this.config.remote_id,
+											)}${this.buildSelector(
+												'Config Entry ID',
+												'config_entry_id',
+												{
+													config_entry: {},
+												},
+												this.config.config_entry_id,
+											)}`;
+											break;
+										default:
+											break;
 									}
-									case 'Samsung TV':
-									case 'LG webOS':
-										if (action == 'search') {
-											break;
-										}
-									// falls through
-									case 'Kodi':
-										options = this.buildSelector(
-											'Media Player ID',
-											`${actionType}.media_player_id`,
-											{
-												entity: {
-													filter: {
-														domain: 'media_player',
-													},
-												},
-											},
-											this.config.media_player_id,
-										);
-										break;
-									case 'Unified Remote':
-										if (action == 'search') {
-											break;
-										}
-										options = this.buildSelector(
-											'Remote/Device Name',
-											'device',
-											{
-												text: {},
-											},
-											this.config.device,
-										);
-										break;
-									case 'Apple TV':
-										options = html`${this.buildSelector(
-											'Remote ID',
-											'remote_id',
-											{
-												entity: {
-													filter: {
-														domain: 'remote',
-													},
-												},
-											},
-											this.config.remote_id,
-										)}${this.buildSelector(
-											'Config Entry ID',
-											'config_entry_id',
-											{
-												config_entry: {},
-											},
-											this.config.config_entry_id,
-										)}`;
-										break;
-									default:
-										break;
-								}
-								return options;
-							})()}
+									return options;
+								})()}
 							</div>
 							${this.buildSelector('Prompt', `${actionType}.keyboard_prompt`, {
-							text: {},
-						})}`
+								text: {},
+							})}`
 					: ''
 			}
 			${
@@ -1311,12 +1310,12 @@ export class UniversalRemoteCardEditor extends LitElement {
 				action == 'eval'
 					? html`
 							${this.buildAlertBox(
-							"It's easy to crash your browser or server if you use this to send too many commands in a loop. Make sure you know what you're doing!",
-							'warning',
-						)}
+								"It's easy to crash your browser or server if you use this to send too many commands in a loop. Make sure you know what you're doing!",
+								'warning',
+							)}
 							${this.buildSelector('', `${actionType}.eval`, {
-							template: { preview: false },
-						})}
+								template: { preview: false },
+							})}
 						`
 					: ''
 			}
@@ -1331,28 +1330,28 @@ export class UniversalRemoteCardEditor extends LitElement {
 							false,
 						)}
 						${
-						(this.activeEntry as IElementConfig)?.[actionType]?.confirmation
-							? html`${this.buildSelector(
-									'Text',
-									`${actionType}.confirmation.text`,
-									{
-										text: {},
-									},
-								)}
-								${this.buildSelector(
-								'Exemptions',
-								`${actionType}.confirmation.exemptions`,
-								{
-									select: {
-										multiple: true,
-										mode: 'list',
-										options: this.people,
-										reorder: false,
-									},
-								},
-							)}`
-							: ''
-					}`
+							(this.activeEntry as IElementConfig)?.[actionType]?.confirmation
+								? html`${this.buildSelector(
+										'Text',
+										`${actionType}.confirmation.text`,
+										{
+											text: {},
+										},
+									)}
+									${this.buildSelector(
+										'Exemptions',
+										`${actionType}.confirmation.exemptions`,
+										{
+											select: {
+												multiple: true,
+												mode: 'list',
+												options: this.people,
+												reorder: false,
+											},
+										},
+									)}`
+								: ''
+						}`
 					: ''
 			}
 		</div>`;
@@ -1867,18 +1866,18 @@ export class UniversalRemoteCardEditor extends LitElement {
 									<div class="title-header">Custom Elements</div>
 									<ul class="action-list two-column-action-list">
 										${customActions.map((entry) => {
-										const context = this.getEntryContext(
-											entry as IElementConfig,
-										);
-										const iconElement = this.buildIconElement(entry, context);
-										return html`<li
-											class="action-list-item"
-											draggable="true"
-											@dragstart=${this.handleLayoutActionListItemDragStart}
-										>
-											${iconElement} ${entry.name}
-										</li>`;
-									})}
+											const context = this.getEntryContext(
+												entry as IElementConfig,
+											);
+											const iconElement = this.buildIconElement(entry, context);
+											return html`<li
+												class="action-list-item"
+												draggable="true"
+												@dragstart=${this.handleLayoutActionListItemDragStart}
+											>
+												${iconElement} ${entry.name}
+											</li>`;
+										})}
 									</ul>
 								</div>
 								<div><hr /></div>`
@@ -1892,8 +1891,10 @@ export class UniversalRemoteCardEditor extends LitElement {
 									<div class="action-list-container">
 										<ul
 											class="action-list ${
-											defaultSourcesList.length ? '' : 'two-column-action-list'
-										}"
+												defaultSourcesList.length
+													? ''
+													: 'two-column-action-list'
+											}"
 										>
 											${defaultKeysList}
 										</ul>
@@ -2058,14 +2059,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 						)}
 					</div>
 				</div>
-				<ha-button
-					@click=${this.handleUpdateDeprecatedConfig}
-					size="s"
-					appearance="filled"
-				>
-					<ha-icon .icon=${'mdi:cog'} slot="start"></ha-icon>Update old
-					config</ha-button
-				>
 			</div>
 		`;
 	}
@@ -2231,6 +2224,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 				...entry,
 				entity: '',
 				attribute: '',
+				card: this.config,
 			},
 		};
 		context.config.attribute = this.renderTemplate(
@@ -2325,16 +2319,28 @@ export class UniversalRemoteCardEditor extends LitElement {
 		parentName?: string,
 		childName?: string,
 	) {
+		this.yamlCache = {};
 		const context = this.getEntryContext(entry);
+		const entryName = this.renderTemplate(entry.name, context) as string;
+		const allActions = [
+			...(this.customActionsFromFile ?? []),
+			...this.DEFAULT_KEYS,
+			...this.DEFAULT_SOURCES,
+		];
+		const defaultActions = allActions.find(
+			(elementConfig) => elementConfig.name == (parentName ?? entryName),
+		);
+		if (!defaultActions) {
+			return entry;
+		}
+
 		// Copy custom action onto default action
 		if (parentName && childName) {
 			const parentActions =
 				structuredClone(
-					[
-						...(this.customActionsFromFile ?? []),
-						...this.DEFAULT_KEYS,
-						...this.DEFAULT_SOURCES,
-					].find((defaultActions) => defaultActions.name == parentName),
+					allActions.find(
+						(defaultActions) => defaultActions.name == parentName,
+					),
 				) ?? ({} as IElementConfig);
 			const defaultActions = parentActions[childName as DirectionAction];
 			entry = {
@@ -2361,593 +2367,20 @@ export class UniversalRemoteCardEditor extends LitElement {
 			};
 		}
 
+		// Autofill targets
+		entry = autofillActionTargets(entry);
+
 		// Copy direction actions
 		for (const direction of DirectionActions) {
 			if (entry[direction]) {
 				entry[direction] = this.autofillDefaultFields(
-					(entry[direction] ?? {}) as IElementConfig,
-					this.renderTemplate(entry.name, context) as string,
+					entry[direction] as IElementConfig,
+					entryName,
 					direction,
 				);
 			}
 		}
 		return entry;
-	}
-
-	handleUpdateDeprecatedConfig() {
-		const config = this.updateDeprecatedFields(this.config);
-		this.configChanged(config);
-	}
-
-	updateDeprecatedFields(config: IConfig = this.config): IConfig {
-		const updatedConfig = structuredClone(config);
-
-		// Update card type
-		updatedConfig.type = 'custom:universal-remote-card';
-
-		// Convert old root level key names to new
-		if ('adb_id' in updatedConfig) {
-			updatedConfig.keyboard_id = (
-				updatedConfig as Record<string, string>
-			).adb_id;
-			delete (updatedConfig as Record<string, string>).adb_id;
-		}
-		if ('keyboard_mode' in updatedConfig) {
-			updatedConfig.platform = (updatedConfig as Record<string, string>)
-				.keyboard_mode as Platform;
-			delete (updatedConfig as Record<string, string>).keyboard_mode;
-		}
-		updatedConfig.platform = Platforms.includes(
-			updatedConfig.platform as Platform,
-		)
-			? updatedConfig.platform
-			: 'Android TV';
-
-		// Old haptic feedback toggle names
-		if ('enable_button_feedback' in updatedConfig) {
-			updatedConfig.haptics = (
-				updatedConfig as Record<string, boolean>
-			).enable_button_feedback;
-		}
-		if ('button_haptics' in updatedConfig) {
-			updatedConfig.haptics = (
-				updatedConfig as Record<string, boolean>
-			).button_haptics;
-		}
-
-		// Convert old _row keys into rows array
-		if (!updatedConfig.rows) {
-			const rows: string[][] = [];
-			const rowNames = Object.keys(updatedConfig).filter((row) =>
-				row.includes('_row'),
-			);
-			for (const name of rowNames) {
-				let row = (config as Record<string, string[]>)[name];
-				if (typeof row == 'string') {
-					row = [row];
-				}
-				if (name == 'volume_row') {
-					row = ['volume_' + row[0]];
-				} else if (name == 'navigation_row') {
-					row = ['navigation_' + row[0]];
-				}
-				rows.push(row);
-				delete (updatedConfig as Record<string, string[]>)[name];
-			}
-			updatedConfig.rows = rows;
-		}
-
-		// Convert deprecated special case names to single new one
-		const rowsString = JSON.stringify(updatedConfig.rows ?? [])
-			.replace(/vol_buttons/g, 'volume_buttons')
-			.replace(/nav_buttons/g, 'navigation_buttons')
-			.replace(/d_pad/g, 'dpad')
-			.replace(/direction_pad/g, 'dpad')
-			.replace(/num_pad/g, 'numpad')
-			.replace(/number_pad/g, 'numpad')
-			.replace(/x_pad/g, 'xpad')
-			.replace(/gamepad/g, 'xpad')
-			.replace(/xgamepad/g, 'xpad')
-			.replace(/x_gamepad/g, 'xpad')
-			.replace(/n_pad/g, 'npad')
-			.replace(/ngamepad/g, 'npad')
-			.replace(/n_gamepad/g, 'npad')
-			.replace(/volume_slider/g, 'slider')
-			.replace(/nav_touchpad/g, 'touchpad')
-			.replace(/navigation_touchpad/g, 'touchpad');
-		updatedConfig.rows = JSON.parse(rowsString) as Row[];
-
-		// Convert old custom icons object into an array
-		if (
-			!Array.isArray(updatedConfig.custom_icons) &&
-			typeof updatedConfig.custom_icons == 'object' &&
-			updatedConfig.custom_icons != null
-		) {
-			const customIcons: IIconConfig[] = [];
-			for (const name of Object.keys(
-				updatedConfig.custom_icons as unknown as Record<string, string>,
-			)) {
-				customIcons.push({
-					name: name,
-					path: updatedConfig?.custom_icons?.[name],
-				});
-			}
-			updatedConfig.custom_icons = customIcons;
-		}
-
-		// Convert old custom actions object into an array
-		let customActions: IElementConfig[] = [];
-		if (
-			!Array.isArray(updatedConfig.custom_actions) &&
-			typeof updatedConfig.custom_actions == 'object' &&
-			updatedConfig.custom_actions != null
-		) {
-			for (const name of Object.keys(
-				updatedConfig.custom_actions as unknown as Record<
-					string,
-					IElementConfig
-				>,
-			)) {
-				customActions.push({
-					...(updatedConfig.custom_actions?.[
-						name
-					] as unknown as IElementConfig),
-					name: name,
-				});
-			}
-		} else {
-			customActions = updatedConfig.custom_actions ?? [];
-		}
-
-		// Combine custom actions, custom keys, and custom sources fields
-		for (const customKeys of ['custom_keys', 'custom_sources']) {
-			if (customKeys in updatedConfig) {
-				for (const name of Object.keys(
-					updatedConfig[customKeys as keyof IConfig] as unknown as Record<
-						string,
-						IElementConfig
-					>,
-				)) {
-					customActions.push({
-						...((
-							updatedConfig[customKeys as keyof IConfig] as unknown as Record<
-								string,
-								IElementConfig
-							>
-						)?.[name] as unknown as IElementConfig),
-						name: name,
-					});
-				}
-				delete updatedConfig[customKeys as keyof IConfig];
-			}
-		}
-
-		// Copy slider fields
-		const sliderIndex = customActions.findIndex(
-			(customAction) => customAction.name == 'slider',
-		);
-		const slider = customActions[sliderIndex] ?? {
-			type: 'slider',
-			name: 'slider',
-		};
-		let updateSlider = false;
-		if ('slider_style' in updatedConfig) {
-			let styles = slider.styles ?? '';
-			styles += '\n:host {';
-			const style = updatedConfig[
-				'slider_style' as keyof IConfig
-			] as unknown as Record<string, string>;
-			for (const field in style) {
-				styles += `\n  ${field}: ${style[field]};`;
-			}
-			styles += `\n}`;
-			slider.styles = styles.trim();
-			delete updatedConfig['slider_style' as keyof IConfig];
-			updateSlider = true;
-		}
-		if ('tooltip' in slider) {
-			let styles = slider.styles ?? '';
-			styles += `\n.tooltip {\n  display: {{ "initial" if render(${slider.tooltip}) else "none" }};\n}`;
-			slider.styles = styles.trim();
-			updateSlider = true;
-		}
-		if ('slider_range' in updatedConfig) {
-			slider.range = updatedConfig.slider_range as [number, number];
-			delete updatedConfig.slider_range;
-			updateSlider = true;
-		}
-		if ('slider_step' in updatedConfig) {
-			slider.step = updatedConfig.slider_step as number;
-			delete updatedConfig.slider_step;
-			updateSlider = true;
-		}
-		if ('slider_attribute' in updatedConfig) {
-			slider.value_attribute = updatedConfig.slider_attribute as string;
-			delete updatedConfig.slider_attribute;
-			updateSlider = true;
-		}
-		if ('enable_slider_feedback' in updatedConfig) {
-			slider.haptics = updatedConfig.enable_slider_feedback as boolean;
-			delete updatedConfig.enable_slider_feedback;
-			updateSlider = true;
-		}
-		if ('slider_haptics' in updatedConfig) {
-			slider.haptics = updatedConfig.slider_haptics as boolean;
-			delete updatedConfig.slider_haptics;
-			updateSlider = true;
-		}
-		if ('slider_id' in updatedConfig) {
-			if (!updatedConfig.media_player_id) {
-				updatedConfig.media_player_id = updatedConfig.slider_id as string;
-			}
-			slider.entity_id =
-				slider.entity_id ??
-				(updatedConfig.slider_id as string) ??
-				config.media_player_id ??
-				'';
-			const tapAction =
-				slider.tap_action ??
-				structuredClone(
-					this.DEFAULT_KEYS.find((defaultKey) => defaultKey.name == 'slider')
-						?.tap_action,
-				);
-			if (tapAction) {
-				const data = tapAction.data ?? {};
-				const target = tapAction.target ?? {};
-				if (!('entity_id' in target)) {
-					target.entity_id =
-						(data.entity_id as string) ?? (updatedConfig.slider_id as string);
-					delete data.entity_id;
-				}
-				tapAction.data = data;
-				tapAction.target = target;
-			}
-			slider.tap_action = tapAction;
-			delete updatedConfig.slider_id;
-			updateSlider = true;
-		}
-		if (updateSlider) {
-			const defaultSlider = structuredClone(
-				this.DEFAULT_KEYS.find((defaultKey) => defaultKey.name == 'slider'),
-			);
-			if (sliderIndex > -1) {
-				customActions[sliderIndex] = {
-					...defaultSlider,
-					...slider,
-				};
-			} else {
-				customActions.push({
-					...defaultSlider,
-					...slider,
-				});
-			}
-		}
-
-		const touchpadIndex = customActions.findIndex(
-			(customAction) => customAction.name == 'touchpad',
-		);
-		const touchpad = customActions[touchpadIndex] ?? {
-			type: 'touchpad',
-			name: 'touchpad',
-		};
-		let updateTouchpad = false;
-		if ('touchpad_style' in updatedConfig) {
-			let styles = touchpad.styles ?? '';
-			styles += '\ntoucharea {';
-			const style = updatedConfig[
-				'touchpad_style' as keyof IConfig
-			] as unknown as Record<string, string>;
-			for (const field in style) {
-				styles += `\n  ${field}: ${style[field]};`;
-			}
-			styles += `\n}`;
-			touchpad.styles = styles.trim();
-			delete updatedConfig['touchpad_style' as keyof IConfig];
-			updateTouchpad = true;
-		}
-		if ('touchpad_height' in updatedConfig) {
-			let styles = touchpad.styles ?? '';
-			styles += `\ntoucharea {\n  height: ${
-				(updatedConfig as Record<string, string>)['touchpad_height']
-			};\n}`;
-			touchpad.styles = styles.trim();
-			delete (updatedConfig as Record<string, string>)['touchpad_height'];
-			updateTouchpad = true;
-		}
-		if ('enable_touchpad_feedback' in updatedConfig) {
-			touchpad.haptics = (
-				updatedConfig as Record<string, boolean>
-			).enable_touchpad_feedback;
-			delete (updatedConfig as Record<string, boolean>)
-				.enable_touchpad_feedback;
-			updateTouchpad = true;
-		}
-		if ('touchpad_haptics' in updatedConfig) {
-			touchpad.haptics = (
-				updatedConfig as Record<string, boolean>
-			).touchpad_haptics;
-			delete (updatedConfig as Record<string, boolean>).touchpad_haptics;
-			updateTouchpad = true;
-		}
-		if ('enable_double_click' in updatedConfig) {
-			touchpad.double_tap_action = {
-				action: 'key',
-				key: (updatedConfig['double_click_keycode' as keyof IConfig] ??
-					'BACK') as string,
-			};
-			delete updatedConfig.enable_double_click;
-			delete updatedConfig['double_click_keycode' as keyof IConfig];
-			updateTouchpad = true;
-		}
-		if ('long_click_keycode' in updatedConfig) {
-			touchpad.hold_action = {
-				action: 'key',
-				key: (updatedConfig.long_click_keycode ?? 'DPAD_CENTER') as string,
-			};
-			updateTouchpad = true;
-		}
-		const defaultTouchpad = structuredClone(
-			this.DEFAULT_KEYS.find((defaultKey) => defaultKey.name == 'touchpad'),
-		) as IElementConfig;
-		if (updatedConfig.rows.toString().includes('touchpad')) {
-			const centerCustomAction = customActions.find(
-				(customAction) => customAction.name == 'center',
-			);
-			if (centerCustomAction) {
-				for (const actionType of ActionTypes) {
-					if (centerCustomAction[actionType]) {
-						touchpad[actionType] = centerCustomAction[actionType];
-					} else if (defaultTouchpad[actionType] && !touchpad[actionType]) {
-						touchpad[actionType] = defaultTouchpad[actionType];
-					}
-				}
-				updateTouchpad = true;
-			}
-			for (const direction of DirectionActions) {
-				const customAction = customActions.find(
-					(customAction) => customAction.name == direction,
-				);
-				if (
-					!touchpad[direction] &&
-					customAction &&
-					updatedConfig.rows.toString().includes('touchpad')
-				) {
-					touchpad[direction] = customAction;
-					delete touchpad[direction]?.icon;
-					updateTouchpad = true;
-				}
-			}
-		}
-		if (updateTouchpad) {
-			for (const direction of DirectionActions) {
-				if (!touchpad[direction]) {
-					touchpad[direction] = defaultTouchpad[direction] ?? {};
-					delete touchpad[direction]?.['type' as keyof IBasicActions];
-					delete touchpad[direction]?.icon;
-				}
-			}
-			if (touchpadIndex > -1) {
-				customActions[touchpadIndex] = {
-					...defaultTouchpad,
-					...touchpad,
-				};
-			} else {
-				customActions.push({
-					...defaultTouchpad,
-					...touchpad,
-				});
-			}
-		}
-
-		for (const [i, entry] of customActions.entries()) {
-			const updatedEntry = this.updateDeprecatedActionFields(
-				entry,
-				customActions,
-			);
-			for (const direction of DirectionActions) {
-				if (updatedEntry[direction]) {
-					updatedEntry[direction] = this.updateDeprecatedActionFields(
-						updatedEntry[direction] as IElementConfig,
-						customActions,
-					);
-				}
-			}
-			customActions[i] = updatedEntry;
-		}
-
-		// Convert style object to styles string
-		if (updatedConfig['style' as keyof IConfig]) {
-			let styles = updatedConfig.styles ?? '';
-			styles += '\n:host {';
-			const style = updatedConfig[
-				'style' as keyof IConfig
-			] as unknown as Record<string, string>;
-			for (const field in style) {
-				styles += `\n  ${field}: ${style[field]};`;
-			}
-			styles += `\n}`;
-			updatedConfig.styles = styles.trim();
-			delete updatedConfig['style' as keyof IConfig];
-		}
-
-		// Convert button style object to styles string
-		if (updatedConfig['button_style' as keyof IConfig]) {
-			let styles = updatedConfig.styles ?? '';
-			styles += '\nremote-button {';
-			const style = updatedConfig[
-				'button_style' as keyof IConfig
-			] as unknown as Record<string, string>;
-			for (const field in style) {
-				styles += `\n  ${field}: ${style[field]};`;
-			}
-			styles += `\n}`;
-			updatedConfig.styles = styles.trim();
-			delete updatedConfig['button_style' as keyof IConfig];
-		}
-
-		// Convert row styles object to styles string
-		if (updatedConfig['row_styles' as keyof IConfig]) {
-			let styles = updatedConfig.styles ?? '';
-			const rowStyles = updatedConfig[
-				'row_styles' as keyof IConfig
-			] as unknown as Record<string, Record<string, string>>;
-			for (const style in rowStyles) {
-				if (style.includes('-')) {
-					styles += `\n#${style} {`;
-				} else if (style == 'rows') {
-					styles += '\n.row {';
-				} else if (style == 'columns') {
-					styles += '\n.column {';
-				} else {
-					continue;
-				}
-				for (const field in rowStyles[style]) {
-					styles += `\n  ${field}: ${rowStyles[style][field]};`;
-				}
-				styles += '\n}';
-			}
-			updatedConfig.styles = styles.trim();
-			delete updatedConfig['row_styles' as keyof IConfig];
-		}
-
-		updatedConfig.custom_actions = customActions;
-		return updatedConfig;
-	}
-
-	updateDeprecatedActionFields(
-		entry: IElementConfig,
-		customActions: IElementConfig[],
-	) {
-		let customAction = structuredClone(entry);
-
-		// Copy svg_path to icon
-		if ('svg_path' in customAction) {
-			customAction.icon = customAction.svg_path as string;
-		}
-
-		// Copy action fields to tap_action
-		const actionKeys = [
-			'key',
-			'source',
-			'service',
-			'service_data',
-			'data',
-			'target',
-			'navigation_path',
-			'navigation_replace',
-			'url_path',
-			'confirmation',
-			'pipeline_id',
-			'start_listening',
-		];
-		const tapAction = customAction.tap_action ?? ({} as IAction);
-		let updateTapAction = false;
-		for (const actionKey of actionKeys) {
-			if (actionKey in customAction) {
-				updateTapAction = true;
-				(tapAction as unknown as Record<string, string>)[actionKey] =
-					customAction[actionKey as keyof IElementConfig] as string;
-				delete (customAction as unknown as Record<string, string>)[actionKey];
-			}
-		}
-		if (updateTapAction) {
-			customAction.tap_action = tapAction as IAction;
-		}
-
-		// For each type of action
-		for (const actionType of ActionTypes) {
-			if (actionType in customAction) {
-				const action = customAction[actionType as ActionType] as IAction;
-				if (action) {
-					// Populate action field
-					if (!action.action) {
-						if (action.key) {
-							action.action = 'key';
-						} else if (action.source) {
-							action.action = 'source';
-						} else if (action.perform_action) {
-							action.action = 'perform-action';
-						} else if (action['service' as 'perform_action']) {
-							// Deprecated in 2024.8
-							action.action = 'perform-action';
-							action.perform_action = action['service' as 'perform_action'];
-							delete action['service' as 'perform_action'];
-						} else if (action.navigation_path) {
-							action.action = 'navigate';
-						} else if (action.url_path) {
-							action.action = 'url';
-						} else if (action.browser_mod) {
-							action.action = 'fire-dom-event';
-						} else if (action.pipeline_id || action.start_listening) {
-							action.action = 'assist';
-						} else {
-							action.action = 'none';
-						}
-					} else if (action.action == ('call-service' as 'perform-action')) {
-						action.action = 'perform-action';
-						action.perform_action = action['service' as 'perform_action'] ?? '';
-						delete action['service' as 'perform_action'];
-					}
-
-					// Rename service_data to data
-					if (action['service_data' as 'data']) {
-						action.data = {
-							...action['service_data' as 'data'],
-							...action.data,
-						};
-						delete action['service_data' as 'data'];
-					}
-
-					customAction[actionType] = action;
-				}
-			}
-		}
-
-		// Set entry type to button if not present
-		customAction.type = (
-			customAction.type ?? 'button'
-		).toLowerCase() as RemoteElementType;
-
-		// Convert style object to styles string
-		if (customAction['style' as keyof IElementConfig]) {
-			let styles = customAction.styles ?? '';
-			styles += '\n:host {';
-			const style = customAction['style' as keyof IElementConfig] as Record<
-				string,
-				string
-			>;
-			for (const field in style) {
-				styles += `\n  ${field}: ${style[field]};`;
-			}
-			styles += '\n}';
-			customAction.styles = styles.trim();
-			delete customAction['style' as keyof IElementConfig];
-		}
-
-		// Obsolete template field
-		if ('template' in entry) {
-			const templateActions =
-				customActions?.find(
-					(customActions) =>
-						entry['template' as keyof IElementConfig] == customActions.name,
-				) ??
-				this.DEFAULT_KEYS.find(
-					(defaultKeys) =>
-						entry['template' as keyof IElementConfig] == defaultKeys.name,
-				) ??
-				this.DEFAULT_SOURCES.find(
-					(defaultSources) =>
-						entry['template' as keyof IElementConfig] == defaultSources.name,
-				) ??
-				{};
-			customAction = mergeDeep(
-				structuredClone(templateActions),
-				entry,
-			) as IElementConfig;
-			delete customAction['template' as keyof IElementConfig];
-		}
-
-		return customAction;
 	}
 
 	static get styles() {

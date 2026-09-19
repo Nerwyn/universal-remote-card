@@ -55,7 +55,7 @@ The editor has four tabs - General, Layout, Elements, and Icons.
 
 <img src="https://raw.githubusercontent.com/Nerwyn/universal-remote-card/main/assets/editor_general_tab.png" width="600"/>
 
-Start by selecting your media platform, then your device using the Config Entry ID field. The latter will autofill the remote and media player ID fields if available for the config entry. Platform, entity ID, and timing fields set in the general tab will be used for default keys and sources. If you do not set these fields for custom elements and autofill is enabled, they will also use these fields. If you explicitly set one of these fields in a custom element, it will not be overwritten if you change the matching general field until you clear the field in the custom element. To completely clear toggle fields, you must remove them from the config using the code editor.
+Start by selecting your media platform, then your device using the Config Entry ID field. The latter will autofill the remote and media player ID fields if available for the config entry. Platform, entity ID, and timing fields set in the general tab will be used for default keys and sources. If you do not set these fields for custom elements, they will also use these fields. If you explicitly set one of these fields in a custom element, it will not be overwritten if you change the matching general field until you clear the field in the custom element. To completely clear toggle fields, you must remove them from the config using the code editor.
 
 ## Media Platform and Entity IDs
 
@@ -199,7 +199,7 @@ If you hover over the card preview window, a red dashed outline will appear alon
 
 ### Autofill and Haptics
 
-When creating custom elements, the card editor will autofill fields using information set in the general tab. This can be disabled by toggling `Autofill` off. This value can also be set at the custom remote element level. Haptics can be similarly toggled globally or for individual custom remote elements and are enabled by default.
+When creating custom elements, the card editor will autofill fields using information set in the general tab when you click the autofill button or set the custom element name. This value can also be set at the custom remote element level. Haptics can be similarly toggled globally or for individual custom remote elements and are enabled by default.
 
 ### Other
 
@@ -259,9 +259,7 @@ The default keys and sources lists for your selected platform are displayed belo
 
 <img src="https://raw.githubusercontent.com/Nerwyn/universal-remote-card/main/assets/editor_actions_tab.png" width="600"/>
 
-In addition to the default keys and sources, you can create your own custom elements. You can also overwrite default keys and sources (including the default touchpad and slider) by setting the custom element name to match a default one. If you do so the default key or source information will be autopopulated if autofill is enabled.
-
-**Note**: If the remote element (default or custom) actions targets are not explicitly set in the UI they will be autofilled (if autofill is enabled) using the custom element entity or global IDs depending on which best matches the `perform-action` domain.
+In addition to the default keys and sources, you can create your own custom elements. You can also overwrite default keys and sources (including the default touchpad and slider) by setting the custom element name to match a default one. If you do so the custom element config will be autopopulated.
 
 Click the `Add remote element` button to add a custom element remote element. Custom action remote elements can be buttons, sliders, or touchpads.
 
@@ -283,8 +281,6 @@ Some additional value logic is applied for certain attributes:
   - **Note**: `elapsed` is not an actual attribute of timer entities, but is a possible attribute for timer entities in this card for the purpose of displaying accurate timer elapsed values. Timer entities do have an attribute `remaining`, which only updates when the timer state changes. The actual `remaining` attribute can be calculated using the elapsed value and the timer duration attribute.
 
 If you do not set an entity, you can instead set the remote element value using a template in the value template field. This template is not used if entity ID is set, even if that entity ID does not exist or it's state or attribute is undefined, it is only used if no entity is set at all.
-
-If you find that the autofilling of fields in actions or remote element values is causing issues, setting `Autofill` to false may help. Just remember to set the entity ID of the remote element and the entity, device, area, or label ID of the action target.
 
 Haptics are enabled for remote elements by default, but can be toggled globally or at the custom element level.
 
@@ -590,7 +586,7 @@ This card supports sending text to the following platforms:
 | Kodi                            | Replaces | Yes    |
 | Unified Remote (PC, Mac, Linux) | Inserts  | No     |
 
-If the user defined general platform is listed above, then any action set to a keyboard action (that has autofill enabled) will inherit it. Otherwise it will default to `Android TV`. Keyboard support for more platforms can be added if there is a way to do so through their Home Assistant (or community made) integrations.
+If the user defined general platform is listed above, then any action set to a keyboard action will inherit it. Otherwise it will default to `Android TV`. Keyboard support for more platforms can be added if there is a way to do so through their Home Assistant (or community made) integrations.
 
 When you use any keyboard action, a dialog will open that can be typed into.
 

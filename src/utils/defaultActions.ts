@@ -1,4 +1,9 @@
-import { IElementConfig, Platform, Platforms } from '../models/interfaces';
+import {
+	ActionTypes,
+	IElementConfig,
+	Platform,
+	Platforms,
+} from '../models/interfaces';
 import {
 	androidTVDefaultKeys,
 	androidTVDefaultSources,
@@ -37,10 +42,7 @@ export function getDefaultActions(platform: Platform) {
 			for (const p of Platforms.filter((p) => p != 'Generic Remote')) {
 				const [keys, sources] = getDefaultActions(p);
 				for (const key of keys) {
-					if (
-						(key.type || 'button') == 'button' &&
-						!names.has(key.name)
-					) {
+					if ((key.type || 'button') == 'button' && !names.has(key.name)) {
 						names.add(key.name);
 						const action: IElementConfig = {
 							name: key.name,
@@ -129,4 +131,47 @@ export function getDefaultActions(platform: Platform) {
 			break;
 	}
 	return [defaultKeys, defaultSources];
+}
+
+export function autofillActionTargets(config: IElementConfig) {
+	for (const actionType of ActionTypes) {
+		if (config[actionType]) {
+			const action = config[actionType];
+			if (action.action == 'perform-action') {
+				const [domain, _service] = (action.perform_action ?? '').split('.');
+				const target = action.target ?? {};
+				switch (domain) {
+					case 'remote':
+						target.entity_id = '{{ config.card.remote_id }}';
+						break;
+					case 'media_player':
+					case 'androidtv':
+					case 'kodi':
+					case 'denonavr':
+					case 'webostv':
+						target.entity_id = '{{ config.card.media_player_id }}';
+						break;
+					case 'unified_remote':
+						action.data ??= {};
+						action.data.target ??= '{{ config.card.device }}';
+						break;
+					case 'apple_tv':
+						action.data ??= {};
+						action.data.config_entry_id ??= '{{ config.card.config_entry_id }}';
+						break;
+					case 'wake_on_lan':
+						action.data ??= {};
+						action.data.mac ??= '{{ config.card.mac }}';
+						break;
+					default:
+						target.entity_id = '{{ config.entity }}';
+						break;
+				}
+				action.target = target;
+				break;
+			}
+			config[actionType] = action;
+		}
+	}
+	return config;
 }

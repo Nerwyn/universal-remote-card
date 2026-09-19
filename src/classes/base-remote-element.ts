@@ -202,30 +202,33 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	key(action: IAction, actionType: ActionType) {
-		switch (action.platform) {
+		switch (action.platform || this.config.card?.platform) {
 			case 'Unified Remote':
 				break;
 			case 'Unfolded Circle':
 				this.hass.callService('unfoldedcircle', 'send_button_command', {
-					entity_id: action.remote_id,
+					entity_id: action.remote_id || this.config.card?.remote_id,
 					button: action.key,
 				});
 				break;
 			case 'Kodi':
 				this.hass.callService('kodi', 'call_method', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					method: action.key,
 				});
 				break;
 			case 'Denon AVR':
 				this.hass.callService('denonavr', 'get_command', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					command: `/goform/formiPhoneAppDirect.xml?${action.key}`,
 				});
 				break;
 			case 'LG webOS':
 				this.hass.callService('webostv', 'button', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					button: action.key,
 				});
 				break;
@@ -241,7 +244,7 @@ export class BaseRemoteElement extends LitElement {
 			case 'Generic Remote':
 			default: {
 				const data: IData = {
-					entity_id: action.remote_id ?? '',
+					entity_id: action.remote_id || this.config.card?.remote_id,
 					command: action.key ?? '',
 				};
 				if (
@@ -251,7 +254,7 @@ export class BaseRemoteElement extends LitElement {
 					data.hold_secs = 1;
 				}
 				if (action.device) {
-					data.device = action.device;
+					data.device = action.device || this.config.card?.device;
 				}
 				this.hass.callService('remote', 'send_command', data);
 				break;
@@ -270,7 +273,8 @@ export class BaseRemoteElement extends LitElement {
 				break;
 			case 'Kodi':
 				this.hass.callService('kodi', 'call_method', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					method: 'Addons.ExecuteAddon',
 					addonid: action.source,
 				});
@@ -281,20 +285,23 @@ export class BaseRemoteElement extends LitElement {
 			case 'Samsung TV':
 			case 'LG webOS':
 				this.hass.callService('media_player', 'select_source', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					source: action.source,
 				});
 				break;
 			case 'Sony BRAVIA':
 				this.hass.callService('media_player', 'play_media', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					media_content_id: action.source,
 					media_content_type: 'app',
 				});
 				break;
 			case 'Yamaha YNCA':
 				this.hass.callService('media_player', 'play_media', {
-					entity_id: action.media_player_id,
+					entity_id:
+						action.media_player_id || this.config.card?.media_player_id,
 					media_content_id: action.source,
 					media_content_type: 'music',
 				});
@@ -302,7 +309,7 @@ export class BaseRemoteElement extends LitElement {
 			case 'Android TV':
 			default:
 				this.hass.callService('remote', 'turn_on', {
-					entity_id: action.remote_id,
+					entity_id: action.remote_id || this.config.card?.remote_id,
 					activity: action.source,
 				});
 				break;
@@ -459,7 +466,16 @@ export class BaseRemoteElement extends LitElement {
 			composed: true,
 			bubbles: true,
 		});
-		event.detail = action;
+		event.detail = {
+			...action,
+			platform: action.platform || this.config.card?.platform,
+			keyboard_id: action.keyboard_id || this.config.card?.keyboard_id,
+			remote_id: action.remote_id || this.config.card?.remote_id,
+			media_player_id:
+				action.media_player_id || this.config.card?.media_player_id,
+			config_entry_id:
+				action.config_entry_id || this.config.card?.config_entry_id,
+		};
 		this.dispatchEvent(event);
 	}
 

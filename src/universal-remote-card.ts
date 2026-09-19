@@ -15,17 +15,14 @@ import {
 } from './models/interfaces';
 
 import {
-	ActionTypes,
 	DirectionActions,
-	IAction,
 	IConfig,
 	IElementConfig,
-	ITarget,
 	Platform,
 } from './models/interfaces';
 
 import { UniversalRemoteCardEditor } from './universal-remote-card-editor';
-import { getDefaultActions } from './utils';
+import { autofillActionTargets, getDefaultActions } from './utils';
 
 import { BaseRemoteElement } from './classes/base-remote-element';
 import './classes/remote-button';
@@ -101,12 +98,11 @@ class UniversalRemoteCard extends LitElement {
 	}
 
 	updateElementConfig(element: IElementConfig) {
-		// TODO - fix autofill
 		if (!Object.keys(element).length) {
 			return element;
 		}
 
-		const updatedElement = structuredClone(element);
+		let updatedElement = structuredClone(element);
 		const context = {
 			config: {
 				...this.config,
@@ -122,92 +118,8 @@ class UniversalRemoteCard extends LitElement {
 				),
 			},
 		};
-		for (const actionType of ActionTypes) {
-			if (updatedElement[actionType]) {
-				const action = updatedElement[actionType] ?? ({} as IAction);
 
-				switch (this.renderTemplate(action.action, context)) {
-					case 'keyboard':
-					case 'textbox':
-					case 'search':
-						action.keyboard_id ??=
-							this.config.keyboard_id ??
-							this.config.remote_id ??
-							this.config.media_player_id;
-					// falls through
-					case 'key':
-					case 'source':
-						action.remote_id ??= this.config.remote_id;
-						action.media_player_id ??= this.config.media_player_id;
-						action.config_entry_id ??= this.config.config_entry_id;
-						action.device ??= this.config.device;
-						action.platform ??= this.config.platform;
-						break;
-					case 'perform-action': {
-						const [domain, _service] = (
-							this.renderTemplate(
-								action.perform_action ?? '',
-								context,
-							) as string
-						).split('.');
-						const target = action.target ?? ({} as ITarget);
-						if (
-							!target.entity_id &&
-							!target.device_id &&
-							!target.area_id &&
-							!target.label_id
-						) {
-							const entity = this.renderTemplate(
-								updatedElement.entity_id ?? '',
-								context,
-							) as string;
-							switch (domain) {
-								case 'remote':
-									target.entity_id = entity.startsWith('remote')
-										? updatedElement.entity_id
-										: this.config.remote_id;
-									break;
-								case 'media_player':
-								case 'androidtv':
-								case 'kodi':
-								case 'denonavr':
-								case 'webostv':
-									target.entity_id = entity.startsWith('media_player')
-										? updatedElement.entity_id
-										: this.config.media_player_id;
-									break;
-								case 'unified_remote':
-									action.data ??= {};
-									action.data.target =
-										action.data.target ??
-										this.config.device ??
-										this.config.remote_id ??
-										this.config.media_player_id ??
-										this.config.keyboard_id;
-									break;
-								case 'apple_tv':
-									action.data ??= {};
-									action.data.config_entry_id ??= this.config.config_entry_id;
-									break;
-								case 'wake_on_lan':
-									action.data ??= {};
-									action.data.mac ??= this.config.mac;
-									break;
-								default:
-									target.entity_id = updatedElement.entity_id;
-									break;
-							}
-						}
-						action.target = target;
-						break;
-					}
-					default:
-						break;
-				}
-
-				updatedElement[actionType] = action;
-			}
-		}
+		updatedElement = autofillActionTargets(updatedElement);
 
 		// Set haptics if defined globally
 		updatedElement.haptics =
