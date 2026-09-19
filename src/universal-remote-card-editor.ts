@@ -798,18 +798,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 	}
 
 	buildMainFeatureOptions(additionalOptions: TemplateResult<1> = html``) {
-		const placeholderEntityId =
-			(Array.isArray(
-				(this.activeEntry as IElementConfig)?.tap_action?.target?.entity_id,
-			)
-				? (this.activeEntry as IElementConfig)?.tap_action?.target
-						?.entity_id?.[0]
-				: ((this.activeEntry as IElementConfig)?.tap_action?.target
-						?.entity_id as string)) ??
-			this.config.remote_id ??
-			this.config.media_player_id ??
-			this.config.keyboard_id;
-
 		return html`
 			${this.buildSelector('Name', 'name', {
 				select: {
@@ -828,14 +816,9 @@ export class UniversalRemoteCardEditor extends LitElement {
 					],
 				},
 			})}
-			${this.buildSelector(
-				'Entity',
-				'entity_id',
-				{
-					entity: {},
-				},
-				placeholderEntityId,
-			)}
+			${this.buildSelector('Entity', 'entity_id', {
+				entity: {},
+			})}
 			${
 				(this.activeEntry as IElementConfig)?.entity_id
 					? ''
@@ -844,19 +827,13 @@ export class UniversalRemoteCardEditor extends LitElement {
 						})
 			}
 			${
-				this.hass.states[
-					(this.activeEntry as IElementConfig)?.entity_id ??
-						placeholderEntityId ??
-						''
-				]
+				this.hass.states[(this.activeEntry as IElementConfig)?.entity_id ?? '']
 					? this.buildSelector(
 							'Attribute',
 							'value_attribute',
 							{
 								attribute: {
-									entity_id:
-										(this.activeEntry as IElementConfig)?.entity_id ??
-										placeholderEntityId,
+									entity_id: (this.activeEntry as IElementConfig)?.entity_id,
 								},
 							},
 							'state',
