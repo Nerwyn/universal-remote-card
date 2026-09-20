@@ -2311,6 +2311,16 @@ export class UniversalRemoteCardEditor extends LitElement {
 			return entry;
 		}
 
+		// Entity ID
+		if (entry.type == 'slider') {
+			entry.entity_id ??= this.config.media_player_id;
+		} else {
+			entry.entity_id ??=
+				this.config.remote_id ??
+				this.config.media_player_id ??
+				this.config.keyboard_id;
+		}
+
 		// Copy custom action onto default action
 		if (parentName && childName) {
 			const parentActions =

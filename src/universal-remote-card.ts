@@ -186,14 +186,9 @@ class UniversalRemoteCard extends LitElement {
 			elementType == 'slider' &&
 			this.renderTemplate(updatedElement.name, context) == 'slider'
 		) {
-			updatedElement.entity_id =
-				updatedElement.entity_id ?? this.config.media_player_id;
+			updatedElement.entity_id ??= this.config.media_player_id;
 		} else {
-			updatedElement.entity_id =
-				updatedElement.entity_id ??
-				(Array.isArray(updatedElement.tap_action?.target?.entity_id)
-					? updatedElement.tap_action?.target?.entity_id?.[0]
-					: (updatedElement.tap_action?.target?.entity_id as string)) ??
+			updatedElement.entity_id ??=
 				this.config.remote_id ??
 				this.config.media_player_id ??
 				this.config.keyboard_id;
