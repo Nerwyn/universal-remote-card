@@ -41,7 +41,9 @@ export class RemoteButton extends BaseRemoteElement {
 					const doubleTapWindow: number =
 						(this.renderTemplate(
 							this.config.double_tap_action?.double_tap_window as number,
-						) as number) ?? DOUBLE_TAP_WINDOW;
+						) as number) ??
+						this.config.card?.double_tap_window ??
+						DOUBLE_TAP_WINDOW;
 					this.clickTimer = setTimeout(async () => {
 						this.fireHapticEvent('light');
 						await this.sendAction('tap_action');
@@ -82,10 +84,14 @@ export class RemoteButton extends BaseRemoteElement {
 					) != 'none'
 				) {
 					const holdTime = this.renderTemplate(
-						this.config.momentary_repeat_action?.hold_time ?? HOLD_TIME,
+						this.config.momentary_repeat_action?.hold_time ??
+							this.config.card?.hold_time ??
+							HOLD_TIME,
 					) as number;
 					const repeat_delay = this.renderTemplate(
-						this.config.momentary_repeat_action?.repeat_delay ?? REPEAT_DELAY,
+						this.config.momentary_repeat_action?.repeat_delay ??
+							this.config.card?.repeat_delay ??
+							REPEAT_DELAY,
 					) as number;
 
 					this.holdTimer = setTimeout(async () => {
@@ -109,7 +115,9 @@ export class RemoteButton extends BaseRemoteElement {
 				this.momentaryStart = performance.now();
 			} else if (!this.holdTimer) {
 				const holdTime = this.renderTemplate(
-					this.config.hold_action?.hold_time ?? HOLD_TIME,
+					this.config.hold_action?.hold_time ??
+						this.config.card?.hold_time ??
+						HOLD_TIME,
 				) as number;
 
 				clearTimeout(this.holdTimer);
@@ -123,7 +131,9 @@ export class RemoteButton extends BaseRemoteElement {
 							'repeat'
 						) {
 							const repeat_delay = this.renderTemplate(
-								this.config.hold_action?.repeat_delay ?? REPEAT_DELAY,
+								this.config.hold_action?.repeat_delay ??
+									this.config.card?.repeat_delay ??
+									REPEAT_DELAY,
 							) as number;
 							if (!this.holdInterval) {
 								this.holdInterval = setInterval(async () => {

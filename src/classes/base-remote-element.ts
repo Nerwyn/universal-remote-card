@@ -5,7 +5,7 @@ import { hasTemplate, renderTemplate } from 'ha-nunjucks';
 import { Action, HapticType, HomeAssistant } from '../models/interfaces';
 
 import { load } from 'js-yaml';
-import { UPDATE_AFTER_ACTION_DELAY } from '../models/constants';
+import { HAPTICS, UPDATE_AFTER_ACTION_DELAY } from '../models/constants';
 import {
 	ActionType,
 	IAction,
@@ -59,7 +59,11 @@ export class BaseRemoteElement extends LitElement {
 	rtl: boolean = false;
 
 	fireHapticEvent(haptic: HapticType) {
-		if (this.renderTemplate(this.config.haptics as unknown as string) ?? true) {
+		if (
+			this.renderTemplate(this.config.haptics as unknown as boolean) ??
+			this.config.card?.haptics ??
+			HAPTICS
+		) {
 			const event = new Event('haptic', {
 				bubbles: true,
 				composed: true,

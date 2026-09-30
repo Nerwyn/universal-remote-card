@@ -62,7 +62,9 @@ export class RemoteTouchpad extends BaseRemoteElement {
 						(this.renderTemplate(
 							this.config[doubleTapAction]?.double_tap_window ??
 								(this.config.double_tap_action?.double_tap_window as number),
-						) as number) ?? DOUBLE_TAP_WINDOW;
+						) as number) ??
+						this.config.card?.double_tap_window ??
+						DOUBLE_TAP_WINDOW;
 					this.clickTimer = setTimeout(async () => {
 						this.fireHapticEvent('light');
 						await this.sendAction(`${multiPrefix}tap_action`);
@@ -206,9 +208,12 @@ export class RemoteTouchpad extends BaseRemoteElement {
 		const holdAction = `${this.getMultiPrefix()}hold_action`;
 		const actions = this.getDirectionActions();
 
-		const holdTime = this.renderTemplate(
-			actions[holdAction as ActionType]?.hold_time ?? HOLD_TIME,
-		) as number;
+		const holdTime =
+			(this.renderTemplate(
+				actions[holdAction as ActionType]?.hold_time as number,
+			) as number) ??
+			this.config.card?.hold_time ??
+			HOLD_TIME;
 
 		clearTimeout(this.holdTimer);
 		this.holdTimer = setTimeout(async () => {
@@ -218,16 +223,22 @@ export class RemoteTouchpad extends BaseRemoteElement {
 
 			let repeat =
 				this.renderTemplate(actions.hold_action?.action as string) == 'repeat';
-			let repeatDelay = this.renderTemplate(
-				actions.hold_action?.repeat_delay ?? REPEAT_DELAY,
-			) as number;
+			let repeatDelay =
+				(this.renderTemplate(
+					actions.hold_action?.repeat_delay as number,
+				) as number) ??
+				this.config.card?.repeat_delay ??
+				REPEAT_DELAY;
 			if (multiPrefix == 'multi_' && actions.multi_hold_action) {
 				repeat =
 					this.renderTemplate(actions.multi_hold_action?.action as string) ==
 					'repeat';
-				repeatDelay = this.renderTemplate(
-					actions.multi_hold_action?.repeat_delay ?? REPEAT_DELAY,
-				) as number;
+				repeatDelay =
+					(this.renderTemplate(
+						actions.multi_hold_action?.repeat_delay as number,
+					) as number) ??
+					this.config.card?.repeat_delay ??
+					REPEAT_DELAY;
 			}
 			if (repeat) {
 				if (!this.holdInterval) {

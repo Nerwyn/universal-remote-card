@@ -32,12 +32,7 @@ import './classes/remote-dialog';
 import { RemoteDialog } from './classes/remote-dialog';
 import './classes/remote-slider';
 import './classes/remote-touchpad';
-import {
-	DOUBLE_TAP_WINDOW,
-	HOLD_TIME,
-	NAVIGATION_KEYS,
-	REPEAT_DELAY,
-} from './models/constants';
+import { NAVIGATION_KEYS } from './models/constants';
 import { platforms } from './models/maps/platforms';
 import { buildStyles, capitalizeWords } from './utils/styles';
 
@@ -120,62 +115,6 @@ class UniversalRemoteCard extends LitElement {
 		};
 
 		updatedElement = autofillActionTargets(updatedElement);
-
-		// Set haptics if defined globally
-		updatedElement.haptics =
-			updatedElement.haptics ?? this.config.haptics ?? true;
-
-		// Set double tap window if defined globally
-		if (this.config.double_tap_window) {
-			if (updatedElement.double_tap_action) {
-				updatedElement.double_tap_action.double_tap_window =
-					updatedElement.double_tap_action?.double_tap_window ??
-					this.config.double_tap_window ??
-					DOUBLE_TAP_WINDOW;
-			}
-			if (updatedElement.multi_double_tap_action) {
-				updatedElement.multi_double_tap_action.double_tap_window =
-					updatedElement.multi_double_tap_action.double_tap_window ??
-					this.config.double_tap_window ??
-					DOUBLE_TAP_WINDOW;
-			}
-		}
-
-		// Set hold time if defined globally
-		if (this.config.hold_time) {
-			if (updatedElement.hold_action) {
-				updatedElement.hold_action.hold_time =
-					updatedElement.hold_action?.hold_time ??
-					this.config.hold_time ??
-					HOLD_TIME;
-			}
-
-			if (updatedElement.multi_hold_action) {
-				updatedElement.multi_hold_action.hold_time =
-					updatedElement.multi_hold_action?.hold_time ??
-					this.config.hold_time ??
-					HOLD_TIME;
-			}
-		}
-
-		// Set repeat delay if defined globally
-		if (this.config.repeat_delay) {
-			if (updatedElement.hold_action?.action == 'repeat') {
-				updatedElement.hold_action.repeat_delay =
-					updatedElement.hold_action.repeat_delay ??
-					this.config.repeat_delay ??
-					REPEAT_DELAY;
-			}
-			if (
-				updatedElement.multi_hold_action &&
-				updatedElement.multi_hold_action?.action == 'repeat'
-			) {
-				updatedElement.multi_hold_action.repeat_delay =
-					updatedElement.multi_hold_action.repeat_delay ??
-					this.config.repeat_delay ??
-					REPEAT_DELAY;
-			}
-		}
 
 		// Set element entity
 		const elementType = this.renderTemplate(
