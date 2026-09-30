@@ -118,6 +118,7 @@ export interface IAction {
 	double_tap_window?: number;
 	hold_time?: number;
 	repeat_delay?: number;
+	touch_threshold?: number;
 }
 
 export interface IActions

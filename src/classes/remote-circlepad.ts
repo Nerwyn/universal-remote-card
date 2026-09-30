@@ -1,5 +1,6 @@
 import { CSSResult, PropertyValues, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { CLICKWHEEL_THRESHOLD } from '../models/constants';
 import { ICirclepadConfig } from '../models/interfaces';
 import { buildStyles } from '../utils/styles';
 import { BaseRemoteElement } from './base-remote-element';
@@ -87,7 +88,12 @@ export class RemoteCirclepad extends BaseRemoteElement {
 				diff += 360;
 			}
 
-			if (Math.abs(diff) >= 20) {
+			const threshold = this.renderTemplate(
+				this.config.drag_action?.touch_threshold ?? CLICKWHEEL_THRESHOLD,
+			) as number;
+
+			// TODO - debug why this breaks at large threshold angles
+			if (Math.abs(diff) >= threshold) {
 				this.cancelButtons();
 				this.clockwise = diff > 0;
 				this.fireHapticEvent('selection');
@@ -111,7 +117,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 		this.previousAngle = undefined;
 	}
 
-	renderTemplate(str: string, context?: object) {
+	renderTemplate(str: string | number | boolean, context?: object) {
 		context = {
 			...context,
 			clockwise: this.clockwise,

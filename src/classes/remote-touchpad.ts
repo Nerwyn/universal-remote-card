@@ -1,4 +1,4 @@
-import { CSSResult, PropertyValues, css, html } from 'lit';
+import { css, CSSResult, html, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import {
@@ -11,9 +11,12 @@ import {
 import {
 	DIRECTION_KEYS,
 	DOUBLE_TAP_WINDOW,
+	DRAG_THRESHOLD,
 	HOLD_TIME,
 	NAVIGATION_KEYS,
 	REPEAT_DELAY,
+	SAMPLING_DELAY,
+	SWIPE_THRESHOLD,
 } from '../models/constants';
 import { buildStyles } from '../utils/styles';
 import { BaseRemoteElement } from './base-remote-element';
@@ -58,13 +61,12 @@ export class RemoteTouchpad extends BaseRemoteElement {
 			} else {
 				// Single tap action is triggered if double tap is not within window
 				if (!this.clickTimer) {
-					const doubleTapWindow =
-						(this.renderTemplate(
-							this.config[doubleTapAction]?.double_tap_window ??
-								(this.config.double_tap_action?.double_tap_window as number),
-						) as number) ??
-						this.config.card?.double_tap_window ??
-						DOUBLE_TAP_WINDOW;
+					const doubleTapWindow = this.renderTemplate(
+						this.config[doubleTapAction]?.double_tap_window ??
+							this.config.double_tap_action?.double_tap_window ??
+							this.config.card?.double_tap_window ??
+							DOUBLE_TAP_WINDOW,
+					) as number;
 					this.clickTimer = setTimeout(async () => {
 						this.fireHapticEvent('light');
 						await this.sendAction(`${multiPrefix}tap_action`);
@@ -126,7 +128,11 @@ export class RemoteTouchpad extends BaseRemoteElement {
 			) != 'none'
 		) {
 			// Drag actions
-			const sensitivity = 0.5;
+			const sensitivity = this.renderTemplate(
+				this.config[`${multiPrefix}drag_action`]?.touch_threshold ??
+					this.config.drag_action?.touch_threshold ??
+					DRAG_THRESHOLD,
+			) as number;
 			if (
 				this.holdMove ||
 				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) > sensitivity
@@ -137,7 +143,8 @@ export class RemoteTouchpad extends BaseRemoteElement {
 					this.holdMove = true;
 
 					const repeatDelay = this.renderTemplate(
-						this.config[`${multiPrefix}drag_action`]?.repeat_delay ?? 0, // default to 0 instead of normal repeat delay
+						this.config[`${multiPrefix}drag_action`]?.repeat_delay ??
+							SAMPLING_DELAY,
 					) as number;
 					if (repeatDelay) {
 						this.fireDragAction = false;
@@ -150,7 +157,11 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				}
 			}
 		} else {
-			const sensitivity = 16;
+			const sensitivity = this.renderTemplate(
+				this.config[`${multiPrefix}drag_action`]?.touch_threshold ??
+					this.config.drag_action?.touch_threshold ??
+					SWIPE_THRESHOLD,
+			) as number;
 			if (
 				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) > sensitivity
 			) {
@@ -208,12 +219,11 @@ export class RemoteTouchpad extends BaseRemoteElement {
 		const holdAction = `${this.getMultiPrefix()}hold_action`;
 		const actions = this.getDirectionActions();
 
-		const holdTime =
-			(this.renderTemplate(
-				actions[holdAction as ActionType]?.hold_time as number,
-			) as number) ??
-			this.config.card?.hold_time ??
-			HOLD_TIME;
+		const holdTime = this.renderTemplate(
+			actions[holdAction as ActionType]?.hold_time ??
+				this.config.card?.hold_time ??
+				HOLD_TIME,
+		) as number;
 
 		clearTimeout(this.holdTimer);
 		this.holdTimer = setTimeout(async () => {
@@ -221,26 +231,17 @@ export class RemoteTouchpad extends BaseRemoteElement {
 			const actions = this.getDirectionActions();
 			const multiPrefix = this.getMultiPrefix();
 
-			let repeat =
-				this.renderTemplate(actions.hold_action?.action as string) == 'repeat';
-			let repeatDelay =
-				(this.renderTemplate(
-					actions.hold_action?.repeat_delay as number,
-				) as number) ??
-				this.config.card?.repeat_delay ??
-				REPEAT_DELAY;
-			if (multiPrefix == 'multi_' && actions.multi_hold_action) {
-				repeat =
-					this.renderTemplate(actions.multi_hold_action?.action as string) ==
-					'repeat';
-				repeatDelay =
-					(this.renderTemplate(
-						actions.multi_hold_action?.repeat_delay as number,
-					) as number) ??
-					this.config.card?.repeat_delay ??
-					REPEAT_DELAY;
-			}
+			const repeat =
+				this.renderTemplate(
+					actions[`${multiPrefix}hold_action`]?.action as string,
+				) == 'repeat';
 			if (repeat) {
+				const repeatDelay = this.renderTemplate(
+					actions[`${multiPrefix}hold_action`]?.repeat_delay ??
+						actions.hold_action?.repeat_delay ??
+						this.config.card?.repeat_delay ??
+						REPEAT_DELAY,
+				) as number;
 				if (!this.holdInterval) {
 					this.holdInterval = setInterval(async () => {
 						this.fireHapticEvent('selection');

@@ -2,6 +2,11 @@ export const DOUBLE_TAP_WINDOW = 200;
 export const HOLD_TIME = 500;
 export const REPEAT_DELAY = 100;
 
+export const SAMPLING_DELAY = 0;
+export const SWIPE_THRESHOLD = 16;
+export const DRAG_THRESHOLD = 0.5;
+export const CLICKWHEEL_THRESHOLD = 20;
+
 export const HAPTICS = true;
 
 export const UPDATE_AFTER_ACTION_DELAY = 1000;

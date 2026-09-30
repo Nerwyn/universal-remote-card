@@ -7,12 +7,15 @@ import { load } from 'js-yaml';
 import { Action, HomeAssistant } from './models/interfaces';
 
 import {
+	CLICKWHEEL_THRESHOLD,
 	DOUBLE_TAP_WINDOW,
+	DRAG_THRESHOLD,
 	HAPTICS,
 	HOLD_TIME,
 	RANGE_MAX,
 	RANGE_MIN,
 	REPEAT_DELAY,
+	SAMPLING_DELAY,
 	STEP,
 	STEP_COUNT,
 	UPDATE_AFTER_ACTION_DELAY,
@@ -862,9 +865,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 					Appearance
 				</div>
 				<div class="content">
-					${this.buildAlertBox(
-						"Change the feature appearance based on its value using a template like '{{ value | float }}'.",
-					)}
 					${appearanceOptions}${this.buildSelector('CSS Styles', 'styles', {
 						template: { preview: false },
 					})}
@@ -931,7 +931,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 		actionType: ActionType,
 		selector: object,
 		buildCodeEditor: boolean = false,
-		showSamplingDelay: boolean = false,
 	) {
 		const context = this.getEntryContext(
 			(this.activeEntry as IElementConfig) ?? ({} as IElementConfig),
@@ -947,313 +946,21 @@ export class UniversalRemoteCardEditor extends LitElement {
 			context,
 		) as Platform;
 
+		// TODO - touchpad swipe sensitivity location
+
 		return html`<div class="action-options">
 			${this.buildSelector(label, actionType, selector)}
+			<div class="actions-form">
+				${this.buildActionTimingFields(actionType)}
+			</div>
 			${
-				action != 'none' && actionType.includes('double_tap_action')
-					? this.buildSelector(
-							'Double tap window',
-							`${actionType}.double_tap_window`,
-							{
-								number: {
-									min: 0,
-									step: 0,
-									mode: 'box',
-									unit_of_measurement: 'ms',
-								},
-							},
-							DOUBLE_TAP_WINDOW,
-						)
-					: (actionType.includes('hold_action') ||
-								actionType == 'momentary_repeat_action') &&
-						  (this.activeEntry as IElementConfig)[actionType]
-						? html`<div class="actions-form">
-								${this.buildSelector(
-									'Hold time',
-									`${actionType}.hold_time`,
-									{
-										number: {
-											min: 0,
-											step: 0,
-											mode: 'box',
-											unit_of_measurement: 'ms',
-										},
-									},
-									HOLD_TIME,
-								)}
-								${
-									this.renderTemplate(
-										(this.activeEntry as IElementConfig)?.[actionType]
-											?.action as string,
-										context,
-									) == 'repeat' || actionType == 'momentary_repeat_action'
-										? this.buildSelector(
-												'Repeat delay',
-												`${actionType}.repeat_delay`,
-												{
-													number: {
-														min: 0,
-														step: 0,
-														mode: 'box',
-														unit_of_measurement: 'ms',
-													},
-												},
-												REPEAT_DELAY,
-											)
-										: ''
-								}
-							</div>`
-						: action != 'none' && showSamplingDelay
-							? this.buildSelector(
-									'Sampling delay',
-									`${actionType}.repeat_delay`,
-									{
-										number: {
-											min: 0,
-											step: 0,
-											mode: 'box',
-											unit_of_measurement: 'ms',
-										},
-									},
-									0,
-								)
-							: ''
-			}
-			${
-				action == 'key'
-					? html`<div class="actions-form">
-								${this.buildSelector(
-									'Platform',
-									`${actionType}.platform`,
-									{
-										select: {
-											mode: 'dropdown',
-											options: Platforms,
-											reorder: false,
-										},
-									},
-									this.PLATFORM ?? 'Android TV',
-								)}
-								${
-									['Kodi', 'LG webOS', 'Denon AVR'].includes(platform)
-										? this.buildSelector(
-												'Media Player ID',
-												`${actionType}.media_player_id`,
-												{
-													entity: {
-														filter: {
-															domain: 'media_player',
-														},
-													},
-												},
-												this.config.media_player_id,
-											)
-										: this.buildSelector(
-												'Remote ID',
-												`${actionType}.remote_id`,
-												{
-													entity: {
-														filter: {
-															domain: 'remote',
-														},
-													},
-												},
-												this.config.remote_id,
-											)
-								}
-							</div>
-							${this.buildSelector('Key', `${actionType}.key`, {
-								text: {},
-							})}`
+				action == 'key' || action == 'source'
+					? this.buildActionKeySourceFields(actionType, action, platform)
 					: ''
 			}
 			${
-				action == 'source'
-					? html`<div class="actions-form">
-								${this.buildSelector(
-									'Platform',
-									`${actionType}.platform`,
-									{
-										select: {
-											mode: 'dropdown',
-											options: Platforms,
-											reorder: false,
-										},
-									},
-									this.PLATFORM ?? 'Android TV',
-								)}
-								${
-									['Android TV'].includes(platform)
-										? this.buildSelector(
-												'Remote ID',
-												`${actionType}.remote_id`,
-												{
-													entity: {
-														filter: {
-															domain: 'remote',
-														},
-													},
-												},
-												this.config.remote_id,
-											)
-										: this.buildSelector(
-												'Media Player ID',
-												`${actionType}.media_player_id`,
-												{
-													entity: {
-														filter: {
-															domain: 'media_player',
-														},
-													},
-												},
-												this.config.media_player_id,
-											)
-								}
-							</div>
-							${this.buildSelector('Source', `${actionType}.source`, {
-								text: {},
-							})}`
-					: ''
-			}
-			${
-				['keyboard', 'textbox', 'search'].includes(action)
-					? html`<div class="actions-form">
-								${this.buildSelector(
-									'Platform',
-									`${actionType}.platform`,
-									{
-										select: {
-											mode: 'dropdown',
-											options:
-												action == 'search'
-													? this.SearchPlatforms
-													: this.KeyboardPlatforms,
-											reorder: false,
-										},
-									},
-									this.KeyboardPlatforms.includes(
-										this.config.platform ?? 'Android TV',
-									)
-										? this.PLATFORM
-										: 'Android TV',
-								)}
-								${(() => {
-									let options = html``;
-									const keyboardPlatform =
-										PlatformConfig[platform].keyboard ||
-										PlatformConfig[platform].search
-											? platform
-											: 'Android TV';
-									switch (keyboardPlatform) {
-										case 'Android TV':
-											options = this.buildSelector(
-												'Remote ID',
-												`${actionType}.remote_id`,
-												{
-													entity: {
-														filter: {
-															domain: 'remote',
-														},
-													},
-												},
-												this.config.remote_id,
-											);
-											break;
-										case 'Sony BRAVIA':
-										case 'Fire TV':
-											options = this.buildSelector(
-												'Keyboard ID',
-												`${actionType}.keyboard_id`,
-												{
-													entity: {
-														filter: {
-															domain: ['remote', 'media_player'],
-														},
-													},
-												},
-												this.config.keyboard_id,
-											);
-											break;
-										case 'Roku': {
-											const domain =
-												action == 'search' ? 'media_player' : 'remote';
-											options = this.buildSelector(
-												`${capitalizeWords(domain)} ID`,
-												`${actionType}.${domain}_id`,
-												{
-													entity: {
-														filter: {
-															domain,
-														},
-													},
-												},
-												this.config[`${domain}_id`],
-											);
-											break;
-										}
-										case 'Samsung TV':
-										case 'LG webOS':
-											if (action == 'search') {
-												break;
-											}
-										// falls through
-										case 'Kodi':
-											options = this.buildSelector(
-												'Media Player ID',
-												`${actionType}.media_player_id`,
-												{
-													entity: {
-														filter: {
-															domain: 'media_player',
-														},
-													},
-												},
-												this.config.media_player_id,
-											);
-											break;
-										case 'Unified Remote':
-											if (action == 'search') {
-												break;
-											}
-											options = this.buildSelector(
-												'Remote/Device Name',
-												'device',
-												{
-													text: {},
-												},
-												this.config.device,
-											);
-											break;
-										case 'Apple TV':
-											options = html`${this.buildSelector(
-												'Remote ID',
-												'remote_id',
-												{
-													entity: {
-														filter: {
-															domain: 'remote',
-														},
-													},
-												},
-												this.config.remote_id,
-											)}${this.buildSelector(
-												'Config Entry ID',
-												'config_entry_id',
-												{
-													config_entry: {},
-												},
-												this.config.config_entry_id,
-											)}`;
-											break;
-										default:
-											break;
-									}
-									return options;
-								})()}
-							</div>
-							${this.buildSelector('Prompt', `${actionType}.keyboard_prompt`, {
-								text: {},
-							})}`
+				action == 'keyboard' || action == 'textbox' || action == 'search'
+					? this.buildActionKeyboardFields(actionType, action, platform)
 					: ''
 			}
 			${
@@ -1334,6 +1041,385 @@ export class UniversalRemoteCardEditor extends LitElement {
 		</div>`;
 	}
 
+	buildActionTimingFields(actionType: ActionType) {
+		const context = this.getEntryContext(
+			(this.activeEntry as IElementConfig) ?? ({} as IElementConfig),
+		);
+		const entryType = this.renderTemplate(
+			(this.activeEntry as IElementConfig)?.type as string,
+			context,
+		);
+
+		const fields: TemplateResult[] = [];
+		switch (actionType) {
+			case 'double_tap_action':
+			case 'multi_double_tap_action':
+				fields.push(
+					this.buildSelector(
+						'Double tap window',
+						`${actionType}.double_tap_window`,
+						{
+							number: {
+								min: 0,
+								step: 1,
+								mode: 'box',
+								unit_of_measurement: 'ms',
+							},
+						},
+						DOUBLE_TAP_WINDOW,
+					),
+				);
+				break;
+			case 'hold_action':
+			case 'multi_hold_action':
+			case 'momentary_repeat_action':
+				fields.push(
+					this.buildSelector(
+						'Hold time',
+						`${actionType}.hold_time`,
+						{
+							number: {
+								min: 0,
+								step: 1,
+								mode: 'box',
+								unit_of_measurement: 'ms',
+							},
+						},
+						HOLD_TIME,
+					),
+				);
+				if (
+					this.renderTemplate(
+						(this.activeEntry as IElementConfig)?.[actionType]
+							?.action as string,
+						context,
+					) == 'repeat' ||
+					actionType == 'momentary_repeat_action'
+				) {
+					fields.push(
+						this.buildSelector(
+							'Repeat delay',
+							`${actionType}.repeat_delay`,
+							{
+								number: {
+									min: 0,
+									step: 1,
+									mode: 'box',
+									unit_of_measurement: 'ms',
+								},
+							},
+							REPEAT_DELAY,
+						),
+					);
+				}
+				break;
+			case 'drag_action':
+			case 'multi_drag_action':
+				if (entryType == 'touchpad') {
+					fields.push(
+						this.buildSelector(
+							'Drag threshold',
+							`${actionType}.touch_threshold`,
+							{
+								number: {
+									min: 0,
+									step: 0.1,
+									mode: 'box',
+									unit_of_measurement: 'px',
+								},
+							},
+							DRAG_THRESHOLD,
+						),
+					);
+					fields.push(
+						this.buildSelector(
+							'Sampling delay',
+							`${actionType}.repeat_delay`,
+							{
+								number: {
+									min: 0,
+									step: 1,
+									mode: 'box',
+									unit_of_measurement: 'ms',
+								},
+							},
+							SAMPLING_DELAY,
+						),
+					);
+				} else if (entryType == 'circlepad') {
+					fields.push(
+						this.buildSelector(
+							'Drag threshold',
+							`${actionType}.touch_threshold`,
+							{
+								number: {
+									min: 0,
+									step: 1,
+									mode: 'box',
+									unit_of_measurement: '°',
+								},
+							},
+							CLICKWHEEL_THRESHOLD,
+						),
+					);
+				}
+				break;
+			default:
+				break;
+		}
+		return html`<div class="actions-form">${fields}</div>`;
+	}
+
+	buildActionKeySourceFields(
+		actionType: ActionType,
+		action: 'key' | 'source',
+		platform: Platform,
+	) {
+		const fields: TemplateResult[] = [
+			this.buildSelector(
+				'Platform',
+				`${actionType}.platform`,
+				{
+					select: {
+						mode: 'dropdown',
+						options: Platforms,
+						reorder: false,
+					},
+				},
+				this.PLATFORM ?? 'Android TV',
+			),
+		];
+
+		if (action == 'key') {
+			switch (platform) {
+				case 'Kodi':
+				case 'LG webOS':
+				case 'Denon AVR':
+					fields.push(
+						this.buildSelector(
+							'Media Player ID',
+							`${actionType}.media_player_id`,
+							{
+								entity: {
+									filter: {
+										domain: 'media_player',
+									},
+								},
+							},
+							this.config.media_player_id,
+						),
+					);
+					break;
+				default:
+					fields.push(
+						this.buildSelector(
+							'Remote ID',
+							`${actionType}.remote_id`,
+							{
+								entity: {
+									filter: {
+										domain: 'remote',
+									},
+								},
+							},
+							this.config.remote_id,
+						),
+					);
+					break;
+			}
+		} else if (action == 'source') {
+			if (platform == 'Android TV') {
+				fields.push(
+					this.buildSelector(
+						'Remote ID',
+						`${actionType}.remote_id`,
+						{
+							entity: {
+								filter: {
+									domain: 'remote',
+								},
+							},
+						},
+						this.config.remote_id,
+					),
+				);
+			} else {
+				this.buildSelector(
+					'Media Player ID',
+					`${actionType}.media_player_id`,
+					{
+						entity: {
+							filter: {
+								domain: 'media_player',
+							},
+						},
+					},
+					this.config.media_player_id,
+				);
+			}
+		}
+		return html`<div class="actions-form">${fields}</div>
+			${this.buildSelector(
+				action.charAt(0).toUpperCase() + action.slice(1),
+				`${actionType}.${action}`,
+				{
+					text: {},
+				},
+			)}`;
+	}
+
+	buildActionKeyboardFields(
+		actionType: ActionType,
+		action: 'keyboard' | 'textbox' | 'search',
+		platform: Platform,
+	) {
+		const keyboardPlatform =
+			PlatformConfig[platform].keyboard || PlatformConfig[platform].search
+				? platform
+				: 'Android TV';
+
+		const fields: TemplateResult[] = [
+			this.buildSelector(
+				'Platform',
+				`${actionType}.platform`,
+				{
+					select: {
+						mode: 'dropdown',
+						options:
+							action == 'search'
+								? this.SearchPlatforms
+								: this.KeyboardPlatforms,
+						reorder: false,
+					},
+				},
+				this.KeyboardPlatforms.includes(this.config.platform ?? 'Android TV')
+					? this.PLATFORM
+					: 'Android TV',
+			),
+		];
+
+		switch (keyboardPlatform) {
+			case 'Android TV':
+				fields.push(
+					this.buildSelector(
+						'Remote ID',
+						`${actionType}.remote_id`,
+						{
+							entity: {
+								filter: {
+									domain: 'remote',
+								},
+							},
+						},
+						this.config.remote_id,
+					),
+				);
+				break;
+			case 'Sony BRAVIA':
+			case 'Fire TV':
+				fields.push(
+					this.buildSelector(
+						'Keyboard ID',
+						`${actionType}.keyboard_id`,
+						{
+							entity: {
+								filter: {
+									domain: ['remote', 'media_player'],
+								},
+							},
+						},
+						this.config.keyboard_id,
+					),
+				);
+				break;
+			case 'Roku': {
+				const domain = action == 'search' ? 'media_player' : 'remote';
+				fields.push(
+					this.buildSelector(
+						`${capitalizeWords(domain)} ID`,
+						`${actionType}.${domain}_id`,
+						{
+							entity: {
+								filter: {
+									domain,
+								},
+							},
+						},
+						this.config[`${domain}_id`],
+					),
+				);
+				break;
+			}
+			case 'Samsung TV':
+			case 'LG webOS':
+				if (action == 'search') {
+					break;
+				}
+			// falls through
+			case 'Kodi':
+				fields.push(
+					this.buildSelector(
+						'Media Player ID',
+						`${actionType}.media_player_id`,
+						{
+							entity: {
+								filter: {
+									domain: 'media_player',
+								},
+							},
+						},
+						this.config.media_player_id,
+					),
+				);
+				break;
+			case 'Unified Remote':
+				if (action == 'search') {
+					break;
+				}
+				fields.push(
+					this.buildSelector(
+						'Remote/Device Name',
+						'device',
+						{
+							text: {},
+						},
+						this.config.device,
+					),
+				);
+				break;
+			case 'Apple TV':
+				fields.push(
+					html`${this.buildSelector(
+						'Remote ID',
+						'remote_id',
+						{
+							entity: {
+								filter: {
+									domain: 'remote',
+								},
+							},
+						},
+						this.config.remote_id,
+					)}${this.buildSelector(
+						'Config Entry ID',
+						'config_entry_id',
+						{
+							config_entry: {},
+						},
+						this.config.config_entry_id,
+					)}`,
+				);
+				break;
+			default:
+				break;
+		}
+
+		return html`<div class="actions-form">${fields}</div>
+			${this.buildSelector('Prompt', `${actionType}.keyboard_prompt`, {
+				text: {},
+			})}`;
+	}
+
 	buildTabBar(index: number, handler: (e: Event) => void, tabs: string[]) {
 		return html`
 			<ha-tab-group @wa-tab-show=${handler}>
@@ -1377,7 +1463,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							"Use the 'clockwise' boolean variable in a template to change the clickwheel action.",
 						)}
 						${this.buildActionOption(
-							'Clickwheel behavior (optional)',
+							'Clickwheel behavior',
 							'drag_action',
 							defaultUiActions,
 						)}
@@ -1388,25 +1474,25 @@ export class UniversalRemoteCardEditor extends LitElement {
 			case 1:
 				actionSelectors = html`
 					${this.buildAlertBox(
-						'Enabling momentary actions disables tap, double tap, and hold actions.',
+						'Enabling momentary actions disables default actions.',
 						'warning',
 					)}
 					${this.buildActionOption(
-						'Start behavior (optional)',
+						'Start behavior',
 						'momentary_start_action',
 						defaultUiActions,
 					)}
 					${this.buildAlertBox(
-						"Set the actions below, and then use the code editor to set a data field to the seconds the feature was held down using a template like '{{ hold_secs | float }}'.",
+						"Use the 'hold_secs' numeric variable in a template to use the seconds the feature was held down in an action",
 					)}
 					${this.buildActionOption(
-						'Repeat behavior (optional)',
+						'Repeat behavior',
 						'momentary_repeat_action',
 						defaultUiActions,
 						true,
 					)}
 					${this.buildActionOption(
-						'End behavior (optional)',
+						'End behavior',
 						'momentary_end_action',
 						defaultUiActions,
 						true,
@@ -1417,16 +1503,16 @@ export class UniversalRemoteCardEditor extends LitElement {
 			default:
 				actionSelectors = html`
 					${this.buildActionOption(
-						'Tap behavior (optional)',
+						'Tap behavior',
 						'tap_action',
 						defaultUiActions,
 					)}
 					${this.buildActionOption(
-						'Double tap behavior (optional)',
+						'Double tap behavior',
 						'double_tap_action',
 						defaultUiActions,
 					)}
-					${this.buildActionOption('Hold behavior (optional)', 'hold_action', {
+					${this.buildActionOption('Hold behavior', 'hold_action', {
 						ui_action: {
 							actions: Actions,
 						},
@@ -1553,7 +1639,6 @@ export class UniversalRemoteCardEditor extends LitElement {
 				)}`,
 			)}
 			${this.buildInteractionsPanel(html`
-				${this.buildAlertBox()}
 				${this.buildActionOption(
 					'Behavior',
 					'tap_action',
@@ -1595,18 +1680,14 @@ export class UniversalRemoteCardEditor extends LitElement {
 						'warning',
 					)}
 					${this.buildActionOption(
-						'Drag behavior (optional)',
+						'Drag behavior',
 						'drag_action',
 						defaultUiActions,
-						false,
-						true,
 					)}
 					${this.buildActionOption(
-						'Multi-touch drag behavior (optional)',
+						'Multi-touch drag behavior',
 						'multi_drag_action',
 						defaultUiActions,
-						false,
-						true,
 					)}
 				`;
 				break;
@@ -1616,21 +1697,21 @@ export class UniversalRemoteCardEditor extends LitElement {
 					${this.buildActionOption(
 						`Multi-touch ${
 							this.directionTabIndex == 2 ? 'tap' : 'swipe'
-						} behavior (optional)`,
+						} behavior`,
 						'multi_tap_action',
 						defaultUiActions,
 					)}
 					${
 						this.directionTabIndex == 2
 							? this.buildActionOption(
-									'Multi-touch double tap behavior (optional)',
+									'Multi-touch double tap behavior',
 									'multi_double_tap_action',
 									defaultUiActions,
 								)
 							: ''
 					}
 					${this.buildActionOption(
-						'Multi-touch hold behavior (optional)',
+						'Multi-touch hold behavior',
 						'multi_hold_action',
 						{
 							ui_action: {
@@ -1645,22 +1726,20 @@ export class UniversalRemoteCardEditor extends LitElement {
 				actionSelectors = html`
 					${actionsTabBar}
 					${this.buildActionOption(
-						`${
-							this.directionTabIndex == 2 ? 'Tap' : 'Swipe'
-						} behavior (optional)`,
+						`${this.directionTabIndex == 2 ? 'Tap' : 'Swipe'} behavior`,
 						'tap_action',
 						defaultUiActions,
 					)}
 					${
 						this.directionTabIndex == 2
 							? this.buildActionOption(
-									'Double tap behavior (optional)',
+									'Double tap behavior',
 									'double_tap_action',
 									defaultUiActions,
 								)
 							: ''
 					}
-					${this.buildActionOption('Hold behavior (optional)', 'hold_action', {
+					${this.buildActionOption('Hold behavior', 'hold_action', {
 						ui_action: {
 							actions: Actions,
 						},
@@ -2008,6 +2087,14 @@ export class UniversalRemoteCardEditor extends LitElement {
 							},
 							DOUBLE_TAP_WINDOW,
 						)}
+						${this.buildSelector('Drag sensitivity', 'drag_sensitivity', {
+							number: {
+								min: 0,
+								step: 0.1,
+								mode: 'box',
+								unit_of_measurement: 'px',
+							},
+						})}
 					</div>
 				</div>
 				<div class="wrapper">
