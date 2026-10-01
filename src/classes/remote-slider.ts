@@ -2,7 +2,13 @@ import { CSSResult, PropertyValues, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { RANGE_MAX, RANGE_MIN, STEP, STEP_COUNT } from '../models/constants';
+import {
+	DIRECTION_KEYS,
+	RANGE_MAX,
+	RANGE_MIN,
+	STEP,
+	STEP_COUNT,
+} from '../models/constants';
 import { ISliderConfig } from '../models/interfaces';
 import { buildStyles } from '../utils/styles';
 import { BaseRemoteElement } from './base-remote-element';
@@ -147,12 +153,14 @@ export class RemoteSlider extends BaseRemoteElement {
 	}
 
 	setSliderState() {
+		const state = this.hass.states[this.entityId as string]?.state;
 		this.sliderOn =
 			!(
 				this.value == undefined ||
-				['off', 'idle', null, undefined].includes(
-					this.hass.states[this.entityId as string]?.state,
-				)
+				state == 'off' ||
+				state == 'idle' ||
+				state == null ||
+				state == undefined
 			) || ((this.value as number) ?? this.range[0]) > this.range[0];
 	}
 
@@ -307,8 +315,7 @@ export class RemoteSlider extends BaseRemoteElement {
 	}
 
 	async onKey(e: KeyboardEvent) {
-		const keys = ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'];
-		if (keys.includes(e.key)) {
+		if (DIRECTION_KEYS.includes(e.key)) {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 			if (e.type == 'keydown') {

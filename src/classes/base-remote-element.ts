@@ -252,8 +252,8 @@ export class BaseRemoteElement extends LitElement {
 					command: action.key ?? '',
 				};
 				if (
-					actionType.includes('hold_action') &&
-					(!this.config.hold_action || this.config.hold_action.action == 'none')
+					(actionType == 'hold_action' || actionType == 'multi_hold_action') &&
+					(!this.config[actionType] || this.config[actionType].action == 'none')
 				) {
 					data.hold_secs = 1;
 				}
@@ -420,9 +420,12 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	toggleSingle(entityId: string) {
-		const turnOn = ['closed', 'closing', 'locked', 'off'].includes(
-			this.hass.states[entityId].state,
-		);
+		const state = this.hass.states[entityId].state;
+		const turnOn =
+			state == 'closed' ||
+			state == 'closing' ||
+			state == 'locked' ||
+			state == 'off';
 		let domain = entityId.split('.')[0];
 		let service: string;
 		switch (domain) {
@@ -850,7 +853,7 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	async onKey(e: KeyboardEvent) {
-		if (['Enter', ' '].includes(e.key)) {
+		if (e.key == 'Enter' || e.key == ' ') {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 			if (!e.repeat) {

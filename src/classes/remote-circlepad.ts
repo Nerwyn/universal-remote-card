@@ -216,7 +216,7 @@ export class RemoteCirclepad extends BaseRemoteElement {
 
 			if (e.shiftKey && this.hasAttribute('clickwheel')) {
 				if (e.type == 'keyup') {
-					this.clockwise = ['up', 'right'].includes(id);
+					this.clockwise = id == 'up' || id == 'right';
 					this.sendAction('drag_action');
 					this.cancelButtons();
 				}
