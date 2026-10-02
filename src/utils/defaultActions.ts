@@ -168,7 +168,6 @@ export function autofillActionTargets(config: IElementConfig) {
 						break;
 				}
 				action.target = target;
-				break;
 			}
 			config[actionType] = action;
 		}
