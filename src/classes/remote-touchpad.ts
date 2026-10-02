@@ -157,6 +157,7 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				}
 			}
 		} else {
+			// TODO where to put this?
 			const sensitivity = this.renderTemplate(
 				this.config[`${multiPrefix}drag_action`]?.touch_threshold ??
 					this.config.drag_action?.touch_threshold ??

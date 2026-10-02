@@ -169,7 +169,7 @@ class UniversalRemoteCard extends LitElement {
 				) ??
 				({} as IElementConfig),
 		);
-		return structuredClone(defaultActions);
+		return defaultActions;
 	}
 
 	renderTemplate(
