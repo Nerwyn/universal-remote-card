@@ -926,12 +926,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 		`;
 	}
 
-	buildActionOption(
-		label: string,
-		actionType: ActionType,
-		selector: object,
-		buildCodeEditor: boolean = false,
-	) {
+	buildActionOption(label: string, actionType: ActionType, selector: object) {
 		const context = this.getEntryContext(
 			(this.activeEntry as IElementConfig) ?? ({} as IElementConfig),
 		);
@@ -986,7 +981,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 					: ''
 			}
 			${
-				buildCodeEditor || action == 'fire-dom-event'
+				action == 'fire-dom-event'
 					? this.buildSelector('', actionType, { object: {} })
 					: ''
 			}
@@ -1489,13 +1484,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 						'Repeat behavior',
 						'momentary_repeat_action',
 						defaultUiActions,
-						true,
 					)}
 					${this.buildActionOption(
 						'End behavior',
 						'momentary_end_action',
 						defaultUiActions,
-						true,
 					)}
 				`;
 				break;
@@ -1639,16 +1632,11 @@ export class UniversalRemoteCardEditor extends LitElement {
 				)}`,
 			)}
 			${this.buildInteractionsPanel(html`
-				${this.buildActionOption(
-					'Behavior',
-					'tap_action',
-					{
-						ui_action: {
-							actions: actionsNoRepeat,
-						},
+				${this.buildActionOption('Behavior', 'tap_action', {
+					ui_action: {
+						actions: actionsNoRepeat,
 					},
-					true,
-				)}
+				})}
 			`)}
 		`;
 	}
