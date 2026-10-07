@@ -298,11 +298,6 @@ export const androidTVDefaultKeys: IElementConfig[] = [
 		icon: 'mdi:text-box',
 	},
 	{
-		name: 'search',
-		tap_action: { action: 'search' },
-		icon: 'mdi:google-assistant',
-	},
-	{
 		name: 'delete',
 		tap_action: { action: 'key', key: 'DEL' },
 		hold_action: { action: 'repeat' },
