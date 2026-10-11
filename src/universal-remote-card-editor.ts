@@ -18,6 +18,7 @@ import {
 	SAMPLING_DELAY,
 	STEP,
 	STEP_COUNT,
+	SWIPE_THRESHOLD,
 	UPDATE_AFTER_ACTION_DELAY,
 } from './models/constants';
 import {
@@ -1682,6 +1683,23 @@ export class UniversalRemoteCardEditor extends LitElement {
 			case 1:
 				actionSelectors = html`
 					${actionsTabBar}
+					${
+						this.directionTabIndex == 2
+							? this.buildSelector(
+									'Swipe threshold',
+									'touch_threshold',
+									{
+										number: {
+											min: 0,
+											step: 1,
+											mode: 'box',
+											unit_of_measurement: 'px',
+										},
+									},
+									SWIPE_THRESHOLD,
+								)
+							: ''
+					}
 					${this.buildActionOption(
 						`Multi-touch ${
 							this.directionTabIndex == 2 ? 'tap' : 'swipe'
@@ -1713,6 +1731,23 @@ export class UniversalRemoteCardEditor extends LitElement {
 			default:
 				actionSelectors = html`
 					${actionsTabBar}
+					${
+						this.directionTabIndex == 2
+							? this.buildSelector(
+									'Swipe threshold',
+									'touch_threshold',
+									{
+										number: {
+											min: 0,
+											step: 1,
+											mode: 'box',
+											unit_of_measurement: 'px',
+										},
+									},
+									SWIPE_THRESHOLD,
+								)
+							: ''
+					}
 					${this.buildActionOption(
 						`${this.directionTabIndex == 2 ? 'Tap' : 'Swipe'} behavior`,
 						'tap_action',
@@ -2075,7 +2110,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							},
 							DOUBLE_TAP_WINDOW,
 						)}
-						${this.buildSelector('Drag sensitivity', 'drag_sensitivity', {
+						${this.buildSelector('Drag sensitivity', 'touch_threshold', {
 							number: {
 								min: 0,
 								step: 0.1,

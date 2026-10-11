@@ -61,6 +61,7 @@ export interface ITouchpadConfig extends IBaseElementConfig, IActions {
 	down?: IBasicActions & IMultiActions & IDisplayConfig;
 	left?: IBasicActions & IMultiActions & IDisplayConfig;
 	right?: IBasicActions & IMultiActions & IDisplayConfig;
+	touch_threshold?: number;
 }
 
 export interface ICirclepadConfig extends IBaseElementConfig, IActions {

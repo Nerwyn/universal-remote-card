@@ -157,11 +157,9 @@ export class RemoteTouchpad extends BaseRemoteElement {
 				}
 			}
 		} else {
-			// TODO where to put this?
+			// Swipe actions
 			const sensitivity = this.renderTemplate(
-				this.config[`${multiPrefix}drag_action`]?.touch_threshold ??
-					this.config.drag_action?.touch_threshold ??
-					SWIPE_THRESHOLD,
+				this.config?.touch_threshold ?? SWIPE_THRESHOLD,
 			) as number;
 			if (
 				Math.abs(Math.abs(totalDeltaX) - Math.abs(totalDeltaY)) > sensitivity
