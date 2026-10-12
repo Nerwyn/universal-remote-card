@@ -37,7 +37,7 @@
 	"homepage": "https://github.com/Nerwyn/universal-remote-card#readme",
 	"dependencies": {
 		"ha-nunjucks": "^1.7.9",
-		"js-yaml": "^5.4.2",
+		"js-yaml": "^5.4.3",
 		"lit": "^3.3.3"
 	},
 	"devDependencies": {
@@ -47,17 +47,17 @@
 		"@types/js-yaml": "^4.0.9",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/parser": "latest",
-		"eslint": "^10.11.0",
+		"eslint": "^10.12.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-prettier": "^5.5.6",
-		"home-assistant-js-websocket": "^9.7.0",
+		"home-assistant-js-websocket": "^9.7.1",
 		"lint-staged": "^17.6.0",
 		"lit-css-loader": "^4.0.1",
 		"minify-html-literals-loader": "^1.1.1",
-		"prettier": "^3.9.9",
+		"prettier": "^3.9.10",
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"ts-loader": "^9.6.2",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.71.0"
+		"typescript-eslint": "^8.71.2"
 	}
 }
