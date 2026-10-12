@@ -236,22 +236,6 @@ export class BaseRemoteElement extends LitElement {
 					button: action.key,
 				});
 				break;
-			case 'ADB TV (Legacy)': {
-				let longpress = false;
-				if (
-					(actionType == 'hold_action' || actionType == 'multi_hold_action') &&
-					(!this.config[actionType] || this.config[actionType].action == 'none')
-				) {
-					longpress = true;
-				}
-				const data: IData = {
-					entity_id:
-						action.media_player_id || this.config.card?.media_player_id,
-					command: `input keyevent ${longpress ? '--longpress ' : ''}${action.key}`,
-				};
-				this.hass.callService('androidtv', 'adb_command', data);
-				break;
-			}
 			case 'Android TV':
 			case 'Apple TV':
 			case 'Fire TV':

@@ -2,7 +2,6 @@ export const Platforms = [
 	'Android TV',
 	'Sony BRAVIA',
 	'Fire TV',
-	'ADB TV (Legacy)',
 	'Apple TV',
 	'Roku',
 	'LG webOS',

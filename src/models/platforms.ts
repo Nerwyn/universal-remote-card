@@ -21,11 +21,6 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 		keyboard: true,
 		search: true,
 	},
-	'ADB TV (Legacy)': {
-		media_player_id: true,
-		keyboard: true,
-		search: true,
-	},
 	'Apple TV': {
 		remote_id: true,
 		media_player_id: true,

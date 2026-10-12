@@ -83,6 +83,8 @@ This card supports several media platforms with default key and source lists. Di
 
 Modern Android TVs use the Android TV Remote protocol for receiving commands, including keyboard input. This protocol does not work for global search, which still requires the Android Debug Bridge integration for triggering global search without navigating to an inconsistently placed search box in the Android TV UI.
 
+As of Android 14, changes have been made to Android Debug Bridge in the name of security which make it harder to use for TV control. It uses a random port rather than the old default, disconnects after some time of inactivity, and does not work over wired connections. To get around these changes, you can sideload a tool like [adb-auto-enable](https://github.com/mouldybread/adb-auto-enable) onto your Android TV to automatically enable ADB on boot and use a static port.
+
 ### Sony BRAVIA - Different APIs on Different Models
 
 Some Sony BRAVIA TVs do not support the Android TV Remote API, but do have their own proprietary API. The correct integration should be chosen based on which one your television supports. If you use the Sony BRAVIA platform, then you will also want to set up the Android Debug Bridge integration and provide its remote or media player entity ID in the Keyboard ID field in order to use the keyboard and search actions.
