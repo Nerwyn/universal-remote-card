@@ -1711,15 +1711,11 @@ custom_actions:
     name: show_volume
     icon: mdi:volume-high
     tap_action:
-      action: eval
-      eval: |-
-        const card = this.parentNode.parentNode;
-        const volume = card.querySelector("#volume")
-        if (volume.hasAttribute("enabled")) {
-          volume.removeAttribute("enabled")
-        } else {
-          volume.setAttribute("enabled", "")
-        }
+      action: fire-dom-event
+      event_type: urc-attributes
+      attributes:
+        volume:
+          - ''
   - type: slider
     name: volume
     value_attribute: volume_level
@@ -1745,16 +1741,6 @@ custom_actions:
 
       .background {
         opacity: 0.5;
-      }
-      input {
-        pointer-events: none;
-      }
-
-      :host([enabled]) {
-        opacity: 1;
-      }
-      :host([enabled]) input {
-        pointer-events: all;
       }
   - type: button
     name: shuffle
@@ -1960,6 +1946,19 @@ styles: |-
 
   remote-touchpad {
     pointer-events: none;
+  }
+
+  #volume {
+    display: none;
+  }
+  #volume::part(range) {
+    pointer-events: none;
+  }
+  :host([volume]) #volume {
+    display: flex;
+  }
+  :host([volume]) #volume::part(range) {
+    pointer-events: all;
   }
 haptics: false
 ```
