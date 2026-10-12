@@ -1296,20 +1296,37 @@ export class UniversalRemoteCardEditor extends LitElement {
 
 		switch (keyboardPlatform) {
 			case 'Android TV':
-				fields.push(
-					this.buildSelector(
-						'Remote ID',
-						`${actionType}.remote_id`,
-						{
-							entity: {
-								filter: {
-									domain: 'remote',
+				if (action == 'search') {
+					fields.push(
+						this.buildSelector(
+							'ADB ID',
+							`${actionType}.keyboard_id`,
+							{
+								entity: {
+									filter: {
+										domain: ['remote', 'media_player'],
+									},
 								},
 							},
-						},
-						this.config.remote_id,
-					),
-				);
+							this.config.keyboard_id,
+						),
+					);
+				} else {
+					fields.push(
+						this.buildSelector(
+							'Remote ID',
+							`${actionType}.remote_id`,
+							{
+								entity: {
+									filter: {
+										domain: 'remote',
+									},
+								},
+							},
+							this.config.remote_id,
+						),
+					);
+				}
 				break;
 			case 'Sony BRAVIA':
 			case 'Fire TV':

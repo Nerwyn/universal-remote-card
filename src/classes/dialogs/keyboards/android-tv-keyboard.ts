@@ -1,9 +1,9 @@
 import { PropertyValues } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { BaseKeyboard } from './base-keyboard';
+import { ADBKeyboard } from './adb-keyboard';
 
 @customElement('android-tv-keyboard')
-export class AndroidTVKeyboard extends BaseKeyboard {
+export class AndroidTVKeyboard extends ADBKeyboard {
 	keyMap = {
 		Backspace: 'DEL',
 		Enter: 'ENTER',

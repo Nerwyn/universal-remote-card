@@ -6,6 +6,7 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 		media_player_id: true,
 		keyboard: true,
 		search: true,
+		adb: true,
 	},
 	'Sony BRAVIA': {
 		remote_id: true,
@@ -19,7 +20,11 @@ export const PlatformConfig: Record<Platform, IPlatformFeatures> = {
 		media_player_id: true,
 		keyboard: true,
 		search: true,
-		// adb: true, // Fire TV uses ADB for everything and does not need to configured here
+	},
+	'ADB TV (Legacy)': {
+		media_player_id: true,
+		keyboard: true,
+		search: true,
 	},
 	'Apple TV': {
 		remote_id: true,
