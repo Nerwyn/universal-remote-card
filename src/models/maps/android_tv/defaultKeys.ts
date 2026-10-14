@@ -300,7 +300,7 @@ export const androidTVDefaultKeys: IElementConfig[] = [
 	{
 		name: 'search',
 		tap_action: { action: 'search' },
-		icon: 'mdi:google-assistant',
+		icon: 'mdi:star-four-points',
 	},
 	{
 		name: 'delete',
