@@ -89,11 +89,11 @@ As of Android 14, changes have been made to Android Debug Bridge in the name of 
 
 Some Sony BRAVIA TVs do not support the Android TV Remote API, but do have their own proprietary API. The correct integration should be chosen based on which one your television supports. If you use the Sony BRAVIA platform, then you will also want to set up the Android Debug Bridge integration and provide its remote or media player entity ID in the Keyboard ID field in order to use the keyboard and search actions.
 
-### Fire TV - Android Debug Bridge
+### Fire TV (Legacy) - Android Debug Bridge
 
-Fire TV is a heavily modified fork of Android TV. It uses the Android Debug Bridge integration for all interactions. If your Android TV does not support the Android TV Remote API, you can use this platform with the Android Debug Bridge integration instead.
+Legacy Fire TV is a heavily modified fork of Android TV. It uses the Android Debug Bridge integration for all interactions. If your Android TV does not support the Android TV Remote API, you can use this platform with the Android Debug Bridge integration instead.
 
-Amazon does have future plans to switch from their Android TV fork base to an entirely new operating system, at which point this integration will not work with newer Fire TVs.
+Starting in 2025, new Amazon Fire TV devices use a new operating system called Vega OS. Vega OS is not based on Android, and communicating with it not possible with Home Assistant. At time of writing, you cannot use this card (or anything except Amazon official methods) to control a Vega OS Fire TV.
 
 ### Samsung TV - Sources and Keyboard Using Custom Integration
 
@@ -102,6 +102,8 @@ The Home Assistant Samsung TV integration does not allow you to change sources o
 ### Unified Remote - Custom Integration
 
 Unified Remote relies entirely on [a custom integration](https://github.com/akshansh1998/hass-unified-remote), which is used to control a [Unified Remote server](https://www.unifiedremote.com/) on your PC. This custom integration creates a media player entity, but all default keys are called using the action `unified_remote.call` which can be used to call any Unified Remote API. You must enter the Unified Remote server friendly name you used when configuring the integration in the card Remote/Device Name field.
+
+Unified Remote has not been updated in many years, and is slowly ceasing to work with newer operating systems. Certain functionality like mouse clicks (see [discussion thread](https://github.com/Nerwyn/universal-remote-card/discussions/285) and keyboard for workaround) no longer works on Linux Wayland devices
 
 ### Yamaha YNCA - Custom integration
 
