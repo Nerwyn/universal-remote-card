@@ -164,7 +164,6 @@ export function autofillActionTargets(config: IElementConfig) {
 						action.data.mac ??= '{{ config.card.mac }}';
 						break;
 					default:
-						target.entity_id ??= '{{ config.entity }}';
 						break;
 				}
 				action.target = target;
