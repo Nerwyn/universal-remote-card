@@ -1150,6 +1150,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							{
 								number: {
 									min: 0,
+									max: 179,
 									step: 1,
 									mode: 'box',
 									unit_of_measurement: '°',
