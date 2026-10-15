@@ -1149,7 +1149,7 @@ export class UniversalRemoteCardEditor extends LitElement {
 							`${actionType}.touch_threshold`,
 							{
 								number: {
-									min: 0,
+									min: 1,
 									max: 179,
 									step: 1,
 									mode: 'box',
