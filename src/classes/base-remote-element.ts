@@ -267,7 +267,7 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	source(action: IAction) {
-		switch (action.platform) {
+		switch (action.platform || this.config.card?.platform) {
 			case 'Unified Remote':
 			case 'Unfolded Circle':
 			case 'Generic Remote':
