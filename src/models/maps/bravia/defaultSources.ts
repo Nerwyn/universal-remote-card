@@ -118,7 +118,7 @@ export const braviaTVDefaultSources: IElementConfig[] = [
 		name: 'max',
 		tap_action: {
 			action: 'source',
-			source: 'Max', // Substring matching might fail us here...
+			source: 'HBO Max',
 		},
 		icon: 'hbomax',
 	},

@@ -21,6 +21,14 @@ export const webosDefaultSources: IElementConfig[] = [
 		icon: 'dropout',
 	},
 	{
+		name: 'max',
+		tap_action: {
+			action: 'source',
+			source: 'HBO Max',
+		},
+		icon: 'hbomax',
+	},
+	{
 		name: 'nebula',
 		tap_action: {
 			action: 'source',

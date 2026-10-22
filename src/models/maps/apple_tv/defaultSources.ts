@@ -106,7 +106,7 @@ export const appleTVDefaultSources: IElementConfig[] = [
 		name: 'max',
 		tap_action: {
 			action: 'source',
-			source: 'Max',
+			source: 'HBO Max',
 		},
 		icon: 'hbomax',
 	},
