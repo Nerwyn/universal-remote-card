@@ -257,8 +257,9 @@ export class BaseRemoteElement extends LitElement {
 				) {
 					data.hold_secs = 1;
 				}
-				if (action.device) {
-					data.device = action.device || this.config.card?.device;
+				const device = action.device || this.config.card?.device;
+				if (device) {
+					data.device = device;
 				}
 				this.hass.callService('remote', 'send_command', data);
 				break;
