@@ -776,7 +776,7 @@ export class BaseRemoteElement extends LitElement {
 	}
 
 	buildRipple() {
-		return html`<md-ripple part="ripple"></md-ripple>`;
+		return html`<ha-ripple part="ripple"></ha-ripple>`;
 	}
 
 	onPointerDown(e: PointerEvent) {
@@ -829,7 +829,7 @@ export class BaseRemoteElement extends LitElement {
 	onTouchStart(e: TouchEvent) {
 		// Stuck ripple fix
 		clearTimeout(this.rippleEndTimer);
-		const ripple = this.shadowRoot?.querySelector('md-ripple') as MdRipple;
+		const ripple = this.shadowRoot?.querySelector('ha-ripple') as MdRipple;
 		ripple?.endPressAnimation?.();
 		ripple?.startPressAnimation?.(e);
 	}
@@ -849,7 +849,7 @@ export class BaseRemoteElement extends LitElement {
 
 	endRipple() {
 		clearTimeout(this.rippleEndTimer);
-		const ripple = this.shadowRoot?.querySelector('md-ripple') as MdRipple;
+		const ripple = this.shadowRoot?.querySelector('ha-ripple') as MdRipple;
 		this.rippleEndTimer = setTimeout(() => ripple?.endPressAnimation?.(), 15);
 	}
 
@@ -975,22 +975,11 @@ export class BaseRemoteElement extends LitElement {
 				outline: none;
 			}
 
-			md-ripple {
+			ha-ripple {
 				height: var(--ha-ripple-height, 100%);
 				width: var(--ha-ripple-width, 100%);
 				top: var(--ha-ripple-top, 0);
 				left: var(--ha-ripple-left, 0);
-
-				--md-ripple-hover-opacity: var(--ha-ripple-hover-opacity, 0.08);
-				--md-ripple-pressed-opacity: var(--ha-ripple-pressed-opacity, 0.12);
-				--md-ripple-hover-color: var(
-					--ha-ripple-hover-color,
-					var(--ha-ripple-color, var(--secondary-text-color))
-				);
-				--md-ripple-pressed-color: var(
-					--ha-ripple-pressed-color,
-					var(--ha-ripple-color, var(--secondary-text-color))
-				);
 			}
 
 			.icon {

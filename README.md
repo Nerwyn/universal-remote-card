@@ -387,7 +387,7 @@ You may also find the actual HTML of the remote elements useful for directly sty
       <ha-icon></ha-icon>
     </div>
     <pre class="label" part="label">"Power"</pre>
-    <md-ripple part="ripple"></md-ripple>
+    <ha-ripple part="ripple"></ha-ripple>
     ::after
   </button>
 </remote-button>
@@ -446,7 +446,7 @@ You may also find the actual HTML of the remote elements useful for directly sty
     <div class="toucharea-row" part="bottom-row">
       <remote-icon-label id="down" part="down"></remote-icon-label>
     </div>
-    <md-ripple part="ripple"></md-ripple>
+    <ha-ripple part="ripple"></ha-ripple>
   </toucharea>
 </remote-touchpad>
 ```

@@ -80,27 +80,15 @@ export class BaseDialog extends LitElement {
 			}
 			@media (hover: hover) {
 				button:hover {
-					opacity: var(
-						--ha-ripple-hover-opacity,
-						var(--md-ripple-hover-opacity, 0.08)
-					);
+					opacity: var(--ha-ripple-hover-opacity, 0.08);
 				}
 			}
 			button:focus-visible {
 				outline: none;
-				opacity: var(
-					--ha-ripple-pressed-opacity,
-					var(--md-ripple-pressed-opacity, 0.12)
-				);
+				opacity: var(--ha-ripple-pressed-opacity, 0.12);
 			}
 			button:active {
-				opacity: calc(
-					2 *
-						var(
-							--ha-ripple-pressed-opacity,
-							var(--md-ripple-pressed-opacity, 0.12)
-						)
-				);
+				opacity: calc(2 * var(--ha-ripple-pressed-opacity, 0.12));
 			}
 
 			.button span {
