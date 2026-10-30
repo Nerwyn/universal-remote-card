@@ -108,7 +108,6 @@ export class RemoteCirclepad extends BaseRemoteElement {
 			[]) as RemoteButton[];
 		for (const button of buttons) {
 			button.endAction();
-			button.endRipple();
 		}
 	}
 

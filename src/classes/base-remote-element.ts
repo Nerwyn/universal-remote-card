@@ -14,7 +14,6 @@ import {
 	IElementConfig,
 	IIconConfig,
 } from '../models/interfaces';
-import { MdRipple } from '../models/interfaces/MdRipple';
 import { defaultIcons } from '../models/maps';
 import { deepGet, deepSet, getDeepKeys, handleConfirmation } from '../utils';
 
@@ -22,8 +21,6 @@ export class BaseRemoteElement extends LitElement {
 	@property() hass!: HomeAssistant;
 	@property() config!: IElementConfig;
 	@property() icons?: IIconConfig[] = [];
-
-	rippleEndTimer?: ReturnType<typeof setTimeout>;
 
 	@state() value?: string | number | boolean = 0;
 	entityId?: string;
@@ -816,7 +813,6 @@ export class BaseRemoteElement extends LitElement {
 		if (e.pointerType == 'mouse' && this.initialX && this.initialY) {
 			this.onPointerCancel(e);
 		}
-		this.endRipple();
 	}
 
 	onContextMenu(e: PointerEvent) {
@@ -824,14 +820,6 @@ export class BaseRemoteElement extends LitElement {
 			e.preventDefault();
 			e.stopPropagation();
 		}
-	}
-
-	onTouchStart(e: TouchEvent) {
-		// Stuck ripple fix
-		clearTimeout(this.rippleEndTimer);
-		const ripple = this.shadowRoot?.querySelector('ha-ripple') as MdRipple;
-		ripple?.endPressAnimation?.();
-		ripple?.startPressAnimation?.(e);
 	}
 
 	onTouchMove(e: TouchEvent) {
@@ -842,15 +830,6 @@ export class BaseRemoteElement extends LitElement {
 	onTouchEnd(e: TouchEvent) {
 		// Premature dialog close fix
 		e.preventDefault();
-
-		// Stuck ripple fix
-		this.endRipple();
-	}
-
-	endRipple() {
-		clearTimeout(this.rippleEndTimer);
-		const ripple = this.shadowRoot?.querySelector('ha-ripple') as MdRipple;
-		this.rippleEndTimer = setTimeout(() => ripple?.endPressAnimation?.(), 15);
 	}
 
 	async onKey(e: KeyboardEvent) {
@@ -922,9 +901,6 @@ export class BaseRemoteElement extends LitElement {
 		if (this.rtl) {
 			this.setAttribute('dir', 'rtl');
 		}
-		this.addEventListener('touchstart', this.onTouchStart, {
-			passive: true,
-		});
 		this.addEventListener('touchmove', this.onTouchMove);
 		this.addEventListener('touchend', this.onTouchEnd);
 		this.addEventListener('keydown', this.onKey);
