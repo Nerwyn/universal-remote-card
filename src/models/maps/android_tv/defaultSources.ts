@@ -233,6 +233,11 @@ export const androidTVDefaultSources: IElementConfig[] = [
 		icon: 'reshet13',
 	},
 	{
+		name: 'rtlplus',
+		tap_action: { action: 'source', source: 'https://plus.rtl.de' },
+		icon: 'rtlplus',
+	},
+	{
 		name: 's0undtv',
 		tap_action: { action: 'source', source: 'com.s0und.s0undtv' },
 		icon: 'mdi:twitch',
