@@ -2,14 +2,14 @@
 
 [![GitHub Release](https://img.shields.io/github/release/Nerwyn/universal-remote-card.svg?style=for-the-badge)](https://github.com/nerwyn/universal-remote-card/releases)
 [![License](https://img.shields.io/github/license/Nerwyn/universal-remote-card.svg?style=for-the-badge)](LICENSE)
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg?style=for-the-badge)](https://github.com/hacs/default)
+[![marketplace_badge](https://img.shields.io/badge/Marketplace-Default-blue.svg?style=for-the-badge)](https://github.com/hacs/default)
 [![Project Maintenance](https://img.shields.io/badge/maintainer-Nerwyn-blue.svg?style=for-the-badge)](https://github.com/Nerwyn)
 ![Github](https://img.shields.io/github/followers/Nerwyn.svg?style=for-the-badge)
 [![GitHub Activity](https://img.shields.io/github/last-commit/Nerwyn/universal-remote-card?style=for-the-badge)](https://github.com/Nerwyn/universal-remote-card/commits/main)
 [![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge)](https://community.home-assistant.io/t/universal-remote-card-buttons-touchpads-sliders-and-keyboards-for-multiple-platforms/)
 [![Buy Me A Coffee](https://img.shields.io/badge/donate-☕buy_me_a_coffee-yellow.svg?style=for-the-badge)](https://www.buymeacoffee.com/nerwyn)
 
-[![My Home Assistant](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?repository=universal-remote-card&owner=Nerwyn&category=Plugin)
+[![My Home Assistant](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?repository=universal-remote-card&owner=Nerwyn&category=Plugin)
 
 _Formerly called Android TV Card_
 
@@ -47,7 +47,7 @@ A super customizable universal remote card iterating on the work of several othe
 
 # How To Use
 
-This project now has a fully featured configuration user interface! To get started, install this project using HACS. Then go to a dashboard and create a universal remote card or edit an existing one.
+This project now has a fully featured configuration user interface! To get started, install this project using the Marketplace. Then go to a dashboard and create a universal remote card or edit an existing one.
 
 The editor has four tabs - General, Layout, Elements, and Icons.
 
