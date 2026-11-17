@@ -212,6 +212,8 @@ export class BaseRemoteElement extends LitElement {
 		const mediaPlayerId =
 			action.media_player_id ||
 			this.renderTemplate(this.config.card?.media_player_id as string);
+		const device =
+			action.device || this.renderTemplate(this.config.card?.device as string);
 
 		switch (platform) {
 			case 'Unified Remote':
@@ -261,7 +263,6 @@ export class BaseRemoteElement extends LitElement {
 				) {
 					data.hold_secs = 1;
 				}
-				const device = action.device || this.config.card?.device;
 				if (device) {
 					data.device = device;
 				}
