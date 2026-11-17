@@ -142,26 +142,27 @@ export function autofillActionTargets(config: IElementConfig) {
 				const target = action.target ?? {};
 				switch (domain) {
 					case 'remote':
-						target.entity_id ??= '{{ config.card.remote_id }}';
+						target.entity_id ??= '{{ render(config.card.remote_id) }}';
 						break;
 					case 'media_player':
 					case 'androidtv':
 					case 'kodi':
 					case 'denonavr':
 					case 'webostv':
-						target.entity_id ??= '{{ config.card.media_player_id }}';
+						target.entity_id ??= '{{ render(config.card.media_player_id) }}';
 						break;
 					case 'unified_remote':
 						action.data ??= {};
-						action.data.target ??= '{{ config.card.device }}';
+						action.data.target ??= '{{ render(config.card.device) }}';
 						break;
 					case 'apple_tv':
 						action.data ??= {};
-						action.data.config_entry_id ??= '{{ config.card.config_entry_id }}';
+						action.data.config_entry_id ??=
+							'{{ render(config.card.config_entry_id) }}';
 						break;
 					case 'wake_on_lan':
 						action.data ??= {};
-						action.data.mac ??= '{{ config.card.mac }}';
+						action.data.mac ??= '{{ render(config.card.mac) }}';
 						break;
 					default:
 						break;
